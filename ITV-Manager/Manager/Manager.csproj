@@ -28,5 +28,13 @@
         
         <PackageReference Include="Select.HtmlToPdf.NetCore" Version="25.2.0"/>
     </ItemGroup>
+    
+    <ItemGroup>
+      <Page Update="Views\Main\MainWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
 
 </Project>
