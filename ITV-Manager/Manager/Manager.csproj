@@ -36,9 +36,5 @@
         <SubType>Designer</SubType>
       </Page>
     </ItemGroup>
-    
-    <ItemGroup>
-      <Folder Include="Errors\Storage\" />
-    </ItemGroup>
 
 </Project>

@@ -25,4 +25,3 @@ public static class CitaErrors {
     public static DomainError MaximosVehiculosAlcanzados(string dni, DateTime fecha) =>
         new CitaError.MaximosVehiculosAlcanzados(dni, fecha);
 }
-   
