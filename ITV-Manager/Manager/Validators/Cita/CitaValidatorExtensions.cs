@@ -41,7 +41,7 @@ public static class CitaValidatorExtensions {
             if (string.IsNullOrWhiteSpace(dni)) return false; // 6
 
             var d = dni.Trim().ToUpper().Replace(" ", "");
-            if (d.Length != 7) return false; // 7
+            if (d.Length != 9) return false; // 7
             
             if (!int.TryParse(d.Substring(0, 8), out var numero)) return false; // 8
             if (!char.TryParse(d[8].ToString() ,out var letra)) return false; // 9
@@ -71,5 +71,17 @@ public static class CitaValidatorExtensions {
             return modelo.Length < 15; // 14
         }
     }
+    
+    /// <summary> Validador del motor </summary>
+    /// <param name="modelo">Motor a validar</param>
+    extension() {
+        public bool IsValidMotor() {
+            Log.Debug("🔵 Validando Modelo...");
+            
+           
+        }
+    }
+    
+    
     
 }

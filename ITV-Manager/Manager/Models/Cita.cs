@@ -9,6 +9,7 @@ public record Cita {
     public string Dni { get; init; } = string.Empty;
     public string Marca { get; init; } = string.Empty;
     public string Modelo { get; init; } = string.Empty;
+    public int Cilindrada { get; init; }
     public TiposMotor Motor { get; init; }
     public DateTime FechaMatriculacion { get; init; }
     public DateTime FechaInspeccion { get; init; }
