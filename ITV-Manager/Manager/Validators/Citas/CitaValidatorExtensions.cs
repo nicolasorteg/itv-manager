@@ -13,7 +13,7 @@ public static class CitaValidatorExtensions {
         public bool IsValidMatricula() {
             Log.Debug("🔵 Validando Matrícula...");
 
-            const string LetrasProhibidas = "ALIOU";
+            const string LetrasProhibidas = "AEIOUQÑ";
 
             if (string.IsNullOrWhiteSpace(matricula)) return false; // 1
 
@@ -24,7 +24,7 @@ public static class CitaValidatorExtensions {
             if (!int.TryParse(m.Substring(0, 4), out var numeros)) return false; // 3
 
             for (var i = 4; i < m.Length; i++) {
-                if (!char.TryParse(m[i].ToString(), out var letra)) return false; // 4
+                if (!char.IsLetter(m[i])) return false; // 4
             }
 
             var letras = m.Substring(4, 3);
@@ -46,9 +46,9 @@ public static class CitaValidatorExtensions {
             if (d.Length != 9) return false; // 7
             
             if (!int.TryParse(d.Substring(0, 8), out var numero)) return false; // 8
-            if (!char.TryParse(d[8].ToString() ,out var letra)) return false; // 9
+            if (!char.IsLetter(d[8])) return false; // 9
             
-            return letra == LetrasValidas[numero % 23]; // 10
+            return d[8] == LetrasValidas[numero % 23]; // 10
         }
     }
     
@@ -59,7 +59,7 @@ public static class CitaValidatorExtensions {
             Log.Debug("🔵 Validando Marca...");
             
             if (string.IsNullOrWhiteSpace(marca)) return false; // 11
-            return marca.Length < 15; // 12
+            return marca.Trim().Length < 15; // 12
         }
     }
     
@@ -70,7 +70,7 @@ public static class CitaValidatorExtensions {
             Log.Debug("🔵 Validando Modelo...");
             
             if (string.IsNullOrWhiteSpace(modelo)) return false; // 13
-            return modelo.Length < 15; // 14
+            return modelo.Trim().Length < 15; // 14
         }
     }
     
@@ -110,7 +110,7 @@ public static class CitaValidatorExtensions {
         public bool IsValidFechaInspeccion() {
             Log.Debug("🔵 Validando Fecha de Inspección...");
             
-            return fechaInspeccion.Date >= DateTime.Today && fechaInspeccion.Date <= DateTime.Today.AddDays(AppConfig.VentanaDiasCita); // 19, 20
+            return fechaInspeccion >= DateTime.Today && fechaInspeccion.Date <= DateTime.Today.AddDays(AppConfig.VentanaDiasCita); // 19, 20
         }
     }
 }
