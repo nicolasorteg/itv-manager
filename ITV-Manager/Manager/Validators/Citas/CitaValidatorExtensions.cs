@@ -1,6 +1,8 @@
-﻿using Serilog;
+﻿using Manager.Config;
+using Serilog;
+using Manager.Models;
 
-namespace Manager.Validators.Cita;
+namespace Manager.Validators.Citas;
 
 /// <summary> Contenedor de funciones de extensión para la validación de los datos de la Cita </summary>
 public static class CitaValidatorExtensions {
@@ -73,15 +75,42 @@ public static class CitaValidatorExtensions {
     }
     
     /// <summary> Validador del motor </summary>
-    /// <param name="modelo">Motor a validar</param>
-    extension() {
+    /// <param name="motor">Motor a validar</param>
+    extension(Cita.TiposMotor motor) {
         public bool IsValidMotor() {
-            Log.Debug("🔵 Validando Modelo...");
+            Log.Debug("🔵 Validando Motor...");
             
-           
+            return Enum.IsDefined(motor); // 15
         }
     }
     
+    /// <summary> Validador de la cilindrada </summary>
+    /// <param name="cilindrada">Cilindrada a validar</param>
+    extension(int cilindrada) {
+        public bool IsValidCilindrada() {
+            Log.Debug("🔵 Validando Cilindrada...");
+            
+            return cilindrada is > 0 and <= 9000; // 16, 17
+        }
+    }
     
+    /// <summary> Validador de la fecha de matriculación </summary>
+    /// <param name="fechaMatriculacion">Fecha de Matriculación a validar</param>
+    extension(DateTime fechaMatriculacion) {
+        public bool IsValidFechaMatriculacion() {
+            Log.Debug("🔵 Validando Fecha de Matriculación...");
+
+            return fechaMatriculacion <= DateTime.Today; // 18
+        }
+    }
     
+    /// <summary> Validador de la fecha de la cita </summary>
+    /// <param name="fechaInspeccion">Fecha de Inspección a validar</param>
+    extension(DateTime fechaInspeccion) {
+        public bool IsValidFechaInspeccion() {
+            Log.Debug("🔵 Validando Fecha de Inspección...");
+            
+            return fechaInspeccion.Date >= DateTime.Today && fechaInspeccion.Date <= DateTime.Today.AddDays(AppConfig.VentanaDiasCita); // 19, 20
+        }
+    }
 }
