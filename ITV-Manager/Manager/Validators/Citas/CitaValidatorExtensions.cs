@@ -74,16 +74,6 @@ public static class CitaValidatorExtensions {
         }
     }
     
-    /// <summary> Validador del motor </summary>
-    /// <param name="motor">Motor a validar</param>
-    extension(Cita.TiposMotor motor) {
-        public bool IsValidMotor() {
-            Log.Debug("🔵 Validando Motor...");
-            
-            return Enum.IsDefined(motor); // 15
-        }
-    }
-    
     /// <summary> Validador de la cilindrada </summary>
     /// <param name="cilindrada">Cilindrada a validar</param>
     extension(int cilindrada) {
@@ -91,6 +81,16 @@ public static class CitaValidatorExtensions {
             Log.Debug("🔵 Validando Cilindrada...");
             
             return cilindrada is > 0 and <= 9000; // 16, 17
+        }
+    }
+    
+    /// <summary> Validador del motor </summary>
+    /// <param name="motor">Motor a validar</param>
+    extension(Cita.TiposMotor motor) {
+        public bool IsValidMotor() {
+            Log.Debug("🔵 Validando Motor...");
+            
+            return Enum.IsDefined(motor); // 15
         }
     }
     
