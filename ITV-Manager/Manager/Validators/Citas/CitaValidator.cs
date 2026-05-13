@@ -3,6 +3,7 @@ using Manager.Errors.Citas;
 using Manager.Errors.Common;
 using Manager.Models;
 using Manager.Validators.Common;
+using Serilog;
 
 namespace Manager.Validators.Citas;
 
@@ -11,6 +12,7 @@ namespace Manager.Validators.Citas;
 /// </summary>
 public class CitaValidator: IValidator<Cita> {
     public Result<Cita, DomainError> Validar(Cita cita) {
+        Log.Debug($"🔵 Validando cita de ID: {cita.Id}");
         
         // listado de mensajes de error
         var errores = new List<string>();
