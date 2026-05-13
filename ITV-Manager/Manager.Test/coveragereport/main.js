@@ -292,15 +292,15 @@ var assemblies = [
     "classes": [
       { "name": "Manager.App", "rp": "Manager_App.html", "cl": 0, "ucl": 2, "cal": 2, "tl": 79, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Config.AppConfig", "rp": "Manager_AppConfig.html", "cl": 8, "ucl": 40, "cal": 48, "tl": 86, "cb": 0, "tb": 32, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Errors.Citas.CitaError", "rp": "Manager_CitaError.html", "cl": 0, "ucl": 11, "cal": 11, "tl": 35, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Errors.Citas.CitaErrors", "rp": "Manager_CitaErrors.html", "cl": 0, "ucl": 5, "cal": 5, "tl": 27, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Errors.Common.DomainError", "rp": "Manager_DomainError.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 5, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Errors.Citas.CitaError", "rp": "Manager_CitaError.html", "cl": 3, "ucl": 8, "cal": 11, "tl": 35, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Errors.Citas.CitaErrors", "rp": "Manager_CitaErrors.html", "cl": 1, "ucl": 4, "cal": 5, "tl": 27, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Errors.Common.DomainError", "rp": "Manager_DomainError.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 5, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Errors.Storage.StorageError", "rp": "Manager_StorageError.html", "cl": 0, "ucl": 11, "cal": 11, "tl": 33, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Errors.Storage.StorageErrors", "rp": "Manager_StorageErrors.html", "cl": 0, "ucl": 5, "cal": 5, "tl": 27, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.MainWindow", "rp": "Manager_MainWindow.html", "cl": 0, "ucl": 9, "cal": 9, "tl": 108, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Models.Cita", "rp": "Manager_Cita.html", "cl": 13, "ucl": 0, "cal": 13, "tl": 24, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Validators.Citas.CitaValidator", "rp": "Manager_CitaValidator.html", "cl": 15, "ucl": 8, "cal": 23, "tl": 51, "cb": 9, "tb": 18, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Validators.Citas.CitaValidatorExtensions", "rp": "Manager_CitaValidatorExtensions.html", "cl": 39, "ucl": 0, "cal": 39, "tl": 116, "cb": 14, "tb": 26, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Validators.Citas.CitaValidator", "rp": "Manager_CitaValidator.html", "cl": 23, "ucl": 0, "cal": 23, "tl": 51, "cb": 18, "tb": 18, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Validators.Citas.CitaValidatorExtensions", "rp": "Manager_CitaValidatorExtensions.html", "cl": 39, "ucl": 0, "cal": 39, "tl": 116, "cb": 26, "tb": 26, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
 ];
 
@@ -329,7 +329,7 @@ var riskHotspots = [
   {
     "assembly": "Manager", "class": "Manager.Validators.Citas.CitaValidator", "reportPath": "Manager_CitaValidator.html", "methodName": "Validar(Manager.Models.Cita)", "methodShortName": "Validar(...)", "fileIndex": 0, "line": 14,
     "metrics": [
-      { "value": 32, "exceeded": true },
+      { "value": 18, "exceeded": false },
       { "value": 18, "exceeded": true },
     ]},
 ];

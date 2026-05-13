@@ -339,7 +339,182 @@ public class CitaValidatorTest {
                 .Contain("El DNI no es válido o la letra de control es incorrecta.");
         }
         
+        [Test]
+        [TestCase("")]
+        [TestCase("MarcaDemasiadoL")]
+        public void Validar_MarcaInvalida_RetornaFailure(string marca) {
+            
+            // arrange
+            var c = new Cita {
+                Id = 1,
+                Matricula = "1111aaa",
+                Dni = "12345678z",
+                Marca = marca,
+                Modelo = "Octavia",
+                Cilindrada = 2000,
+                Motor = Cita.TiposMotor.Diesel,
+                FechaMatriculacion = DateTime.Now.AddYears(-20),
+                FechaInspeccion = DateTime.Now.AddDays(10),
+            };
+
+            // act
+            var res = _validador.Validar(c);
+            
+            // assert
+            res.IsSuccess.Should().BeFalse();
+            
+            res.Error.Should().BeOfType<CitaError.Validation>();
+            
+            (res.Error as CitaError.Validation)?.Errores.Should()
+                .Contain("La marca es obligatoria y debe tener menos de 15 caracteres.");
+        }
         
+        [Test]
+        [TestCase("")]
+        [TestCase("ModeloDemasiado")]
+        public void Validar_ModeloInvalido_RetornaFailure(string modelo) {
+            
+            // arrange
+            var c = new Cita {
+                Id = 1,
+                Matricula = "1111aaa",
+                Dni = "12345678z",
+                Marca = "Skoda",
+                Modelo = modelo,
+                Cilindrada = 2000,
+                Motor = Cita.TiposMotor.Diesel,
+                FechaMatriculacion = DateTime.Now.AddYears(-20),
+                FechaInspeccion = DateTime.Now.AddDays(10),
+            };
+
+            // act
+            var res = _validador.Validar(c);
+            
+            // assert
+            res.IsSuccess.Should().BeFalse();
+            
+            res.Error.Should().BeOfType<CitaError.Validation>();
+            
+            (res.Error as CitaError.Validation)?.Errores.Should()
+                .Contain("El modelo es obligatorio y debe tener menos de 15 caracteres.");
+        }
         
+        [Test]
+        [TestCase(0)]
+        [TestCase(9001)]
+        public void Validar_CilindradaInvalida_RetornaFailure(int cilindrada) {
+            
+            // arrange
+            var c = new Cita {
+                Id = 1,
+                Matricula = "1111aaa",
+                Dni = "12345678z",
+                Marca = "Skoda",
+                Modelo = "Octavia",
+                Cilindrada = cilindrada,
+                Motor = Cita.TiposMotor.Diesel,
+                FechaMatriculacion = DateTime.Now.AddYears(-20),
+                FechaInspeccion = DateTime.Now.AddDays(10),
+            };
+
+            // act
+            var res = _validador.Validar(c);
+            
+            // assert
+            res.IsSuccess.Should().BeFalse();
+            
+            res.Error.Should().BeOfType<CitaError.Validation>();
+            
+            (res.Error as CitaError.Validation)?.Errores.Should()
+                .Contain("La cilindrada debe estar entre 1 y 9000 cc.");
+        }
+        
+        [Test]
+        [TestCase((Cita.TiposMotor)4)]
+        public void Validar_MotorInvalido_RetornaFailure(Cita.TiposMotor motor) {
+            
+            // arrange
+            var c = new Cita {
+                Id = 1,
+                Matricula = "1111aaa",
+                Dni = "12345678z",
+                Marca = "Skoda",
+                Modelo = "Octavia",
+                Cilindrada = 2000,
+                Motor = motor,
+                FechaMatriculacion = DateTime.Now.AddYears(-20),
+                FechaInspeccion = DateTime.Now.AddDays(10),
+            };
+
+            // act
+            var res = _validador.Validar(c);
+            
+            // assert
+            res.IsSuccess.Should().BeFalse();
+            
+            res.Error.Should().BeOfType<CitaError.Validation>();
+            
+            (res.Error as CitaError.Validation)?.Errores.Should()
+                .Contain("El tipo de motor seleccionado no es válido para el sistema.");
+        }
+        
+        [Test]
+        [TestCase("2027-05-13")]
+        public void Validar_FechaMtriculacionInvalida_RetornaFailure(DateTime fechaMatriculacion) {
+            
+            // arrange
+            var c = new Cita {
+                Id = 1,
+                Matricula = "1111aaa",
+                Dni = "12345678z",
+                Marca = "Skoda",
+                Modelo = "Octavia",
+                Cilindrada = 2000,
+                Motor = Cita.TiposMotor.Diesel,
+                FechaMatriculacion = fechaMatriculacion,
+                FechaInspeccion = DateTime.Now.AddDays(10),
+            };
+
+            // act
+            var res = _validador.Validar(c);
+            
+            // assert
+            res.IsSuccess.Should().BeFalse();
+            
+            res.Error.Should().BeOfType<CitaError.Validation>();
+            
+            (res.Error as CitaError.Validation)?.Errores.Should()
+                .Contain("La fecha de matriculación no puede ser una fecha futura.");
+        }
+        
+        [Test]
+        [TestCase(-1)]
+        [TestCase(31)]
+        public void Validar_FechaInspeccionInvalida_RetornaFailure(int diaDesdeHoy) {
+            
+            // arrange
+            var c = new Cita {
+                Id = 1,
+                Matricula = "1111aaa",
+                Dni = "12345678z",
+                Marca = "Skoda",
+                Modelo = "Octavia",
+                Cilindrada = 2000,
+                Motor = Cita.TiposMotor.Diesel,
+                FechaMatriculacion = DateTime.Now.AddYears(-20),
+                FechaInspeccion = DateTime.Now.AddDays(diaDesdeHoy),
+            };
+
+            // act
+            var res = _validador.Validar(c);
+            
+            // assert
+            res.IsSuccess.Should().BeFalse();
+            
+            res.Error.Should().BeOfType<CitaError.Validation>();
+            
+            (res.Error as CitaError.Validation)?.Errores.Should()
+                .Contain("La fecha de inspección debe ser desde hoy hasta el límite configurado.");
+        }
     }
 }
