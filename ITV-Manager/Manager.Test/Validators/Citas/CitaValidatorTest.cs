@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
+using Manager.Errors.Citas;
 using Manager.Models;
 using Manager.Validators.Citas;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 
 namespace Manager.Test.Validators.Citas;
 
@@ -31,6 +31,7 @@ public class CitaValidatorTest {
         // caso normal
         [Test]
         public void Validar_CitaValida_RetornaSucces() {
+            
             // arrange
             var c = new Cita {
                 Id = 1,
@@ -55,9 +56,9 @@ public class CitaValidatorTest {
         [Test]
         [TestCase("1111BBB")]
         [TestCase("1111-BBB")]
-        [TestCase("9999 BBB")]
-        [TestCase("7777  nnn")]
+        [TestCase("7777   nnn")]
         public void Validar_MatriculaValida_RetornaSucces(string matricula) {
+            
             // arrange
             var c = new Cita {
                 Id = 1,
@@ -78,10 +79,183 @@ public class CitaValidatorTest {
             res.IsSuccess.Should().BeTrue();
         }
         
-        
-        
-    }
+        [Test]
+        [TestCase("12345678Z")]
+        [TestCase("54836605       m")]
+        public void Validar_DniValido_RetornaSucces(string dni) {
+            
+            // arrange
+            var c = new Cita {
+                Id = 1,
+                Matricula = "1111bbb",
+                Dni = dni,
+                Marca = "Skoda",
+                Modelo = "Octavia",
+                Cilindrada = 2000,
+                Motor = Cita.TiposMotor.Diesel,
+                FechaMatriculacion = DateTime.Now.AddYears(-20),
+                FechaInspeccion = DateTime.Now.AddDays(10),
+            };
 
+            // act
+            var res = _validador.Validar(c);
+            
+            // assert
+            res.IsSuccess.Should().BeTrue();
+        }
+        
+        [Test]
+        [TestCase("Skoda                      ")]
+        [TestCase("S")]
+        public void Validar_MarcaValida_RetornaSucces(string marca) {
+            
+            // arrange
+            var c = new Cita {
+                Id = 1,
+                Matricula = "1111bbb",
+                Dni = "12345678Z",
+                Marca = marca,
+                Modelo = "Octavia",
+                Cilindrada = 2000,
+                Motor = Cita.TiposMotor.Diesel,
+                FechaMatriculacion = DateTime.Now.AddYears(-20),
+                FechaInspeccion = DateTime.Now.AddDays(10),
+            };
+
+            // act
+            var res = _validador.Validar(c);
+            
+            // assert
+            res.IsSuccess.Should().BeTrue();
+        }
+        
+        [Test]
+        [TestCase("Octavia                      ")]
+        [TestCase("O")]
+        public void Validar_ModeloValido_RetornaSucces(string modelo) {
+            
+            // arrange
+            var c = new Cita {
+                Id = 1,
+                Matricula = "1111bbb",
+                Dni = "12345678Z",
+                Marca = "Skoda",
+                Modelo = modelo,
+                Cilindrada = 2000,
+                Motor = Cita.TiposMotor.Diesel,
+                FechaMatriculacion = DateTime.Now.AddYears(-20),
+                FechaInspeccion = DateTime.Now.AddDays(10),
+            };
+
+            // act
+            var res = _validador.Validar(c);
+            
+            // assert
+            res.IsSuccess.Should().BeTrue();
+        }
+        
+        [Test]
+        [TestCase(1)]
+        [TestCase(9000)]
+        public void Validar_ModeloValido_RetornaSucces(int cilindrada) {
+            
+            // arrange
+            var c = new Cita {
+                Id = 1,
+                Matricula = "1111bbb",
+                Dni = "12345678Z",
+                Marca = "Skoda",
+                Modelo = "Octavia",
+                Cilindrada = cilindrada,
+                Motor = Cita.TiposMotor.Diesel,
+                FechaMatriculacion = DateTime.Now.AddYears(-20),
+                FechaInspeccion = DateTime.Now.AddDays(10),
+            };
+
+            // act
+            var res = _validador.Validar(c);
+            
+            // assert
+            res.IsSuccess.Should().BeTrue();
+        }
+        
+        [Test]
+        [TestCase(Cita.TiposMotor.Diesel)]
+        [TestCase(Cita.TiposMotor.Electrico)]
+        [TestCase(Cita.TiposMotor.Gasolina)]
+        [TestCase(Cita.TiposMotor.Hibrido)]
+        public void Validar_ModeloValido_RetornaSucces(Cita.TiposMotor motor) {
+            
+            // arrange
+            var c = new Cita {
+                Id = 1,
+                Matricula = "1111bbb",
+                Dni = "12345678Z",
+                Marca = "Skoda",
+                Modelo = "Octavia",
+                Cilindrada = 2000,
+                Motor = motor,
+                FechaMatriculacion = DateTime.Now.AddYears(-20),
+                FechaInspeccion = DateTime.Now.AddDays(10),
+            };
+
+            // act
+            var res = _validador.Validar(c);
+            
+            // assert
+            res.IsSuccess.Should().BeTrue();
+        }
+        
+        [Test]
+        [TestCase("2005-10-05")] // Y-M-D
+        [TestCase("2026-05-13")]
+        public void Validar_FechaMatriculacionValida_RetornaSucces(DateTime fechaMatriculacion) {
+            
+            // arrange
+            var c = new Cita {
+                Id = 1,
+                Matricula = "1111bbb",
+                Dni = "12345678Z",
+                Marca = "Skoda",
+                Modelo = "Octavia",
+                Cilindrada = 2000,
+                Motor = Cita.TiposMotor.Diesel,
+                FechaMatriculacion = fechaMatriculacion,
+                FechaInspeccion = DateTime.Now.AddDays(10),
+            };
+
+            // act
+            var res = _validador.Validar(c);
+            
+            // assert
+            res.IsSuccess.Should().BeTrue();
+        }
+        
+        [Test]
+        [TestCase(30)] // Y-M-D
+        [TestCase(0)] //
+        public void Validar_FechaInspeccionValida_RetornaSucces(int fechaInspeccion) {
+            
+            // arrange
+            var c = new Cita {
+                Id = 1,
+                Matricula = "1111bbb",
+                Dni = "12345678Z",
+                Marca = "Skoda",
+                Modelo = "Octavia",
+                Cilindrada = 2000,
+                Motor = Cita.TiposMotor.Diesel,
+                FechaMatriculacion = DateTime.Now.AddYears(-20),
+                FechaInspeccion = DateTime.Now.AddDays(fechaInspeccion),
+            };
+
+            // act
+            var res = _validador.Validar(c);
+            
+            // assert
+            res.IsSuccess.Should().BeTrue();
+        }
+    }
 
     
     /// <summary>
@@ -99,11 +273,73 @@ public class CitaValidatorTest {
         }
 
         
+        [Test]
+        [TestCase("")]
+        [TestCase("MatriculaInvalida")]
+        [TestCase("BBBBBBB")]
+        [TestCase("1111111")]
+        [TestCase("1111AAA")]
+        public void Validar_MatriculaInalida_RetornaFailure(string matricula) {
+            
+            // arrange
+            var c = new Cita {
+                Id = 1,
+                Matricula = matricula,
+                Dni = "12345678Z",
+                Marca = "Skoda",
+                Modelo = "Octavia",
+                Cilindrada = 2000,
+                Motor = Cita.TiposMotor.Diesel,
+                FechaMatriculacion = DateTime.Now.AddYears(-20),
+                FechaInspeccion = DateTime.Now.AddDays(10),
+            };
+
+            // act
+            var res = _validador.Validar(c);
+            
+            // assert
+            res.IsSuccess.Should().BeFalse();
+            
+            res.Error.Should().BeOfType<CitaError.Validation>();
+            
+            (res.Error as CitaError.Validation)?.Errores.Should()
+                .Contain("La matrícula no cumple el formato (NNNNLLL).");
+        }
+        
+        [Test]
+        [TestCase("")]
+        [TestCase("DniInvalido")]
+        [TestCase("aaaaaaaaa")]
+        [TestCase("111111111")]
+        [TestCase("12345678a")]
+        public void Validar_DniInvalido_RetornaFailure(string dni) {
+            
+            // arrange
+            var c = new Cita {
+                Id = 1,
+                Matricula = "1111aaa",
+                Dni = dni,
+                Marca = "Skoda",
+                Modelo = "Octavia",
+                Cilindrada = 2000,
+                Motor = Cita.TiposMotor.Diesel,
+                FechaMatriculacion = DateTime.Now.AddYears(-20),
+                FechaInspeccion = DateTime.Now.AddDays(10),
+            };
+
+            // act
+            var res = _validador.Validar(c);
+            
+            // assert
+            res.IsSuccess.Should().BeFalse();
+            
+            res.Error.Should().BeOfType<CitaError.Validation>();
+            
+            (res.Error as CitaError.Validation)?.Errores.Should()
+                .Contain("El DNI no es válido o la letra de control es incorrecta.");
+        }
         
         
         
     }
-    
-    
-    
 }
