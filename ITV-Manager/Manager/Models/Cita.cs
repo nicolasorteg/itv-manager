@@ -5,7 +5,7 @@ public record Cita {
     
     public int Id { get; init; }
     
-    public int Matricula { get; init; }
+    public string Matricula { get; init; } = string.Empty;
     public string Dni { get; init; } = string.Empty;
     public string Marca { get; init; } = string.Empty;
     public string Modelo { get; init; } = string.Empty;
