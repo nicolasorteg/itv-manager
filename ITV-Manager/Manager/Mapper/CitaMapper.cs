@@ -8,7 +8,7 @@ namespace Manager.Mapper;
 public static class CitaMapper {
     
     // formato fecha sin hora
-    private const string DateFormat = "d";
+    private const string DateFormat = "yyyy-MM-dd";
     // formato fecha con hora
     private const string DateTimeFormat = "s";
     

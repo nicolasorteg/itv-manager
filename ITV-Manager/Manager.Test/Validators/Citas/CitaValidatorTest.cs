@@ -30,7 +30,7 @@ public class CitaValidatorTest {
 
         // caso normal
         [Test]
-        public void Validar_CitaValida_RetornaSucces() {
+        public void Validar_CitaValida_RetornaSuccess() {
             
             // arrange
             var c = new Cita {
@@ -57,7 +57,7 @@ public class CitaValidatorTest {
         [TestCase("1111BBB")]
         [TestCase("1111-BBB")]
         [TestCase("7777   nnn")]
-        public void Validar_MatriculaValida_RetornaSucces(string matricula) {
+        public void Validar_MatriculaValida_RetornaSuccess(string matricula) {
             
             // arrange
             var c = new Cita {
@@ -82,7 +82,7 @@ public class CitaValidatorTest {
         [Test]
         [TestCase("12345678Z")]
         [TestCase("54836605       m")]
-        public void Validar_DniValido_RetornaSucces(string dni) {
+        public void Validar_DniValido_RetornaSuccess(string dni) {
             
             // arrange
             var c = new Cita {
@@ -107,7 +107,7 @@ public class CitaValidatorTest {
         [Test]
         [TestCase("Skoda                      ")]
         [TestCase("S")]
-        public void Validar_MarcaValida_RetornaSucces(string marca) {
+        public void Validar_MarcaValida_RetornaSuccess(string marca) {
             
             // arrange
             var c = new Cita {
@@ -132,7 +132,7 @@ public class CitaValidatorTest {
         [Test]
         [TestCase("Octavia                      ")]
         [TestCase("O")]
-        public void Validar_ModeloValido_RetornaSucces(string modelo) {
+        public void Validar_ModeloValido_RetornaSuccess(string modelo) {
             
             // arrange
             var c = new Cita {
@@ -157,7 +157,7 @@ public class CitaValidatorTest {
         [Test]
         [TestCase(1)]
         [TestCase(9000)]
-        public void Validar_ModeloValido_RetornaSucces(int cilindrada) {
+        public void Validar_ModeloValido_RetornaSuccess(int cilindrada) {
             
             // arrange
             var c = new Cita {
@@ -184,7 +184,7 @@ public class CitaValidatorTest {
         [TestCase(Cita.TiposMotor.Electrico)]
         [TestCase(Cita.TiposMotor.Gasolina)]
         [TestCase(Cita.TiposMotor.Hibrido)]
-        public void Validar_ModeloValido_RetornaSucces(Cita.TiposMotor motor) {
+        public void Validar_ModeloValido_RetornaSuccess(Cita.TiposMotor motor) {
             
             // arrange
             var c = new Cita {
@@ -209,7 +209,7 @@ public class CitaValidatorTest {
         [Test]
         [TestCase("2005-10-05")] // Y-M-D
         [TestCase("2026-05-13")]
-        public void Validar_FechaMatriculacionValida_RetornaSucces(DateTime fechaMatriculacion) {
+        public void Validar_FechaMatriculacionValida_RetornaSuccess(DateTime fechaMatriculacion) {
             
             // arrange
             var c = new Cita {
@@ -234,7 +234,7 @@ public class CitaValidatorTest {
         [Test]
         [TestCase(30)] // Y-M-D
         [TestCase(0)] //
-        public void Validar_FechaInspeccionValida_RetornaSucces(int fechaInspeccion) {
+        public void Validar_FechaInspeccionValida_RetornaSuccess(int fechaInspeccion) {
             
             // arrange
             var c = new Cita {
