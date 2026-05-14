@@ -34,7 +34,7 @@ public class CitaEntity {
     public int Motor { get; set; }
     
     [Required]
-    public DateTime FechaItv { get; set; }
+    public DateTime FechaMatriculacion { get; set; }
 
     [Required]
     public DateTime FechaInspeccion { get; set; }
