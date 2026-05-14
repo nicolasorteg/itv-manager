@@ -32,5 +32,4 @@ public class AppDbContext: DbContext {
     public void EnsureCreated() {
         Database.EnsureCreated();
     }
-    
 }
