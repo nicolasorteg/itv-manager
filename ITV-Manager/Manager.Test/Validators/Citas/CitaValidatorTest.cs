@@ -11,6 +11,7 @@ namespace Manager.Test.Validators.Citas;
 /// Usa patrón AAA.
 /// </summary>
 [TestFixture]
+[TestOf(typeof(CitaValidator))]
 public class CitaValidatorTest {
 
     

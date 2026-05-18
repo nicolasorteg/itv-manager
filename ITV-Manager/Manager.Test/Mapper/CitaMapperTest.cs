@@ -10,6 +10,7 @@ namespace Manager.Test.Mapper;
 /// Clase que almacena los test del mapper.
 /// </summary>
 [TestFixture]
+[TestOf(typeof(CitaMapper))]
 public class CitaMapperTest {
 
 
