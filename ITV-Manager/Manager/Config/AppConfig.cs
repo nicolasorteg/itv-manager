@@ -17,7 +17,6 @@ public class AppConfig {
             .Build();
     }
     
-    
     public static CultureInfo Locale => CultureInfo.GetCultureInfo("es-ES");
     public static string AppName => Configuration.GetValue("AppName", "ITV-Manager");
     public static string Version => Configuration.GetValue("Version", "1.0.0");
