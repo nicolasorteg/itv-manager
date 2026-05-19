@@ -4,7 +4,6 @@ using Manager.Errors.Common;
 namespace Manager.Storage.Common;
 
 /// <summary> Contrato genérico para guardado y escritura de objetos </summary>
-/// <typeparam name="T"></typeparam>
 public interface IStorage<T> {
     
     /// <summary> Escribe una colección de objetos a un archivo </summary>
