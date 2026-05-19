@@ -7,7 +7,7 @@ namespace Manager.Storage.Common;
 public interface IStorage<T> {
     
     /// <summary> Escribe una colección de objetos a un archivo </summary>
-    Result<bool, DomainError> Write(IEnumerable<T> items, string path);
+    Result<bool, DomainError> Write(IEnumerable<T> citas, string path);
     
     /// <summary> Carga una colección de objetos desde un archivo </summary>
     Result<IEnumerable<T>, DomainError> Save(string path);
