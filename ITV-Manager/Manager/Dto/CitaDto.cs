@@ -19,7 +19,7 @@ public record CitaDto(
     [property: XmlElement("CreatedAt")] string CreatedAt,
     [property: XmlElement("UpdatedAt")] string UpdatedAt,
     [property: XmlElement("IsDeleted")] bool IsDeleted,
-    [property: XmlElement("DeletedAt")] string DeletedAt
+    [property: XmlElement("DeletedAt")] string? DeletedAt
 
 ) {
     // constructor vacio para serializadores
