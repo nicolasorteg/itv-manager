@@ -4,6 +4,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using CSharpFunctionalExtensions;
+using Manager.Config;
 using Manager.Dto;
 using Manager.Errors.Common;
 using Manager.Errors.Storage;
@@ -26,6 +27,11 @@ public class CitaJsonStorage : ICitaJsonStorage {
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping 
     };
     
+    public CitaJsonStorage() {
+        _logger.Debug("Inicializando la clase CitaJsonStorage");
+        InitStorage(AppConfig.DataFolder);
+    }
+    
     /// <inheritdoc cref="ICitaJsonStorage.Write" />
     public Result<bool, DomainError> Write(IEnumerable<Cita> citas, string path) {
         try {
@@ -37,7 +43,7 @@ public class CitaJsonStorage : ICitaJsonStorage {
             // serializacion
             var json = JsonSerializer.Serialize(dtos, _options);
             
-            File.WriteAllText(path, json, new UTF8Encoding(false));
+            File.WriteAllText(path, json, new UTF8Encoding(false)); // write al archivo
             
             return Result.Success<bool, DomainError>(true);
         }

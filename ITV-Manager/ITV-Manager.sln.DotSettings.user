@@ -1,15 +1,13 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ADateTimeAssertions_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2026_002E1_003Fresharper_002Dhost_003FSourcesCache_003Fc0f72b83629a28ab8a717cb3bcdfc883be3e6ce3c5615e230db3ebf285d7710_003FDateTimeAssertions_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ADateTimeParse_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2026_002E1_003Fresharper_002Dhost_003FDecompilerCache_003Fdecompiler_003F4e09f6ff7c574a38a6cb04165745f695f45908_003Fb1_003F4be43300_003FDateTimeParse_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
+	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ASqliteDataReader_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003FAppData_003FRoaming_003FJetBrains_003FRider2026_002E1_003Fresharper_002Dhost_003FSourcesCache_003Fa3d51b208138febcd44ddf6e1e8dfa5fc6d78510efa3f17ade2f85645c691143_003FSqliteDataReader_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a71baa39_002De4d4_002D4eee_002D8d5e_002Dae2f8378803b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ToModel_DeberiaSerSucces" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Or&gt;&#xD;
-    &lt;TestAncestor&gt;&#xD;
-      &lt;TestId&gt;NUnit3x::616A154E-FF39-2440-278D-22FE8F47F959::net10.0-windows7.0::Manager.Test.Mapper.CitaMapperTest+CasosCorrectos.ToModel_DeberiaSerSucces&lt;/TestId&gt;&#xD;
-      &lt;TestId&gt;NUnit3x::616A154E-FF39-2440-278D-22FE8F47F959::net10.0-windows7.0::Manager.Test.Mapper.CitaMapperTest+CasosCorrectos.ToDto_DeberiaSerSucces&lt;/TestId&gt;&#xD;
-    &lt;/TestAncestor&gt;&#xD;
-    &lt;ProjectFile&gt;616A154E-FF39-2440-278D-22FE8F47F959/d:Validators/d:Citas/f:CitaValidatorTest.cs&lt;/ProjectFile&gt;&#xD;
-  &lt;/Or&gt;&#xD;
+  &lt;Project Location="C:\Users\nickr\Desktop\itv-manager\ITV-Manager\Manager.Test" Presentation="&amp;lt;Manager.Test&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=cc67f962_002Da73a_002D4058_002Da9cd_002D5cec3aeb5b54/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Validar_CitaValida_RetornaSucces" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;ProjectFile&gt;616A154E-FF39-2440-278D-22FE8F47F959/d:Mapper/f:CitaMapperTest.cs&lt;/ProjectFile&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=af66c850_002D6a8a_002D4eac_002Da9fe_002Dba8fd1b3b242/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Constructor_ConCarpetaInexistente_DeberiaCrearDirectorio" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="C:\Users\nickr\Desktop\itv-manager\ITV-Manager\Manager.Test" Presentation="&amp;lt;Manager.Test&amp;gt;" /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=cc67f962_002Da73a_002D4058_002Da9cd_002D5cec3aeb5b54/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Validar_CitaValida_RetornaSucces" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Project Location="C:\Users\nickr\Desktop\itv-manager\ITV-Manager\Manager.Test" Presentation="&amp;lt;Manager.Test&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

@@ -32,4 +32,7 @@ public abstract record CitaError(string Mensaje) : DomainError(Mensaje) {
     /// <param name="Fecha">Día exacto</param>
     public sealed record MaximosVehiculosAlcanzados(string Dni, DateTime Fecha) 
         : CitaError($"El DNI {Dni} ya tiene 3 vehículos registrados para el día {Fecha:dd/MM/yyyy}.");
+    
+    public sealed record Database(string Detalles)
+        : CitaError($"Error de base de datos: {Detalles}");
 }

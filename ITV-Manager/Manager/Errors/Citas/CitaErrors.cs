@@ -24,4 +24,7 @@ public static class CitaErrors {
     /// <inheritdoc cref="CitaError.MaximosVehiculosAlcanzados"/>
     public static DomainError MaximosVehiculosAlcanzados(string dni, DateTime fecha) =>
         new CitaError.MaximosVehiculosAlcanzados(dni, fecha);
+    
+    public static DomainError Database(string detalles) =>
+        new CitaError.Database(detalles);
 }
