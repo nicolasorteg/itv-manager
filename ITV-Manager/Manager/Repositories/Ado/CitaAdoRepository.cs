@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Text;
 using CSharpFunctionalExtensions;
 using Manager.Config;
 using Manager.Entity;
@@ -15,6 +14,7 @@ using Serilog;
 
 namespace Manager.Repositories.Ado;
 
+/// <summary> Repositorio que usa Ado.NET para gestionar la BD </summary>
 public class CitaAdoRepository : ICitaRepository {
 
     private readonly ILogger _logger = Log.ForContext<CitaAdoRepository>(); // para que en logs se vea la ubicacion
