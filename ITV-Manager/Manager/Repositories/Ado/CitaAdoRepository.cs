@@ -4,7 +4,6 @@ using Manager.Config;
 using Manager.Entity;
 using Manager.Errors.Citas;
 using Manager.Errors.Common;
-using Manager.Errors.Storage;
 using Manager.Factories;
 using Manager.Mapper;
 using Manager.Models;
@@ -111,12 +110,12 @@ public class CitaAdoRepository : ICitaRepository {
         
         if (ExisteCitaParaVehiculoEnFecha(entity.Matricula, entity.FechaInspeccion)) {
             _logger.Warning($"Validación fallida: El vehículo {entity.Matricula} ya tiene una cita el día {entity.FechaInspeccion:yyyy-MM-dd}");
-            return Result.Failure<Cita, DomainError>(StorageErrors.FormatoInvalido($"El vehículo con matrícula {entity.Matricula} ya tiene una cita asignada para ese día."));
+            return Result.Failure<Cita, DomainError>(CitaErrors.Database($"El vehículo con matrícula {entity.Matricula} ya tiene una cita asignada para ese día."));
         }
         
-        if (ContarCitasPropietarioEnFecha(entity.Dni, entity.FechaInspeccion) >= 3) {
+        if (ContarCitasPropietarioEnFecha(entity.Dni, entity.FechaInspeccion) >= AppConfig.MaxVehiculosPorDni) {
             _logger.Warning($"Validación fallida: El propietario con DNI {entity.Dni} ya supera el límite de 3 citas el día {entity.FechaInspeccion:yyyy-MM-dd}");
-            return Result.Failure<Cita, DomainError>(StorageErrors.FormatoInvalido($"El propietario con DNI {entity.Dni} no puede registrar más de 3 citas el mismo día."));
+            return Result.Failure<Cita, DomainError>(CitaErrors.Database($"El propietario con DNI {entity.Dni} no puede registrar más de 3 citas el mismo día."));
         }
 
         // cita -> citaentity
@@ -155,14 +154,14 @@ public class CitaAdoRepository : ICitaRepository {
         if (entity.Matricula != existente.Matricula || entity.FechaInspeccion.Date != existente.FechaInspeccion.Date) {
             if (ExisteCitaParaVehiculoEnFecha(entity.Matricula, entity.FechaInspeccion)) {
                 _logger.Warning($"Validación fallida en Update: El vehículo {entity.Matricula} ya tiene otra cita el día {entity.FechaInspeccion:yyyy-MM-dd}");
-                return Result.Failure<Cita, DomainError>(StorageErrors.FormatoInvalido($"No se puede actualizar: El vehículo con matrícula {entity.Matricula} ya tiene otra cita asignada para ese día."));
+                return Result.Failure<Cita, DomainError>(CitaErrors.Database($"No se puede actualizar: El vehículo con matrícula {entity.Matricula} ya tiene otra cita asignada para ese día."));
             }
         }
         
         if (entity.Dni != existente.Dni || entity.FechaInspeccion.Date != existente.FechaInspeccion.Date) {
-            if (ContarCitasPropietarioEnFecha(entity.Dni, entity.FechaInspeccion) >= 3) {
+            if (ContarCitasPropietarioEnFecha(entity.Dni, entity.FechaInspeccion) >= AppConfig.MaxVehiculosPorDni) {
                 _logger.Warning($"Validación fallida en Update: El propietario {entity.Dni} ya tiene 3 citas el día {entity.FechaInspeccion:yyyy-MM-dd}");
-                return Result.Failure<Cita, DomainError>(StorageErrors.FormatoInvalido($"No se puede actualizar: El propietario con DNI {entity.Dni} ya tiene el límite de 3 citas asignadas para ese día."));
+                return Result.Failure<Cita, DomainError>(CitaErrors.Database($"No se puede actualizar: El propietario con DNI {entity.Dni} ya tiene el límite de 3 citas asignadas para ese día."));
             }
         }
         

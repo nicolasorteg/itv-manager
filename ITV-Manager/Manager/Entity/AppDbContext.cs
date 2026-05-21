@@ -2,9 +2,7 @@
 
 namespace Manager.Entity;
 
-/// <summary>
-/// Puente que conecta C# con SQLite para Entity Framework Core. ORM
-/// </summary>
+/// <summary> Puente que conecta C# con SQLite para Entity Framework Core. ORM </summary>
 public class AppDbContext: DbContext {
     
     public DbSet<CitaEntity> Citas { get; set; } = null!; // EF se encarga de inicializar
