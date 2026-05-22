@@ -96,7 +96,7 @@ public class CitaEfCoreRepository: ICitaRepository {
             _context.Citas.Add(dbEntity);
             _context.SaveChanges(); // gernera ID autoincremental
 
-            _logger.Information($"✅ Cita guardada por EF correctamente con ID: {dbEntity.Id}");
+            _logger.Information($"Cita guardada correctamente con ID: {dbEntity.Id}");
             return Result.Success<Cita, DomainError>(dbEntity.ToModel()!);
         }
         catch (Exception ex) {

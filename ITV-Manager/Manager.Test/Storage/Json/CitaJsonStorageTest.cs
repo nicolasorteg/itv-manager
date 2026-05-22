@@ -195,8 +195,6 @@ public class CitaJsonStorageTest {
 
             // assert
             resultado.IsFailure.Should().BeTrue();
-    
-            // Cambia el tipo aquí dentro si tu clase de error de formato se llama de otra forma en tu dominio
             resultado.Error.Should().BeOfType<StorageError.FormatoInvalido>(); 
             resultado.Error.Mensaje.Should().Contain("No se pudieron deserializar los DTO de Citas.");
         }

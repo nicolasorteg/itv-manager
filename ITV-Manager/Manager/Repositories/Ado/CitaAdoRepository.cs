@@ -164,7 +164,7 @@ public class CitaAdoRepository : ICitaRepository {
         // actualiza el modelo original
         entity = entity with { Id = Convert.ToInt32(command.ExecuteScalar()) };
 
-        _logger.Information($"✅ Cita guardada correctamente con ID asignado: {entity.Id}");
+        _logger.Information($"Cita guardada correctamente con ID asignado: {entity.Id}");
     
         return Result.Success<Cita, DomainError>(entity);
     }
