@@ -6,6 +6,8 @@ using Manager.Storage.Json;
 
 namespace Manager.Test.Storage.Json;
 
+[TestFixture] 
+[TestOf(typeof(CitaJsonStorage))]
 public class CitaJsonStorageTest {
     
     private CitaJsonStorage _storage;

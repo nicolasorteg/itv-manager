@@ -7,6 +7,7 @@ using Manager.Storage.Csv;
 namespace Manager.Test.Storage.Csv;
 
 [TestFixture]
+[TestOf(typeof(CitaCsvStorage))]
 public class CitaCsvStorageTest {
     
     private CitaCsvStorage _storage;
