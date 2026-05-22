@@ -103,6 +103,35 @@ public class CitaAdoRepository : ICitaRepository {
         return reader.Read() ? MapReaderToEntity(reader).ToModel() : null;
     }
 
+    /// <inheritdoc cref="ICitaRepository.GetAll" />
+    public IEnumerable<Cita> GetAll(int pagina = 1, int tamPagina = 10, bool incluirEliminados = false) {
+        
+        var lista = new List<Cita>();
+        using var connection = new SqliteConnection(_connectionString);
+        connection.Open();
+
+        const string sql = @"
+            SELECT * FROM Citas 
+            WHERE (@IncludeDeleted = 1 OR IsDeleted = 0)
+            ORDER BY Id DESC
+            LIMIT @Limit OFFSET @Offset";
+
+        using var command = connection.CreateCommand();
+        command.CommandText = sql;
+
+        command.Parameters.AddWithValue("@IncludeDeleted", incluirEliminados ? 1 : 0);
+        command.Parameters.AddWithValue("@Limit", tamPagina);
+        command.Parameters.AddWithValue("@Offset", (pagina - 1) * tamPagina);
+
+        using var reader = command.ExecuteReader();
+        while (reader.Read()) {
+            lista.Add(MapReaderToEntity(reader).ToModel()!);
+        }
+
+        return lista;
+    }
+    
+
     /// <inheritdoc cref="ICitaRepository.Create" />
     public Result<Cita, DomainError> Create(Cita entity) {
         
@@ -114,8 +143,8 @@ public class CitaAdoRepository : ICitaRepository {
         }
         
         if (ContarCitasPropietarioEnFecha(entity.Dni, entity.FechaInspeccion) >= AppConfig.MaxVehiculosPorDni) {
-            _logger.Warning($"Validación fallida: El propietario con DNI {entity.Dni} ya supera el límite de 3 citas el día {entity.FechaInspeccion:yyyy-MM-dd}");
-            return Result.Failure<Cita, DomainError>(CitaErrors.Database($"El propietario con DNI {entity.Dni} no puede registrar más de 3 citas el mismo día."));
+            _logger.Warning($"Validación fallida: El propietario con DNI {entity.Dni} ya supera el límite de {AppConfig.MaxVehiculosPorDni} citas el día {entity.FechaInspeccion:yyyy-MM-dd}");
+            return Result.Failure<Cita, DomainError>(CitaErrors.Database($"El propietario con DNI {entity.Dni} no puede registrar más de {AppConfig.MaxVehiculosPorDni} citas el mismo día."));
         }
 
         // cita -> citaentity
@@ -160,8 +189,8 @@ public class CitaAdoRepository : ICitaRepository {
         
         if (entity.Dni != existente.Dni || entity.FechaInspeccion.Date != existente.FechaInspeccion.Date) {
             if (ContarCitasPropietarioEnFecha(entity.Dni, entity.FechaInspeccion) >= AppConfig.MaxVehiculosPorDni) {
-                _logger.Warning($"Validación fallida en Update: El propietario {entity.Dni} ya tiene 3 citas el día {entity.FechaInspeccion:yyyy-MM-dd}");
-                return Result.Failure<Cita, DomainError>(CitaErrors.Database($"No se puede actualizar: El propietario con DNI {entity.Dni} ya tiene el límite de 3 citas asignadas para ese día."));
+                _logger.Warning($"Validación fallida en Update: El propietario {entity.Dni} ya tiene {AppConfig.MaxVehiculosPorDni} citas el día {entity.FechaInspeccion:yyyy-MM-dd}");
+                return Result.Failure<Cita, DomainError>(CitaErrors.Database($"No se puede actualizar: El propietario con DNI {entity.Dni} ya tiene el límite de {AppConfig.MaxVehiculosPorDni} citas asignadas para ese día."));
             }
         }
         

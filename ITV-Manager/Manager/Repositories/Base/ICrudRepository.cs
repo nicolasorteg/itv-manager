@@ -11,6 +11,9 @@ public interface ICrudRepository<TEntity, in TKey> where TEntity : class {
     /// <summary> Obtiene una entidad por su ID </summary>
     TEntity? GetById(TKey id);
 
+    /// <summary> Obtiene todas las citas de forma paginada </summary>
+    IEnumerable<TEntity> GetAll(int pagina = 1, int tamPagina = 10, bool incluirEliminados = false);
+
     /// <summary> Crea una nueva entidad en el sistema </summary>
     Result<TEntity, DomainError> Create(TEntity entity);
 
