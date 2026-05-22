@@ -8,7 +8,6 @@ using Manager.Factories;
 using Manager.Mapper;
 using Manager.Models;
 using Manager.Repositories.Base;
-using Microsoft.Data.Sqlite;
 using Serilog;
 
 namespace Manager.Repositories.EfCore;
