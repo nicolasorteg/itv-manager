@@ -292,7 +292,7 @@ var assemblies = [
     "classes": [
       { "name": "Manager.App", "rp": "Manager_App.html", "cl": 0, "ucl": 2, "cal": 2, "tl": 79, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Cache.LruCache\u003CT1, T2\u003E", "rp": "Manager_LruCache_2.html", "cl": 47, "ucl": 0, "cal": 47, "tl": 83, "cb": 10, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Config.AppConfig", "rp": "Manager_AppConfig.html", "cl": 13, "ucl": 35, "cal": 48, "tl": 85, "cb": 1, "tb": 32, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Config.AppConfig", "rp": "Manager_AppConfig.html", "cl": 14, "ucl": 34, "cal": 48, "tl": 85, "cb": 2, "tb": 32, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Dto.CitaDto", "rp": "Manager_CitaDto.html", "cl": 17, "ucl": 0, "cal": 17, "tl": 27, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Entity.AppDbContext", "rp": "Manager_AppDbContext.html", "cl": 0, "ucl": 15, "cal": 15, "tl": 33, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Entity.CitaEntity", "rp": "Manager_CitaEntity.html", "cl": 13, "ucl": 0, "cal": 13, "tl": 46, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
@@ -305,7 +305,7 @@ var assemblies = [
       { "name": "Manager.MainWindow", "rp": "Manager_MainWindow.html", "cl": 0, "ucl": 9, "cal": 9, "tl": 108, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Mapper.CitaMapper", "rp": "Manager_CitaMapper.html", "cl": 77, "ucl": 0, "cal": 77, "tl": 105, "cb": 10, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Models.Cita", "rp": "Manager_Cita.html", "cl": 13, "ucl": 0, "cal": 13, "tl": 24, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Repositories.Ado.CitaAdoRepository", "rp": "Manager_CitaAdoRepository.html", "cl": 0, "ucl": 328, "cal": 328, "tl": 495, "cb": 0, "tb": 92, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Repositories.Ado.CitaAdoRepository", "rp": "Manager_CitaAdoRepository.html", "cl": 312, "ucl": 16, "cal": 328, "tl": 495, "cb": 80, "tb": 92, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Repositories.Dapper.CitaDapperRepository", "rp": "Manager_CitaDapperRepository.html", "cl": 218, "ucl": 11, "cal": 229, "tl": 400, "cb": 70, "tb": 78, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Repositories.EfCore.CitaEfCoreRepository", "rp": "Manager_CitaEfCoreRepository.html", "cl": 0, "ucl": 220, "cal": 220, "tl": 350, "cb": 0, "tb": 76, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Storage.Csv.CitaCsvStorage", "rp": "Manager_CitaCsvStorage.html", "cl": 76, "ucl": 0, "cal": 76, "tl": 115, "cb": 18, "tb": 20, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
@@ -326,18 +326,6 @@ var riskHotspotMetrics = [
 
 var riskHotspots = [
   {
-    "assembly": "Manager", "class": "Manager.Repositories.Ado.CitaAdoRepository", "reportPath": "Manager_CitaAdoRepository.html", "methodName": "GetWithFilters(System.DateTime,System.Nullable\u00601\u003CSystem.DateTime\u003E,System.Int32,System.Int32,System.String,System.String,System.Boolean)", "methodShortName": "GetWithFilters(...)", "fileIndex": 0, "line": 353,
-    "metrics": [
-      { "value": 342, "exceeded": true },
-      { "value": 18, "exceeded": true },
-    ]},
-  {
-    "assembly": "Manager", "class": "Manager.Repositories.Ado.CitaAdoRepository", "reportPath": "Manager_CitaAdoRepository.html", "methodName": "CountCitasFiltradas(System.String,System.DateTime,System.Nullable\u00601\u003CSystem.DateTime\u003E,System.Boolean,System.String)", "methodShortName": "CountCitasFiltradas(...)", "fileIndex": 0, "line": 415,
-    "metrics": [
-      { "value": 272, "exceeded": true },
-      { "value": 16, "exceeded": true },
-    ]},
-  {
     "assembly": "Manager", "class": "Manager.Repositories.EfCore.CitaEfCoreRepository", "reportPath": "Manager_CitaEfCoreRepository.html", "methodName": "GetWithFilters(System.DateTime,System.Nullable\u00601\u003CSystem.DateTime\u003E,System.Int32,System.Int32,System.String,System.String,System.Boolean)", "methodShortName": "GetWithFilters(...)", "fileIndex": 0, "line": 257,
     "metrics": [
       { "value": 272, "exceeded": true },
@@ -348,12 +336,6 @@ var riskHotspots = [
     "metrics": [
       { "value": 272, "exceeded": true },
       { "value": 16, "exceeded": true },
-    ]},
-  {
-    "assembly": "Manager", "class": "Manager.Repositories.Ado.CitaAdoRepository", "reportPath": "Manager_CitaAdoRepository.html", "methodName": "Update(System.Int32,Manager.Models.Cita)", "methodShortName": "Update(...)", "fileIndex": 0, "line": 173,
-    "metrics": [
-      { "value": 210, "exceeded": true },
-      { "value": 14, "exceeded": false },
     ]},
   {
     "assembly": "Manager", "class": "Manager.Repositories.EfCore.CitaEfCoreRepository", "reportPath": "Manager_CitaEfCoreRepository.html", "methodName": "Update(System.Int32,Manager.Models.Cita)", "methodShortName": "Update(...)", "fileIndex": 0, "line": 109,
@@ -374,22 +356,10 @@ var riskHotspots = [
       { "value": 10, "exceeded": false },
     ]},
   {
-    "assembly": "Manager", "class": "Manager.Repositories.Ado.CitaAdoRepository", "reportPath": "Manager_CitaAdoRepository.html", "methodName": "EnsureDataFolder()", "methodShortName": "EnsureDataFolder()", "fileIndex": 0, "line": 40,
-    "metrics": [
-      { "value": 72, "exceeded": true },
-      { "value": 8, "exceeded": false },
-    ]},
-  {
     "assembly": "Manager", "class": "Manager.Repositories.EfCore.CitaEfCoreRepository", "reportPath": "Manager_CitaEfCoreRepository.html", "methodName": ".ctor(Manager.Entity.AppDbContext,System.Boolean,System.Boolean)", "methodShortName": ".ctor(...)", "fileIndex": 0, "line": 19,
     "metrics": [
       { "value": 72, "exceeded": true },
       { "value": 8, "exceeded": false },
-    ]},
-  {
-    "assembly": "Manager", "class": "Manager.Repositories.Ado.CitaAdoRepository", "reportPath": "Manager_CitaAdoRepository.html", "methodName": ".ctor(System.Boolean,System.Boolean)", "methodShortName": ".ctor(...)", "fileIndex": 0, "line": 19,
-    "metrics": [
-      { "value": 42, "exceeded": true },
-      { "value": 6, "exceeded": false },
     ]},
   {
     "assembly": "Manager", "class": "Manager.Repositories.EfCore.CitaEfCoreRepository", "reportPath": "Manager_CitaEfCoreRepository.html", "methodName": "Restore(System.Int32)", "methodShortName": "Restore(...)", "fileIndex": 0, "line": 195,
@@ -398,10 +368,22 @@ var riskHotspots = [
       { "value": 6, "exceeded": false },
     ]},
   {
+    "assembly": "Manager", "class": "Manager.Repositories.Ado.CitaAdoRepository", "reportPath": "Manager_CitaAdoRepository.html", "methodName": "GetWithFilters(System.DateTime,System.Nullable\u00601\u003CSystem.DateTime\u003E,System.Int32,System.Int32,System.String,System.String,System.Boolean)", "methodShortName": "GetWithFilters(...)", "fileIndex": 0, "line": 353,
+    "metrics": [
+      { "value": 18, "exceeded": false },
+      { "value": 18, "exceeded": true },
+    ]},
+  {
     "assembly": "Manager", "class": "Manager.Validators.Citas.CitaValidator", "reportPath": "Manager_CitaValidator.html", "methodName": "Validar(Manager.Models.Cita)", "methodShortName": "Validar(...)", "fileIndex": 0, "line": 14,
     "metrics": [
       { "value": 18, "exceeded": false },
       { "value": 18, "exceeded": true },
+    ]},
+  {
+    "assembly": "Manager", "class": "Manager.Repositories.Ado.CitaAdoRepository", "reportPath": "Manager_CitaAdoRepository.html", "methodName": "CountCitasFiltradas(System.String,System.DateTime,System.Nullable\u00601\u003CSystem.DateTime\u003E,System.Boolean,System.String)", "methodShortName": "CountCitasFiltradas(...)", "fileIndex": 0, "line": 415,
+    "metrics": [
+      { "value": 16, "exceeded": false },
+      { "value": 16, "exceeded": true },
     ]},
   {
     "assembly": "Manager", "class": "Manager.Repositories.Dapper.CitaDapperRepository", "reportPath": "Manager_CitaDapperRepository.html", "methodName": "GetWithFilters(System.DateTime,System.Nullable\u00601\u003CSystem.DateTime\u003E,System.Int32,System.Int32,System.String,System.String,System.Boolean)", "methodShortName": "GetWithFilters(...)", "fileIndex": 0, "line": 289,

@@ -457,7 +457,7 @@ public class CitaAdoRepository : ICitaRepository {
     // métodos auxiliares
 
     /// <summary> Mapea un SqliteDataReader a Cita </summary>
-    private CitaEntity MapReaderToEntity(SqliteDataReader reader) {
+    private static CitaEntity MapReaderToEntity(SqliteDataReader reader) {
         return new CitaEntity {
             Id = reader.GetInt32(reader.GetOrdinal("Id")),
             Matricula = reader.GetString(reader.GetOrdinal("Matricula")),
@@ -478,7 +478,7 @@ public class CitaAdoRepository : ICitaRepository {
     }
 
     /// <summary> Funcion para ahorrar codigo añadiendo parametros a las consultas </summary>
-    private void AddParameters(SqliteCommand command, CitaEntity entity, bool incluirId = false) {
+    private static void AddParameters(SqliteCommand command, CitaEntity entity, bool incluirId = false) {
         if (incluirId) command.Parameters.AddWithValue("@Id", entity.Id);
         command.Parameters.AddWithValue("@Matricula", entity.Matricula);
         command.Parameters.AddWithValue("@Marca", entity.Marca);
