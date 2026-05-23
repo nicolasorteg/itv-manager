@@ -284,23 +284,28 @@ public class CitaEfCoreRepositoryTest {
         (resultado.Error as CitaError.Database)?.Detalles.Should()
             .Contain($"No se puede restaurar una Cita que no existe.");
     }
-    
+
     [Test]
     public void Restore_CitaMismaMatriculaParafecha_DebeFallar() {
         // arrange
-        var citaExistente = _repository.Create(new Cita { Matricula = "1111aaa", FechaInspeccion = DateTime.Today, Dni = "11111111Z" , IsDeleted = true, DeletedAt = DateTime.UtcNow}).Value;
+        var citaExistente = _repository.Create(new Cita {
+            Matricula = "1111aaa", FechaInspeccion = DateTime.Today, Dni = "11111111Z", IsDeleted = true,
+            DeletedAt = DateTime.UtcNow
+        }).Value;
         _repository.Delete(citaExistente.Id, isLogical: true);
-        var otraCita = _repository.Create(new Cita { Matricula = "1111aaa", FechaInspeccion = DateTime.Today, Dni = "11111111Z"}).Value;
-            
+        var otraCita = _repository.Create(new Cita
+            { Matricula = "1111aaa", FechaInspeccion = DateTime.Today, Dni = "11111111Z" }).Value;
+
         // act
         var resultado = _repository.Restore(citaExistente.Id);
 
         // assert
         resultado.IsSuccess.Should().BeFalse();
-        (resultado.Error as CitaError.Database)?.Detalles.Should()
-            .Contain($"No se puede restaurar: El vehículo ya cuenta con otra cita activa ese mismo día.");
+        (resultado.Error as CitaError.InspeccionRepetida)?.Matricula.Should()
+            .Contain("1111aaa");
+        (resultado.Error as CitaError.InspeccionRepetida)?.Fecha.Should().Be(DateTime.Today);
     }
-    
+
     [Test]
     public void Restore_CuandoPropietarioSuperaLimiteMaximoPorDniAlRestaurar_DebeRetornarFailure() {
         // arrange
@@ -316,7 +321,8 @@ public class CitaEfCoreRepositoryTest {
 
         // assert
         resultado.IsFailure.Should().BeTrue();
-        resultado.Error.Mensaje.Should().Contain("ya tiene el límite de");
+        (resultado.Error as CitaError.MaximosVehiculosAlcanzados)?.Mensaje.Should()
+            .Contain("El DNI 12345678J ya tiene 3 vehículos registrados para el día 23/05/2026.");
     }
     
     [Test]

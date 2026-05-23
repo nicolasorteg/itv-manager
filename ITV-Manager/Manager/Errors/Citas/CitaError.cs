@@ -16,11 +16,6 @@ public abstract record CitaError(string Mensaje) : DomainError(Mensaje) {
     public sealed record Validation(IEnumerable<string> Errores) 
         : CitaError($"Se han detectado errores de validación en la entidad:{Environment.NewLine} - {string.Join($"{Environment.NewLine}• ", Errores)}");
     
-    /// <summary> Error en las Reglas de Negocio - RN-04 (las citas solo pueden programarse en un intervalo de 30 días desde la fecha actual) </summary>
-    /// <param name="Fecha">Fecha de la cita</param>
-    public sealed record FechaFueraDeRango(DateTime Fecha) 
-        : CitaError($"La fecha {Fecha:dd/MM/yyyy} debe estar dentro de los próximos 30 días.");
-    
     /// <summary> Error en las Reglas de Negocio - RN-05 (No se permiten varias inspecciones el mismo día) </summary>
     /// <param name="Matricula">Matrícula del coche</param>
     /// <param name="Fecha">Fecha de la cita</param>

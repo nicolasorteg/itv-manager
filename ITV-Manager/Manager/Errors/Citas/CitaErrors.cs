@@ -13,10 +13,6 @@ public static class CitaErrors {
     public static DomainError Validation(IEnumerable<string> errors) =>
         new CitaError.Validation(errors);
     
-    /// <inheritdoc cref="CitaError.FechaFueraDeRango"/>
-    public static DomainError FechaFueraDeRango(DateTime fecha) =>
-        new CitaError.FechaFueraDeRango(fecha);
-    
     /// <inheritdoc cref="CitaError.InspeccionRepetida"/>
     public static DomainError InspeccionRepetida(string matricula, DateTime fecha) =>
         new CitaError.InspeccionRepetida(matricula, fecha);

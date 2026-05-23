@@ -206,13 +206,13 @@ public class CitaEfCoreRepository: ICitaRepository {
 
             // si al restaurar la cita rompe la RN-05   
             if (_context.Citas.Any(c => c.Matricula == entity.Matricula && c.FechaInspeccion.Date == entity.FechaInspeccion.Date && !c.IsDeleted && c.Id != id)) {
-                return Result.Failure<Cita, DomainError>(CitaErrors.Database("No se puede restaurar: El vehículo ya cuenta con otra cita activa ese mismo día."));
+                return Result.Failure<Cita, DomainError>(CitaErrors.InspeccionRepetida(entity.Matricula, entity.FechaInspeccion));
             }
             
             // si al restaurar la cita rompe la RN-06
             var citasDelPropietario = _context.Citas.Count(c => c.Dni == entity.Dni && c.FechaInspeccion.Date == entity.FechaInspeccion.Date && !c.IsDeleted && c.Id != id);
             if (citasDelPropietario >= AppConfig.MaxVehiculosPorDni) {
-                return Result.Failure<Cita, DomainError>(CitaErrors.Database($"No se puede actualizar: El propietario con DNI {entity.Dni} ya tiene el límite de {AppConfig.MaxVehiculosPorDni} citas asignadas para ese día."));
+                return Result.Failure<Cita, DomainError>(CitaErrors.MaximosVehiculosAlcanzados(entity.Dni, entity.FechaInspeccion));
             }
 
             entity.IsDeleted = false;
