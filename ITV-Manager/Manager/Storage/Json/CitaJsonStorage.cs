@@ -10,6 +10,7 @@ using Manager.Errors.Common;
 using Manager.Errors.Storage;
 using Manager.Mapper;
 using Manager.Models;
+using Manager.Storage.Common;
 using Serilog;
 
 namespace Manager.Storage.Json;
@@ -32,16 +33,16 @@ public class CitaJsonStorage : ICitaJsonStorage {
         InitStorage(AppConfig.DataFolder);
     }
     
-    /// <inheritdoc cref="ICitaJsonStorage.Write" />
-    public Result<bool, DomainError> Write(IEnumerable<Cita> citas, string path) {
+    /// <inheritdoc cref="IStorage{T}.WriteToFile" />
+    public Result<bool, DomainError> WriteToFile(IEnumerable<Cita> citas, string path) {
         try {
             _logger.Debug("Guardando las citas en el archivo JSON...");
             
             // tranforma a dtos
-            var dtos = citas.Select(c => c.ToDto()).ToList();
+            var jsonDtos = citas.Select(c => c.ToDto()).ToList();
             
             // serializacion
-            var json = JsonSerializer.Serialize(dtos, _options);
+            var json = JsonSerializer.Serialize(jsonDtos, _options);
             
             File.WriteAllText(path, json, new UTF8Encoding(false)); // write al archivo
             
@@ -53,8 +54,8 @@ public class CitaJsonStorage : ICitaJsonStorage {
         }
     }
     
-    /// <inheritdoc cref="ICitaJsonStorage.Save" />
-    public Result<IEnumerable<Cita>, DomainError> Save(string path) {
+    /// <inheritdoc cref="IStorage{T}.ReadFromFile" />
+    public Result<IEnumerable<Cita>, DomainError> ReadFromFile(string path) {
         _logger.Debug("Cargando citas desde el archivo JSON...");
         
         if (!File.Exists(path)) {

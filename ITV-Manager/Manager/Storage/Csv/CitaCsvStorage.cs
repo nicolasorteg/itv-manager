@@ -6,6 +6,7 @@ using Manager.Errors.Common;
 using Manager.Errors.Storage;
 using Manager.Mapper;
 using Manager.Models;
+using Manager.Storage.Common;
 using Serilog;
 
 namespace Manager.Storage.Csv;
@@ -22,8 +23,8 @@ public class CitaCsvStorage : ICitaCsvStorage {
         InitStorage(dataFolder); // data
     }
     
-    /// <inheritdoc cref="ICitaCsvStorage.Write" />
-    public Result<bool, DomainError> Write(IEnumerable<Cita> citas, string path) {
+    /// <inheritdoc cref="IStorage{T}.WriteToFile" />
+    public Result<bool, DomainError> WriteToFile(IEnumerable<Cita> citas, string path) {
         try {
             _logger.Debug("Guardando las citas en el archivo CSV...");
             using var writer = new StreamWriter(path, false, new UTF8Encoding(false));
@@ -58,8 +59,8 @@ public class CitaCsvStorage : ICitaCsvStorage {
         }
     }
     
-    /// <inheritdoc cref="ICitaCsvStorage.Save" />
-    public Result<IEnumerable<Cita>, DomainError> Save(string path) {
+    /// <inheritdoc cref="IStorage{T}.ReadFromFile" />
+    public Result<IEnumerable<Cita>, DomainError> ReadFromFile(string path) {
         
         _logger.Debug("Cargando citas desde el archivo CSV...");
 

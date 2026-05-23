@@ -206,7 +206,7 @@ public class CitaEfCoreRepository: ICitaRepository {
 
             // si al restaurar la cita rompe la RN-05   
             if (_context.Citas.Any(c => c.Matricula == entity.Matricula && c.FechaInspeccion.Date == entity.FechaInspeccion.Date && !c.IsDeleted && c.Id != id)) {
-                return Result.Failure<Cita, DomainError>(StorageErrors.FormatoInvalido("No se puede restaurar: El vehículo ya cuenta con otra cita activa ese mismo día."));
+                return Result.Failure<Cita, DomainError>(CitaErrors.Database("No se puede restaurar: El vehículo ya cuenta con otra cita activa ese mismo día."));
             }
 
             entity.IsDeleted = false;

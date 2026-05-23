@@ -57,7 +57,7 @@ public class CitaCsvStorageTest {
             };
 
             // act
-            var resultado = _storage.Write(citas, _tempPath);
+            var resultado = _storage.WriteToFile(citas, _tempPath);
 
             // assert
             resultado.IsSuccess.Should().BeTrue();
@@ -92,10 +92,10 @@ public class CitaCsvStorageTest {
                     FechaInspeccion = DateTime.Now.AddDays(20),
                 }
             };
-            _storage.Write(citas, _tempPath);
+            _storage.WriteToFile(citas, _tempPath);
 
             // act
-            var resultado = _storage.Save(_tempPath);
+            var resultado = _storage.ReadFromFile(_tempPath);
 
             // assert
             resultado.IsSuccess.Should().BeTrue();
@@ -126,7 +126,7 @@ public class CitaCsvStorageTest {
             };
 
             // act
-            var result = _storage.Write(citas, _tempPath);
+            var result = _storage.WriteToFile(citas, _tempPath);
 
             // assert
             result.IsSuccess.Should().BeTrue();
@@ -159,7 +159,7 @@ public class CitaCsvStorageTest {
         public void Save_ArchivoInexistente_DeberiaRetornarErrorArchivoNoEncontrado() {
 
             // arrange y act
-            var resultado = _storage.Save("ruta/completamente/inexistente.csv");
+            var resultado = _storage.ReadFromFile("ruta/completamente/inexistente.csv");
 
             // assert
             resultado.IsFailure.Should().BeTrue();
@@ -179,7 +179,7 @@ public class CitaCsvStorageTest {
             }
 
             // act
-            var resultado = _storage.Save(_tempPath);
+            var resultado = _storage.ReadFromFile(_tempPath);
 
             // assert
             resultado.IsFailure.Should().BeTrue();
@@ -217,10 +217,10 @@ public class CitaCsvStorageTest {
             const string RutaInvalida = "/rutainvaluida/archivo.csv";
 
 
-            _storage.Write(citas, RutaInvalida);
+            _storage.WriteToFile(citas, RutaInvalida);
 
             // act
-            var resultado = _storage.Write(citas, RutaInvalida);
+            var resultado = _storage.WriteToFile(citas, RutaInvalida);
 
             // assert
             resultado.IsFailure.Should().BeTrue();
@@ -239,7 +239,7 @@ public class CitaCsvStorageTest {
             var citasVacias = new List<Cita>();
 
             // act
-            var resultado = _storage.Write(citasVacias, _tempPath);
+            var resultado = _storage.WriteToFile(citasVacias, _tempPath);
 
             // assert
             resultado.IsSuccess.Should().BeTrue();

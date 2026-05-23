@@ -2,9 +2,7 @@
 
 namespace Manager.Dto;
 
-/// <summary>
-/// Record para transferencia de datos
-/// </summary>
+/// <summary> Record para transferencia de datos </summary>
 [XmlRoot("Cita")]
 public record CitaDto(
     [property: XmlElement("Id")] int Id,
