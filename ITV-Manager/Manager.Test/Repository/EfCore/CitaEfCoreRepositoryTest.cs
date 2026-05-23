@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Runtime.InteropServices.JavaScript;
+using FluentAssertions;
 using Manager.Config;
 using Manager.Entity;
 using Manager.Errors.Citas;
@@ -301,6 +302,24 @@ public class CitaEfCoreRepositoryTest {
     }
     
     [Test]
+    public void Restore_CuandoPropietarioSuperaLimiteMaximoPorDniAlRestaurar_DebeRetornarFailure() {
+        // arrange
+        
+        var citaBorrada = _repository.Create(new Cita { Matricula = "1111ccc", FechaInspeccion = DateTime.Today, Dni = "12345678J", Marca = "X", Modelo = "Y" }).Value;
+        _repository.Delete(citaBorrada.Id, isLogical: true);
+        _repository.Create(new Cita { Matricula = "2222ddd", FechaInspeccion = DateTime.Today, Dni = "12345678J", Marca = "X", Modelo = "Y" });
+        _repository.Create(new Cita { Matricula = "3333www", FechaInspeccion = DateTime.Today, Dni = "12345678J", Marca = "X", Modelo = "Y" });
+        _repository.Create(new Cita { Matricula = "4444ggg", FechaInspeccion = DateTime.Today, Dni = "12345678J", Marca = "X", Modelo = "Y" });
+
+        // act
+        var resultado = _repository.Restore(citaBorrada.Id);
+
+        // assert
+        resultado.IsFailure.Should().BeTrue();
+        resultado.Error.Mensaje.Should().Contain("ya tiene el límite de");
+    }
+    
+    [Test]
     public void Restore_CitaYaBorrada_DebeRestaurarlaCorrectamente() {
         // arrange
         _context.Citas.Add(new CitaEntity { Id = 5, Matricula = "4444ggg", Dni = "22222222Z", IsDeleted = false});
@@ -526,5 +545,117 @@ public class CitaEfCoreRepositoryTest {
         _repository.CountCita(incluirEliminados: true).Should().Be(0);
         _repository.CountCita(incluirEliminados: false).Should().Be(0);
     }
+    
+    [Test]
+    public void GetById_CuandoBaseDeDatosFalla_DebeRetornarNull() {
+        // arrange
+        _connection.Close(); // Cerramos la conexión para forzar la falla de SQLite
 
+        // act
+        var resultado = _repository.GetById(1);
+
+        // assert
+        resultado.Should().BeNull();
+    }
+    
+    [Test]
+    public void GetAll_CuandoBaseDeDatosFalla_DebeRetornarVacio() {
+        // arrange
+        _connection.Close();
+
+        // act
+        var resultado = _repository.GetAll();
+
+        // assert
+        resultado.Should().BeEmpty();
+    }
+
+    [Test]
+    public void Create_CuandoBaseDeDatosFalla_DebeRetornarFailure() {
+        // arrange
+        var cita = new Cita { Matricula = "ERR123", FechaInspeccion = DateTime.Today };
+        _connection.Close();
+
+        // act
+        var resultado = _repository.Create(cita);
+
+        // assert
+        resultado.IsFailure.Should().BeTrue();
+    }
+    
+
+    [Test]
+    public void DeleteAll_CuandoBaseDeDatosFalla_DebeRetornarFalse() {
+        // arrange
+        _connection.Close();
+
+        // act
+        var resultado = _repository.DeleteAll();
+
+        // assert
+        resultado.Should().BeFalse();
+    }
+    
+    [Test]
+    public void GetWithFilters_CuandoBaseDeDatosFalla_DebeRetornarFalse() {
+        // arrange
+        _connection.Close();
+
+        // act
+        var resultado = _repository.GetWithFilters(DateTime.Today, null, 1, 10, null, "todos", false);
+
+        // assert
+        resultado.IsFailure.Should().BeTrue();
+    }
+    
+    [Test]
+    public void CountCitasFiltradas_CuandoBaseDeDatosFalla_DebeRetornarFalse() {
+        // arrange
+        _connection.Close();
+
+        // act
+        var resultado = _repository.CountCitasFiltradas(null, DateTime.Today, null, false, "todos");
+
+        // assert
+        resultado.Should().Be(0);
+    }
+    
+    [Test]
+    public void CountCita_CuandoBaseDeDatosFalla_DebeRetornarFalse() {
+        // arrange
+        _connection.Close();
+
+        // act
+        var resultado = _repository.CountCita();
+
+        // assert
+        resultado.Should().Be(0);
+    }
+    
+    [Test]
+    public void GetByMatricula_CuandoBaseDeDatosFalla_DebeRetornarFalse() {
+        // arrange
+        _connection.Close();
+
+        // act
+        var resultado = _repository.CountCita();
+
+        // assert
+        resultado.Should().Be(0);
+    }
+
+    [Test]
+    public void Restore_CuandoBaseDeDatosFallaEnSaveChanges_DebeRetornarFailure() {
+        // arrange
+        _context.Citas.Add(new CitaEntity { Id = 77, Matricula = "RESERR", Dni = "111A", IsDeleted = true, DeletedAt = DateTime.Now });
+        _context.SaveChanges();
+
+        _connection.Close();
+
+        // act
+        var resultado = _repository.Restore(77);
+
+        // assert
+        resultado.IsFailure.Should().BeTrue();
+    }
 }

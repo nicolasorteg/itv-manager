@@ -165,7 +165,7 @@ public class CitaDapperRepositoryTest {
             resultado.Value.IsDeleted.Should().BeFalse();
             _repository.GetById(creada.Id).Should().NotBeNull();
         }
-        
+
         [Test]
         public void GetByMatricula_CitaActiva_DeberiaRetornarla() {
             // arrange
@@ -511,6 +511,24 @@ public class CitaDapperRepositoryTest {
             resultado.IsFailure.Should().BeTrue();
             (resultado.Error as CitaError.Database)?.Detalles.Should()
                 .Contain($"No se puede restaurar: El vehículo ya cuenta con otra cita activa ese mismo día.");
+        }
+        
+        [Test]
+        public void Restore_CuandoPropietarioSuperaLimiteMaximoPorDniAlRestaurar_DebeRetornarFailure() {
+            // arrange
+        
+            var citaBorrada = _repository.Create(new Cita { Matricula = "1111ccc", FechaInspeccion = DateTime.Today, Dni = "12345678J", Marca = "X", Modelo = "Y" }).Value;
+            _repository.Delete(citaBorrada.Id, isLogical: true);
+            _repository.Create(new Cita { Matricula = "2222ddd", FechaInspeccion = DateTime.Today, Dni = "12345678J", Marca = "X", Modelo = "Y" });
+            _repository.Create(new Cita { Matricula = "3333www", FechaInspeccion = DateTime.Today, Dni = "12345678J", Marca = "X", Modelo = "Y" });
+            _repository.Create(new Cita { Matricula = "4444ggg", FechaInspeccion = DateTime.Today, Dni = "12345678J", Marca = "X", Modelo = "Y" });
+
+            // act
+            var resultado = _repository.Restore(citaBorrada.Id);
+
+            // assert
+            resultado.IsFailure.Should().BeTrue();
+            resultado.Error.Mensaje.Should().Contain("ya tiene el límite de");
         }
 
         [Test]

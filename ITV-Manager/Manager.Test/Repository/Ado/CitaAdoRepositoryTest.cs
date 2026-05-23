@@ -346,6 +346,43 @@ public class CitaAdoRepositoryTest {
     }
     
     [Test]
+    public void Restore_CuandoPropietarioSuperaLimiteMaximoPorDniAlRestaurar_DebeRetornarFailure() {
+        // arrange
+        
+        var citaBorrada = _repository.Create(new Cita { Matricula = "1111ccc", FechaInspeccion = DateTime.Today, Dni = "12345678J", Marca = "X", Modelo = "Y" }).Value;
+        _repository.Delete(citaBorrada.Id, isLogical: true);
+        _repository.Create(new Cita { Matricula = "2222ddd", FechaInspeccion = DateTime.Today, Dni = "12345678J", Marca = "X", Modelo = "Y" });
+        _repository.Create(new Cita { Matricula = "3333www", FechaInspeccion = DateTime.Today, Dni = "12345678J", Marca = "X", Modelo = "Y" });
+        _repository.Create(new Cita { Matricula = "4444ggg", FechaInspeccion = DateTime.Today, Dni = "12345678J", Marca = "X", Modelo = "Y" });
+
+        // act
+        var resultado = _repository.Restore(citaBorrada.Id);
+
+        // assert
+        resultado.IsFailure.Should().BeTrue();
+        resultado.Error.Mensaje.Should().Contain("ya tiene el límite de");
+    }
+    
+    [Test]
+    public void Restore_VehiculoYaTieneOtraCitaActivaEseDia_DeberiaRetornarFailurePorRN() {
+            
+        var citaParaBorrar = _repository.Create(CrearCita("1234BBB")).Value;
+        // eliminacion logica
+        _repository.Delete(citaParaBorrar.Id, isLogical: true);
+            
+        var citaActivaBloqueante = CrearCita("1234BBB");
+        _repository.Create(citaActivaBloqueante).IsSuccess.Should().BeTrue();
+
+        // act
+        var resultado = _repository.Restore(citaParaBorrar.Id);
+
+        // assert
+        resultado.IsFailure.Should().BeTrue();
+        (resultado.Error as CitaError.Database)?.Detalles.Should()
+            .Contain($"No se puede restaurar: El vehículo ya cuenta con otra cita activa ese mismo día.");
+    }
+    
+    [Test]
     public void CountCitasFiltradas_SinFiltros_DebeRetornarElTotalDeActivos() {
         // arrange
         _repository.Create(CrearCita("1111AAA") with { FechaInspeccion = DateTime.Today });
