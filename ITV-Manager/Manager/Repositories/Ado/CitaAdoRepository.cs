@@ -279,6 +279,29 @@ public class CitaAdoRepository : ICitaRepository {
 
         using var connection = new SqliteConnection(_connectionString);
         connection.Open();
+        
+        // validacion apra no restaurar una cita que rompa la RN-05 (misma matrícula en la misma fecha)
+        using var checkMatriculaCmd = connection.CreateCommand();
+        checkMatriculaCmd.CommandText = "SELECT COUNT(1) FROM Citas WHERE Matricula = @Matricula AND date(FechaInspeccion) = date(@Fecha) AND IsDeleted = 0 AND Id <> @Id;";
+        checkMatriculaCmd.Parameters.AddWithValue("@Matricula", cita.Matricula);
+        checkMatriculaCmd.Parameters.AddWithValue("@Fecha", cita.FechaInspeccion.ToString("yyyy-MM-dd"));
+        checkMatriculaCmd.Parameters.AddWithValue("@Id", id);
+    
+        if (Convert.ToInt32(checkMatriculaCmd.ExecuteScalar()) > 0) {
+            return Result.Failure<Cita, DomainError>(CitaErrors.Database("No se puede restaurar: El vehículo ya cuenta con otra cita activa ese mismo día."));
+        }
+
+        // validacion apra no restaurar una cita que rompa la RN-06 (limite de vehiculos diario por dni)
+        using var checkDniCmd = connection.CreateCommand();
+        checkDniCmd.CommandText = "SELECT COUNT(1) FROM Citas WHERE Dni = @Dni AND date(FechaInspeccion) = date(@Fecha) AND IsDeleted = 0 AND Id <> @Id;";
+        checkDniCmd.Parameters.AddWithValue("@Dni", cita.Dni);
+        checkDniCmd.Parameters.AddWithValue("@Fecha", cita.FechaInspeccion.ToString("yyyy-MM-dd"));
+        checkDniCmd.Parameters.AddWithValue("@Id", id);
+
+        if (Convert.ToInt32(checkDniCmd.ExecuteScalar()) >= AppConfig.MaxVehiculosPorDni) {
+            return Result.Failure<Cita, DomainError>(CitaErrors.Database($"No se puede actualizar: El propietario con DNI {cita.Dni} ya tiene el límite de {AppConfig.MaxVehiculosPorDni} citas asignadas para ese día."));
+        }
+        
         using var restoreCommand = connection.CreateCommand();
         restoreCommand.CommandText = "UPDATE Citas SET IsDeleted = 0, DeletedAt = NULL, UpdatedAt = @UpdatedAt WHERE Id = @Id;";
         restoreCommand.Parameters.AddWithValue("@Id", id);

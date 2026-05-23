@@ -225,8 +225,8 @@ public class CitaDapperRepository: ICitaRepository {
             }
 
             // validacion de regla RN-05 al restaurar
-            const string SqlCheck = "SELECT COUNT(1) FROM Citas WHERE Matricula = @Matricula AND date(FechaInspeccion) = date(@Fecha) AND IsDeleted = 0 AND Id <> @Id";
-            var yaExisteActiva = _connection.ExecuteScalar<int>(SqlCheck, new { 
+            const string SqlCheckMatricula = "SELECT COUNT(1) FROM Citas WHERE Matricula = @Matricula AND date(FechaInspeccion) = date(@Fecha) AND IsDeleted = 0 AND Id <> @Id";
+            var yaExisteActiva = _connection.ExecuteScalar<int>(SqlCheckMatricula, new { 
                 existente.Matricula, 
                 Fecha = existente.FechaInspeccion.ToString("yyyy-MM-dd"),
                 Id = id
@@ -234,6 +234,18 @@ public class CitaDapperRepository: ICitaRepository {
 
             if (yaExisteActiva) {
                 return Result.Failure<Cita, DomainError>(CitaErrors.Database("No se puede restaurar: El vehículo ya cuenta con otra cita activa ese mismo día."));
+            }
+            
+            // validacion de la regla RN-06 al restaurar
+            const string SqlCheckDni = "SELECT COUNT(1) FROM Citas WHERE Dni = @Dni AND date(FechaInspeccion) = date(@Fecha) AND IsDeleted = 0 AND Id <> @Id";
+            var citasDelPropietario = _connection.ExecuteScalar<int>(SqlCheckDni, new { 
+                existente.Dni, 
+                Fecha = existente.FechaInspeccion.ToString("yyyy-MM-dd"),
+                Id = id
+            });
+
+            if (citasDelPropietario >= AppConfig.MaxVehiculosPorDni) {
+                return Result.Failure<Cita, DomainError>(CitaErrors.Database($"No se puede actualizar: El propietario con DNI {existente.Dni} ya tiene el límite de {AppConfig.MaxVehiculosPorDni} citas asignadas para ese día."));
             }
 
             const string SqlUpdate = "UPDATE Citas SET IsDeleted = 0, DeletedAt = NULL, UpdatedAt = @UpdatedAt WHERE Id = @Id";
