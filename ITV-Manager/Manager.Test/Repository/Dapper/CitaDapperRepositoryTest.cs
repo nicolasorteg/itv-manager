@@ -100,14 +100,14 @@ public class CitaDapperRepositoryTest {
         
         [Test]
         public void Update_CitaExistenteSinCambios_DeberiaActualizarCorrectamente() {
-            // Arrange
+            // arrange
             var creada = _repository.Create(CrearCita("1234BBB")).Value;
             var actualizada = creada with { Modelo = "ModeloCambio" };
 
-            // Act
+            // act
             var resultado = _repository.Update(creada.Id, actualizada);
 
-            // Assert
+            // assert
             resultado.IsSuccess.Should().BeTrue();
             resultado.Value.Modelo.Should().Be("ModeloCambio");
         }
@@ -365,7 +365,7 @@ public class CitaDapperRepositoryTest {
             var otraCita = _repository.Create(CrearCita("2222BBB")).Value;
 
             // cambio matricula para misma fecha
-            var actualizada = citaExistente with { Matricula = "1111AAA" };
+            var actualizada = otraCita with { Matricula = "1111AAA" };
             
             // act
             var resultado = _repository.Update(otraCita.Id, actualizada);
@@ -374,6 +374,33 @@ public class CitaDapperRepositoryTest {
             resultado.IsFailure.Should().BeTrue();
             (resultado.Error as CitaError.Database)?.Detalles.Should()
                 .Contain($"No se puede actualizar: El vehículo con matrícula {citaExistente.Matricula} ya tiene otra cita asignada para ese día.");
+        }
+        
+        [Test]
+        public void Update_CambiandoMatriculaAFechaNoOcupada_DeberiaDarSucces() {
+            // Arrange
+            var citaExistente = _repository.Create(CrearCita("1111AAA")).Value;
+            var otraCita = _repository.Create(new Cita {
+                Id = 2,
+                Matricula = "2222bbb",
+                Dni = "11111111w",
+                Marca = "Skoda",
+                Modelo = "Octavia",
+                Cilindrada = 4000,
+                Motor = Cita.TiposMotor.Gasolina,
+                FechaMatriculacion = DateTime.Now.AddYears(-20),
+                FechaInspeccion = DateTime.Now.AddDays(11),
+                IsDeleted = false
+            }).Value;
+
+            // cambio matricula para misma fecha
+            var actualizada = otraCita with { Matricula = "1111AAA" };
+            
+            // act
+            var resultado = _repository.Update(otraCita.Id, actualizada);
+
+            // assert
+            resultado.IsFailure.Should().BeFalse();
         }
 
         [Test]
@@ -393,6 +420,22 @@ public class CitaDapperRepositoryTest {
             resultado.IsFailure.Should().BeTrue();
             (resultado.Error as CitaError.Database)?.Detalles.Should()
                 .Contain($"No se puede actualizar: El propietario con DNI {actualizada.Dni} ya tiene el límite de {AppConfig.MaxVehiculosPorDni} citas asignadas para ese día.");
+        }
+        
+        [Test]
+        public void Update_CambiandoDniYNoExcediendoLimite_DeberiaDarSucces() {
+            // arrange
+            var c1 = _repository.Create(CrearCita("1111AAA")).Value;
+            var c2 = _repository.Create(CrearCita("2222BBB")).Value; 
+            var c4 = _repository.Create(CrearCita("4444CCC", "98765432Z")).Value;
+            
+            var actualizada = c4 with { Dni = "12345678Z" };
+
+            // act
+            var resultado = _repository.Update(c4.Id, actualizada);
+
+            // assert
+            resultado.IsFailure.Should().BeFalse();
         }
 
         [Test]
@@ -482,6 +525,15 @@ public class CitaDapperRepositoryTest {
 
             // assert
             resultado.IsFailure.Should().BeTrue();
+        }
+        
+        [Test]
+        public void GetByMatricula_CitaInexistente_DeberiaRetornarNull() {
+            // arrange y act
+            var resultado = _repository.GetByMatricula("1111BBB");
+
+            // assert
+            resultado.Should().BeNull();
         }
         
         [Test]

@@ -119,6 +119,32 @@ public class CitaAdoRepositoryTest {
     }
     
     [Test]
+    public void Update_CambiandoMatriculaAFechaNoOcupada_DeberiaNoDarError() {
+        // arrange
+        var citaCocheA = _repository.Create(CrearCita("1111AAA")).Value;
+        var citaCocheB = _repository.Create(new Cita {
+            Id = 2,
+            Matricula = "2222bbb",
+            Dni = "12345678L",
+            Marca = "Citroen",
+            Modelo = "c4",
+            Cilindrada = 2000,
+            Motor = Cita.TiposMotor.Diesel,
+            FechaMatriculacion = DateTime.Today.AddYears(-20),
+            FechaInspeccion = DateTime.Today.AddDays(11),
+            IsDeleted = false
+        }).Value;
+        
+        var modificacionInvalida = citaCocheB with { Matricula = "1111AAA" };
+        
+        // act
+        var result = _repository.Update(citaCocheB.Id, modificacionInvalida);
+
+        // assert
+        result.IsFailure.Should().BeFalse();
+    }
+    
+    [Test]
     public void Update_CambiandoDni_DeberiaDarError() {
         // arrange
         var citaCocheA = _repository.Create(CrearCita("1111AAA")).Value;
@@ -136,6 +162,23 @@ public class CitaAdoRepositoryTest {
         result.IsFailure.Should().BeTrue();
         (result.Error as CitaError.Database)?.Detalles.Should()
             .Contain($"No se puede actualizar: El propietario con DNI {modificacionInvalida.Dni} ya tiene el límite de {AppConfig.MaxVehiculosPorDni} citas asignadas para ese día.");
+    }
+    
+    [Test]
+    public void Update_CambiandoDni_DeberiaNoDarError() {
+        // arrange
+        var citaCocheA = _repository.Create(CrearCita("1111AAA")).Value;
+        var citaCocheB = _repository.Create(CrearCita("2222BBB")).Value;
+        var citaCocheD = _repository.Create(CrearCita("4444JJJ", "12345678J")).Value;
+
+        
+        var modificacionInvalida = citaCocheD with { Dni = "12345678Z" };
+        
+        // act
+        var result = _repository.Update(citaCocheD.Id, modificacionInvalida);
+
+        // assert
+        result.IsFailure.Should().BeFalse();
     }
     
     [Test]
@@ -227,6 +270,25 @@ public class CitaAdoRepositoryTest {
         // assert
         encontrado.Should().BeNull();
     }
+    
+    [Test]
+    public void GetAll_Logico_DebeMarcarComoBorradoYEsconderloDeGetAll() {
+        // arrange
+        var c1 = _repository.Create(CrearCita()).Value;
+        var creada = _repository.Create(CrearCita("1111ccc")).Value;
+        
+        // act
+        _repository.Delete(c1.Id, isLogical: true);
+        
+        var recuperado = _repository.GetById(c1.Id);
+        var listadoActivos = _repository.GetAll(pagina: 1, tamPagina: 10, incluirEliminados: false);
+
+        // assert
+        recuperado.Should().NotBeNull();
+        recuperado.IsDeleted.Should().BeTrue(); 
+        listadoActivos.Should().HaveCount(1);    
+    }
+    
     [Test]
     public void GetWithFilters_PorTextoYTiposDeMotor_DebeAcotarResultados() {
         // arrange
