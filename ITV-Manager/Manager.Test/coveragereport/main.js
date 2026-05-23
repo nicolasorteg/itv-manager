@@ -292,7 +292,7 @@ var assemblies = [
     "classes": [
       { "name": "Manager.App", "rp": "Manager_App.html", "cl": 0, "ucl": 2, "cal": 2, "tl": 79, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Cache.LruCache\u003CT1, T2\u003E", "rp": "Manager_LruCache_2.html", "cl": 47, "ucl": 0, "cal": 47, "tl": 83, "cb": 10, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Config.AppConfig", "rp": "Manager_AppConfig.html", "cl": 14, "ucl": 34, "cal": 48, "tl": 85, "cb": 2, "tb": 32, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Config.AppConfig", "rp": "Manager_AppConfig.html", "cl": 34, "ucl": 20, "cal": 54, "tl": 84, "cb": 7, "tb": 36, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Dto.CitaDto", "rp": "Manager_CitaDto.html", "cl": 17, "ucl": 0, "cal": 17, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Entity.AppDbContext", "rp": "Manager_AppDbContext.html", "cl": 7, "ucl": 8, "cal": 15, "tl": 33, "cb": 2, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Entity.CitaEntity", "rp": "Manager_CitaEntity.html", "cl": 13, "ucl": 0, "cal": 13, "tl": 46, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
@@ -335,8 +335,8 @@ var riskHotspots = [
   {
     "assembly": "Manager", "class": "Manager.Config.AppConfig", "reportPath": "Manager_AppConfig.html", "methodName": "get_ItvDataFile()", "methodShortName": "get_ItvDataFile()", "fileIndex": 0, "line": 50,
     "metrics": [
-      { "value": 110, "exceeded": true },
-      { "value": 10, "exceeded": false },
+      { "value": 42, "exceeded": true },
+      { "value": 6, "exceeded": false },
     ]},
   {
     "assembly": "Manager", "class": "Manager.Repositories.Ado.CitaAdoRepository", "reportPath": "Manager_CitaAdoRepository.html", "methodName": "GetWithFilters(System.DateTime,System.Nullable\u00601\u003CSystem.DateTime\u003E,System.Int32,System.Int32,System.String,System.String,System.Boolean)", "methodShortName": "GetWithFilters(...)", "fileIndex": 0, "line": 376,

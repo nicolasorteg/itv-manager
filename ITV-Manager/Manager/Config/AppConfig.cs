@@ -52,7 +52,6 @@ public class AppConfig {
                 "json" => "json",
                 "xml" => "xml",
                 "csv" => "csv",
-                "bin" or "binary" => "bin",
                 _ => "json"
             };
             return Path.Combine(DataFolder, $"gestionITV.{extension}");
