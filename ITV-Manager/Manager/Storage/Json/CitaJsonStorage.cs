@@ -27,10 +27,10 @@ public class CitaJsonStorage : ICitaJsonStorage {
         Converters = { new JsonStringEnumConverter() }, 
         Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping 
     };
-    
-    public CitaJsonStorage() {
+    public CitaJsonStorage() : this(AppConfig.DataFolder) { }
+    public CitaJsonStorage(string dataFolder) {
         _logger.Debug("Inicializando la clase CitaJsonStorage");
-        InitStorage(AppConfig.DataFolder);
+        InitStorage(dataFolder);
     }
     
     /// <inheritdoc cref="IStorage{T}.WriteToFile" />

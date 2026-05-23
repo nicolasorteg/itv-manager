@@ -200,5 +200,19 @@ public class CitaJsonStorageTest {
             resultado.Error.Should().BeOfType<StorageError.FormatoInvalido>(); 
             resultado.Error.Mensaje.Should().Contain("No se pudieron deserializar los DTO de Citas.");
         }
+        
+        [Test]
+        public void Constructor_ConCarpetaInexistente_DeberiaCrearDirectorio() {
+
+            // arrange
+            var tempDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+
+            // act
+            var storage = new CitaJsonStorage(tempDir);
+
+            // assert
+            Directory.Exists(tempDir).Should().BeTrue();
+            Directory.Delete(tempDir);
+        }
     }
 }

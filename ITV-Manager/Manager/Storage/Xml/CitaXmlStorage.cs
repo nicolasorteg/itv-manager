@@ -24,8 +24,10 @@ public class CitaXmlStorage : ICitaXmlStorage{
         Encoding = new UTF8Encoding(false),
     };
 
-    public CitaXmlStorage() {
-        InitStorage(AppConfig.DataFolder);
+    public CitaXmlStorage() : this(AppConfig.DataFolder) { }
+    public CitaXmlStorage(string dataFolder) {
+        _logger.Debug("Inicializando la clase CitaJsonStorage");
+        InitStorage(dataFolder);
     }
 
     /// <inheritdoc cref="ICitaXmlStorage.WriteToFile" />
@@ -51,7 +53,7 @@ public class CitaXmlStorage : ICitaXmlStorage{
     
     /// <inheritdoc cref="ICitaXmlStorage.ReadFromFile" />
     public Result<IEnumerable<Cita>, DomainError> ReadFromFile(string path) {
-        _logger.Debug("Cargando los items del archivo XML '{path}'", path);
+        _logger.Debug("Cargando los items del archivo XML");
 
         if (!File.Exists(path)) {
             _logger.Warning("El archivo XML no existe");
@@ -62,13 +64,11 @@ public class CitaXmlStorage : ICitaXmlStorage{
             var serializer = new XmlSerializer(typeof(List<CitaDto>));
             
             using var stream = File.OpenRead(path);
-
-            if (serializer.Deserialize(stream) is not List<CitaDto> dtos) {
-                return Result.Failure<IEnumerable<Cita>, DomainError>(
-                    StorageErrors.ReadError("No se pudieron deserializar los DTOs desde XML."));
-            }
-
-            return Result.Success<IEnumerable<Cita>, DomainError>(dtos.Select(dto => dto.ToModel()));
+            
+            var dtos = serializer.Deserialize(stream) as List<CitaDto>;
+            
+            // dtos no puede ser nulo ya que en caso de serlo el serializer directamente lanza la excepcion y se atrapa en el catch
+            return Result.Success<IEnumerable<Cita>, DomainError>(dtos!.Select(dto => dto.ToModel()));
         }
         catch (Exception ex) {
             _logger.Error(ex, "Error al leer las citas del archivo XML");

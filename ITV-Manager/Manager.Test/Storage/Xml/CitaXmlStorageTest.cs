@@ -110,5 +110,19 @@ public class CitaXmlStorageTest {
             resultado.IsFailure.Should().BeTrue();
             resultado.Error.Should().BeOfType<StorageError.WriteError>(); 
         }
+        
+        [Test]
+        public void Constructor_ConCarpetaInexistente_DeberiaCrearDirectorio() {
+
+            // arrange
+            var tempDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+
+            // act
+            var storage = new CitaXmlStorage(tempDir);
+
+            // assert
+            Directory.Exists(tempDir).Should().BeTrue();
+            Directory.Delete(tempDir);
+        }
     }
 }
