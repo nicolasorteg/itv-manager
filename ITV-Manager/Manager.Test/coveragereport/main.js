@@ -292,12 +292,12 @@ var assemblies = [
     "classes": [
       { "name": "Manager.App", "rp": "Manager_App.html", "cl": 0, "ucl": 2, "cal": 2, "tl": 79, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Cache.LruCache\u003CT1, T2\u003E", "rp": "Manager_LruCache_2.html", "cl": 47, "ucl": 0, "cal": 47, "tl": 83, "cb": 10, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Config.AppConfig", "rp": "Manager_AppConfig.html", "cl": 34, "ucl": 20, "cal": 54, "tl": 84, "cb": 7, "tb": 36, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Config.AppConfig", "rp": "Manager_AppConfig.html", "cl": 28, "ucl": 19, "cal": 47, "tl": 84, "cb": 5, "tb": 28, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Dto.CitaDto", "rp": "Manager_CitaDto.html", "cl": 17, "ucl": 0, "cal": 17, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Entity.AppDbContext", "rp": "Manager_AppDbContext.html", "cl": 7, "ucl": 8, "cal": 15, "tl": 33, "cb": 2, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Entity.CitaEntity", "rp": "Manager_CitaEntity.html", "cl": 13, "ucl": 0, "cal": 13, "tl": 46, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Errors.Citas.CitaError", "rp": "Manager_CitaError.html", "cl": 17, "ucl": 2, "cal": 19, "tl": 33, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Errors.Citas.CitaErrors", "rp": "Manager_CitaErrors.html", "cl": 8, "ucl": 0, "cal": 8, "tl": 26, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Errors.Citas.CitaError", "rp": "Manager_CitaError.html", "cl": 10, "ucl": 1, "cal": 11, "tl": 33, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Errors.Citas.CitaErrors", "rp": "Manager_CitaErrors.html", "cl": 5, "ucl": 0, "cal": 5, "tl": 26, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Errors.Common.DomainError", "rp": "Manager_DomainError.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 5, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Errors.Storage.StorageError", "rp": "Manager_StorageError.html", "cl": 6, "ucl": 5, "cal": 11, "tl": 33, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Errors.Storage.StorageErrors", "rp": "Manager_StorageErrors.html", "cl": 4, "ucl": 1, "cal": 5, "tl": 27, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
@@ -305,9 +305,10 @@ var assemblies = [
       { "name": "Manager.MainWindow", "rp": "Manager_MainWindow.html", "cl": 0, "ucl": 9, "cal": 9, "tl": 108, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Mapper.CitaMapper", "rp": "Manager_CitaMapper.html", "cl": 77, "ucl": 0, "cal": 77, "tl": 105, "cb": 10, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Models.Cita", "rp": "Manager_Cita.html", "cl": 13, "ucl": 0, "cal": 13, "tl": 24, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Repositories.Ado.CitaAdoRepository", "rp": "Manager_CitaAdoRepository.html", "cl": 380, "ucl": 10, "cal": 390, "tl": 518, "cb": 121, "tb": 132, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Repositories.Dapper.CitaDapperRepository", "rp": "Manager_CitaDapperRepository.html", "cl": 271, "ucl": 8, "cal": 279, "tl": 412, "cb": 110, "tb": 120, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Repositories.EfCore.CitaEfCoreRepository", "rp": "Manager_CitaEfCoreRepository.html", "cl": 241, "ucl": 11, "cal": 252, "tl": 356, "cb": 104, "tb": 108, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Repositories.Ado.CitaAdoRepository", "rp": "Manager_CitaAdoRepository.html", "cl": 331, "ucl": 11, "cal": 342, "tl": 518, "cb": 87, "tb": 96, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Repositories.Dapper.CitaDapperRepository", "rp": "Manager_CitaDapperRepository.html", "cl": 227, "ucl": 9, "cal": 236, "tl": 412, "cb": 75, "tb": 80, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Repositories.EfCore.CitaEfCoreRepository", "rp": "Manager_CitaEfCoreRepository.html", "cl": 214, "ucl": 9, "cal": 223, "tl": 356, "cb": 76, "tb": 78, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Service.ImportExport.ImportExportService", "rp": "Manager_ImportExportService.html", "cl": 20, "ucl": 0, "cal": 20, "tl": 39, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Storage.Csv.CitaCsvStorage", "rp": "Manager_CitaCsvStorage.html", "cl": 76, "ucl": 0, "cal": 76, "tl": 116, "cb": 18, "tb": 20, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Storage.Json.CitaJsonStorage", "rp": "Manager_CitaJsonStorage.html", "cl": 45, "ucl": 3, "cal": 48, "tl": 97, "cb": 6, "tb": 6, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Storage.Xml.CitaXmlStorage", "rp": "Manager_CitaXmlStorage.html", "cl": 43, "ucl": 0, "cal": 43, "tl": 84, "cb": 4, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
@@ -345,12 +346,6 @@ var riskHotspots = [
       { "value": 18, "exceeded": true },
     ]},
   {
-    "assembly": "Manager", "class": "Manager.Repositories.Ado.CitaAdoRepository", "reportPath": "Manager_CitaAdoRepository.html", "methodName": "GetWithFilters(System.DateTime,System.Nullable\u00601\u003CSystem.DateTime\u003E,System.Int32,System.Int32,System.String,System.String,System.Boolean)", "methodShortName": "GetWithFilters(...)", "fileIndex": 0, "line": 353,
-    "metrics": [
-      { "value": 18, "exceeded": false },
-      { "value": 18, "exceeded": true },
-    ]},
-  {
     "assembly": "Manager", "class": "Manager.Validators.Citas.CitaValidator", "reportPath": "Manager_CitaValidator.html", "methodName": "Validar(Manager.Models.Cita)", "methodShortName": "Validar(...)", "fileIndex": 0, "line": 14,
     "metrics": [
       { "value": 18, "exceeded": false },
@@ -358,12 +353,6 @@ var riskHotspots = [
     ]},
   {
     "assembly": "Manager", "class": "Manager.Repositories.Ado.CitaAdoRepository", "reportPath": "Manager_CitaAdoRepository.html", "methodName": "CountCitasFiltradas(System.String,System.DateTime,System.Nullable\u00601\u003CSystem.DateTime\u003E,System.Boolean,System.String)", "methodShortName": "CountCitasFiltradas(...)", "fileIndex": 0, "line": 438,
-    "metrics": [
-      { "value": 16, "exceeded": false },
-      { "value": 16, "exceeded": true },
-    ]},
-  {
-    "assembly": "Manager", "class": "Manager.Repositories.Ado.CitaAdoRepository", "reportPath": "Manager_CitaAdoRepository.html", "methodName": "CountCitasFiltradas(System.String,System.DateTime,System.Nullable\u00601\u003CSystem.DateTime\u003E,System.Boolean,System.String)", "methodShortName": "CountCitasFiltradas(...)", "fileIndex": 0, "line": 415,
     "metrics": [
       { "value": 16, "exceeded": false },
       { "value": 16, "exceeded": true },
@@ -381,18 +370,6 @@ var riskHotspots = [
       { "value": 16, "exceeded": true },
     ]},
   {
-    "assembly": "Manager", "class": "Manager.Repositories.Dapper.CitaDapperRepository", "reportPath": "Manager_CitaDapperRepository.html", "methodName": "GetWithFilters(System.DateTime,System.Nullable\u00601\u003CSystem.DateTime\u003E,System.Int32,System.Int32,System.String,System.String,System.Boolean)", "methodShortName": "GetWithFilters(...)", "fileIndex": 0, "line": 289,
-    "metrics": [
-      { "value": 16, "exceeded": false },
-      { "value": 16, "exceeded": true },
-    ]},
-  {
-    "assembly": "Manager", "class": "Manager.Repositories.Dapper.CitaDapperRepository", "reportPath": "Manager_CitaDapperRepository.html", "methodName": "CountCitasFiltradas(System.String,System.DateTime,System.Nullable\u00601\u003CSystem.DateTime\u003E,System.Boolean,System.String)", "methodShortName": "CountCitasFiltradas(...)", "fileIndex": 0, "line": 337,
-    "metrics": [
-      { "value": 16, "exceeded": false },
-      { "value": 16, "exceeded": true },
-    ]},
-  {
     "assembly": "Manager", "class": "Manager.Repositories.EfCore.CitaEfCoreRepository", "reportPath": "Manager_CitaEfCoreRepository.html", "methodName": "GetWithFilters(System.DateTime,System.Nullable\u00601\u003CSystem.DateTime\u003E,System.Int32,System.Int32,System.String,System.String,System.Boolean)", "methodShortName": "GetWithFilters(...)", "fileIndex": 0, "line": 263,
     "metrics": [
       { "value": 16, "exceeded": false },
@@ -400,18 +377,6 @@ var riskHotspots = [
     ]},
   {
     "assembly": "Manager", "class": "Manager.Repositories.EfCore.CitaEfCoreRepository", "reportPath": "Manager_CitaEfCoreRepository.html", "methodName": "CountCitasFiltradas(System.String,System.DateTime,System.Nullable\u00601\u003CSystem.DateTime\u003E,System.Boolean,System.String)", "methodShortName": "CountCitasFiltradas(...)", "fileIndex": 0, "line": 317,
-    "metrics": [
-      { "value": 16, "exceeded": false },
-      { "value": 16, "exceeded": true },
-    ]},
-  {
-    "assembly": "Manager", "class": "Manager.Repositories.EfCore.CitaEfCoreRepository", "reportPath": "Manager_CitaEfCoreRepository.html", "methodName": "GetWithFilters(System.DateTime,System.Nullable\u00601\u003CSystem.DateTime\u003E,System.Int32,System.Int32,System.String,System.String,System.Boolean)", "methodShortName": "GetWithFilters(...)", "fileIndex": 0, "line": 257,
-    "metrics": [
-      { "value": 16, "exceeded": false },
-      { "value": 16, "exceeded": true },
-    ]},
-  {
-    "assembly": "Manager", "class": "Manager.Repositories.EfCore.CitaEfCoreRepository", "reportPath": "Manager_CitaEfCoreRepository.html", "methodName": "CountCitasFiltradas(System.String,System.DateTime,System.Nullable\u00601\u003CSystem.DateTime\u003E,System.Boolean,System.String)", "methodShortName": "CountCitasFiltradas(...)", "fileIndex": 0, "line": 311,
     "metrics": [
       { "value": 16, "exceeded": false },
       { "value": 16, "exceeded": true },

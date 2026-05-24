@@ -4,7 +4,6 @@ using Manager.Errors.Citas;
 using Manager.Factories;
 using Manager.Models;
 using Manager.Repositories.Ado;
-using Microsoft.Data.Sqlite;
 
 namespace Manager.Test.Repository.Ado;
 

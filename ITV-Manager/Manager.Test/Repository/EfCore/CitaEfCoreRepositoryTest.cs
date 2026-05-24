@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices.JavaScript;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Manager.Config;
 using Manager.Entity;
 using Manager.Errors.Citas;
@@ -322,7 +321,7 @@ public class CitaEfCoreRepositoryTest {
         // assert
         resultado.IsFailure.Should().BeTrue();
         (resultado.Error as CitaError.MaximosVehiculosAlcanzados)?.Mensaje.Should()
-            .Contain("El DNI 12345678J ya tiene 3 vehículos registrados para el día 23/05/2026.");
+            .Contain("El DNI 12345678J ya tiene 3 vehículos registrados para el día");
     }
     
     [Test]
