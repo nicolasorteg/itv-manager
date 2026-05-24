@@ -13,6 +13,9 @@ public class ReportService: IReportService {
     
     private readonly string _directorioDestino = AppConfig.ReportDirectory;
     
+    public ReportService() {
+        if (!Directory.Exists(_directorioDestino)) Directory.CreateDirectory(_directorioDestino);cd .._directorioDestino
+    }
     
     /// <inheritdoc cref="IReportService.ExportarCitaAHtml" />
     public Result<string, DomainError> ExportarCitaAHtml(Cita cita) {

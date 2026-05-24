@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Manager.Errors.Report;
 using Manager.Models;
 using Manager.Service.Report;
 
@@ -75,6 +76,50 @@ public class ReportServiceTest {
             var bytes = File.ReadAllBytes(resultado.Value);
             bytes.Length.Should().BeGreaterThan(0);
             System.Text.Encoding.UTF8.GetString(bytes[0..4]).Should().Be("%PDF");
+        }
+        
+        [Test]
+        public void ExportarCitaAHtml_CuandoRutaEsInvalida_DeberiaEntrarEnCatchYRetornarFailure() {
+            // arrange
+            var citaConError = new Cita {
+                Id = 2,
+                Matricula = "???///??", // caracteres prohibidos 
+                Dni = "12345678Z",
+                Marca = "Test",
+                Modelo = "Error",
+                Motor = Cita.TiposMotor.Hibrido,
+                FechaMatriculacion = DateTime.Today.AddYears(-1),
+                FechaInspeccion = DateTime.Today.AddDays(1)
+            };
+
+            // act
+            var resultado = _reportService.ExportarCitaAHtml(citaConError);
+
+            // assert
+            resultado.IsFailure.Should().BeTrue();
+            resultado.Error.Should().BeOfType<ReportError.HtmlError>();
+        }
+
+        [Test]
+        public void ExportarCitaAPdf_CuandoRutaEsInvalida_DeberiaEntrarEnCatchYRetornarFailure() {
+            // arrange
+            var citaConError = new Cita {
+                Id = 3,
+                Matricula = "???///??", // inválidos en Windows
+                Dni = "12345678Z",
+                Marca = "Test",
+                Modelo = "Error",
+                Motor = Cita.TiposMotor.Hibrido,
+                FechaMatriculacion = DateTime.Today.AddYears(-1),
+                FechaInspeccion = DateTime.Today.AddDays(1)
+            };
+
+            // act
+            var resultado = _reportService.ExportarCitaAPdf(citaConError);
+
+            // assert
+            resultado.IsFailure.Should().BeTrue();
+            resultado.Error.Should().BeOfType<ReportError.PdfError>();
         }
     }
 }
