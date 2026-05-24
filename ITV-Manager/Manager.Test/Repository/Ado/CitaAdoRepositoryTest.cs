@@ -37,7 +37,13 @@ public class CitaAdoRepositoryTest {
         var rep = new CitaAdoRepository(true, true);
 
         rep.CountCita(true).Should().Be(CitaFactory.Seed().Count());
+    }
+    
+    [Test]
+    public void SinConstructor_DebeInsertarSedd() {
+        var rep = new CitaAdoRepository();
 
+        rep.CountCita(true).Should().Be(CitaFactory.Seed().Count());
     }
 
     [Test]
