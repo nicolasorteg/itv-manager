@@ -16,4 +16,7 @@ public interface ICache<in TKey, TValue> where TKey : notnull {
     
     /// <summary> Muestra el estado de la caché </summary>
     void DisplayStatus();
+
+    /// <summary> Vacia la caché </summary>
+    void Clear();
 }

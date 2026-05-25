@@ -80,4 +80,10 @@ public class LruCache<TKey, TValue> : ICache<TKey, TValue> where TKey : notnull 
         _usageOrder.Remove(key);
         _usageOrder.AddLast(key);
     }
+    
+    public void Clear() {
+        _data.Clear();
+        _usageOrder.Clear();
+        _logger.Debug("Caché borrada por completo debido a un borrado masivo.");
+    }
 }
