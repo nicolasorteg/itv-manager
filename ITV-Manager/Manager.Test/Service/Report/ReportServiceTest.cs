@@ -5,6 +5,7 @@ using Manager.Service.Report;
 
 namespace Manager.Test.Service.Report;
 
+[TestFixture]
 public class ReportServiceTest {
     private ReportService _reportService;
     private Cita _citaPrueba;
@@ -16,7 +17,7 @@ public class ReportServiceTest {
 
         _citaPrueba = new Cita {
             Id = 1,
-            Matricula = "1234ABC",
+            Matricula = "5489FGG",
             Dni = "12345678Z",
             Marca = "Toyota",
             Modelo = "Yaris Cross",
