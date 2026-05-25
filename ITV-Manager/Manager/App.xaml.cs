@@ -4,7 +4,7 @@ using Manager.Config;
 using Manager.Infrastructure;
 using Manager.Service.Manager;
 using Manager.Service.Report;
-using Manager.ViewModels;
+using Manager.ViewModels.Main;
 using Manager.Views.Main;
 using Manager.Views.Splash;
 using Microsoft.Extensions.DependencyInjection;

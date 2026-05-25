@@ -69,7 +69,7 @@ public class CitaAdoRepository : ICitaRepository {
 
         var createTableSql = @"
             CREATE TABLE IF NOT EXISTS Citas (
-                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                Id INTEGER PRIMARY KEY,
                 Matricula TEXT NOT NULL,
                 Marca TEXT NOT NULL,
                 Modelo TEXT NOT NULL,
@@ -146,6 +146,12 @@ public class CitaAdoRepository : ICitaRepository {
             _logger.Warning($"Validación fallida: El propietario con DNI {entity.Dni} ya supera el límite de {AppConfig.MaxVehiculosPorDni} citas el día {entity.FechaInspeccion:yyyy-MM-dd}");
             return Result.Failure<Cita, DomainError>(CitaErrors.Database($"El propietario con DNI {entity.Dni} no puede registrar más de {AppConfig.MaxVehiculosPorDni} citas el mismo día."));
         }
+        
+        var diasHastaInspeccion = (entity.FechaInspeccion.Date - DateTime.Today).TotalDays;
+        if (diasHastaInspeccion > AppConfig.VentanaDiasCita) {
+            _logger.Warning($"La cita {entity.Matricula} se sale de la ventana de dias para inspeccion. Máximo desde hoy {AppConfig.VentanaDiasCita} días.");
+            return Result.Failure<Cita, DomainError>(CitaErrors.Database($"La cita {entity.Matricula} se sale de la ventana de dias para inspeccion. Máximo desde hoy {AppConfig.VentanaDiasCita} días."));
+        }
 
         // cita -> citaentity
         var dbEntity = entity.ToEntity();
@@ -154,12 +160,21 @@ public class CitaAdoRepository : ICitaRepository {
         connection.Open();
 
         using var command = connection.CreateCommand();
-        command.CommandText = @"
+        if (entity.Id == 0) {
+            // sin id sqlite autogen
+            command.CommandText = @"
             INSERT INTO Citas (Matricula, Marca, Modelo, Cilindrada, Motor, Dni, FechaMatriculacion, FechaInspeccion, CreatedAt, UpdatedAt, IsDeleted)
             VALUES (@Matricula, @Marca, @Modelo, @Cilindrada, @Motor, @Dni, @FechaMatriculacion, @FechaInspeccion, @CreatedAt, @UpdatedAt, @IsDeleted);
             SELECT last_insert_rowid();";
-        
-        AddParameters(command, dbEntity);
+            AddParameters(command, dbEntity, incluirId: false);
+        } else {
+            // con id explicito para seed
+            command.CommandText = @"
+            INSERT INTO Citas (Id, Matricula, Marca, Modelo, Cilindrada, Motor, Dni, FechaMatriculacion, FechaInspeccion, CreatedAt, UpdatedAt, IsDeleted)
+            VALUES (@Id, @Matricula, @Marca, @Modelo, @Cilindrada, @Motor, @Dni, @FechaMatriculacion, @FechaInspeccion, @CreatedAt, @UpdatedAt, @IsDeleted);
+            SELECT last_insert_rowid();";
+            AddParameters(command, dbEntity, incluirId: true);
+        }
         
         // actualiza el modelo original
         entity = entity with { Id = Convert.ToInt32(command.ExecuteScalar()) };

@@ -40,8 +40,8 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top" Background="#1E1E1E" Foreground="White" Padding="5">
             <MenuItem Header="_Archivo" Background="#1E1E1E" Foreground="White">
-                <MenuItem Header="_Importar..." Command="{Binding ImportarCommand}" Background="#2C2C2E" Foreground="White"/>
-                <MenuItem Header="_Exportar..." Command="{Binding ExportarCommand}" Background="#2C2C2E" Foreground="White"/>
+                <MenuItem Header="_Importar..." Command="{Binding ImportarGlobalCommand}" Background="#2C2C2E" Foreground="White"/>
+                <MenuItem Header="_Exportar..." Command="{Binding ExportarGlobalCommand}" Background="#2C2C2E" Foreground="White"/>
             </MenuItem>
             <MenuItem Header="_Configuración" Command="{Binding MostrarDetallesCommand}" Foreground="White"/>
             <MenuItem Header="A_cerca de" Command="{Binding MostrarAcercaDeCommand}" Foreground="White"/>
@@ -64,8 +64,8 @@
                            Foreground="White" FontSize="20" FontWeight="Bold" Margin="0,0,0,15" Grid.Row="0"/>
 
                 <DataGrid Grid.Row="1" 
-                          ItemsSource="{Binding Citas}" 
-                          SelectedItem="{Binding CitaSeleccionada}"
+                          ItemsSource="{Binding CitasVM.Citas}" 
+                          SelectedItem="{Binding CitasVM.CitaSeleccionada}"
                           AutoGenerateColumns="False" 
                           IsReadOnly="True" 
                           SelectionMode="Single"
@@ -109,12 +109,12 @@
                 </DataGrid>
 
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,15,0,0">
-                    <Button Content="◀ Anterior" Width="90" Height="30" Style="{StaticResource ModernButton}" Command="{Binding PaginaAnteriorCommand}"/>
+                    <Button Content="◀ Anterior" Width="90" Height="30" Style="{StaticResource ModernButton}" Command="{Binding CitasVM.PaginaAnteriorCommand}"/>
                     <TextBlock Text="Página" Foreground="#8E8E93" VerticalAlignment="Center" Margin="15,0,5,0"/>
-                    <TextBlock Text="{Binding PaginaActual}" Foreground="White" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding CitasVM.PaginaActual}" Foreground="White" FontWeight="Bold" VerticalAlignment="Center"/>
                     <TextBlock Text="de" Foreground="#8E8E93" VerticalAlignment="Center" Margin="5,0"/>
-                    <TextBlock Text="{Binding TotalPaginas}" Foreground="White" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,15,0"/>
-                    <Button Content="Siguiente ▶" Width="90" Height="30" Style="{StaticResource ModernButton}" Command="{Binding PaginaSiguienteCommand}"/>
+                    <TextBlock Text="{Binding CitasVM.TotalPaginas}" Foreground="White" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,15,0"/>
+                    <Button Content="Siguiente ▶" Width="90" Height="30" Style="{StaticResource ModernButton}" Command="{Binding CitasVM.PaginaSiguienteCommand}"/>
                 </StackPanel>
             </Grid>
 
@@ -131,37 +131,41 @@
                     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="0,0,0,15">
                         <StackPanel>
                             <TextBlock Text="MATRÍCULA" Style="{StaticResource DetailLabel}"/>
-                            <TextBlock Text="{Binding CitaSeleccionada.Matricula, TargetNullValue='---'}" Style="{StaticResource DetailValue}" FontSize="22" FontWeight="Bold" Foreground="#007AFF"/>
+                            <TextBlock Text="{Binding CitasVM.CitaSeleccionada.Matricula, TargetNullValue='---'}" Style="{StaticResource DetailValue}" FontSize="22" FontWeight="Bold" Foreground="#007AFF"/>
 
                             <TextBlock Text="PROPIETARIO (DNI)" Style="{StaticResource DetailLabel}"/>
-                            <TextBlock Text="{Binding CitaSeleccionada.Dni, TargetNullValue='---'}" Style="{StaticResource DetailValue}"/>
+                            <TextBlock Text="{Binding CitasVM.CitaSeleccionada.Dni, TargetNullValue='---'}" Style="{StaticResource DetailValue}"/>
 
                             <TextBlock Text="VEHÍCULO" Style="{StaticResource DetailLabel}"/>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding CitaSeleccionada.Marca, TargetNullValue='---'}" Style="{StaticResource DetailValue}"/>
+                                <TextBlock Text="{Binding CitasVM.CitaSeleccionada.Marca, TargetNullValue='---'}" Style="{StaticResource DetailValue}"/>
                                 <TextBlock Text=" "/>
-                                <TextBlock Text="{Binding CitaSeleccionada.Modelo, TargetNullValue=''}" Style="{StaticResource DetailValue}"/>
+                                <TextBlock Text="{Binding CitasVM.CitaSeleccionada.Modelo, TargetNullValue=''}" Style="{StaticResource DetailValue}"/>
                             </StackPanel>
 
                             <TextBlock Text="MOTOR Y CILINDRADA" Style="{StaticResource DetailLabel}"/>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding CitaSeleccionada.Motor, TargetNullValue='---'}" Style="{StaticResource DetailValue}"/>
+                                <TextBlock Text="{Binding CitasVM.CitaSeleccionada.Motor, TargetNullValue='---'}" Style="{StaticResource DetailValue}"/>
                                 <TextBlock Text=" · " Foreground="#8E8E93"/>
-                                <TextBlock Text="{Binding CitaSeleccionada.Cilindrada, StringFormat={}{0} cc, TargetNullValue='---'}" Style="{StaticResource DetailValue}"/>
+                                <TextBlock Text="{Binding CitasVM.CitaSeleccionada.Cilindrada, StringFormat={}{0} cc, TargetNullValue='---'}" Style="{StaticResource DetailValue}"/>
                             </StackPanel>
 
                             <TextBlock Text="FECHA MATRICULACIÓN" Style="{StaticResource DetailLabel}"/>
-                            <TextBlock Text="{Binding CitaSeleccionada.FechaMatriculacion, StringFormat={}{0:dd/MM/yyyy}, TargetNullValue='---'}" Style="{StaticResource DetailValue}"/>
+                            <TextBlock Text="{Binding CitasVM.CitaSeleccionada.FechaMatriculacion, StringFormat={}{0:dd/MM/yyyy}, TargetNullValue='---'}" Style="{StaticResource DetailValue}"/>
 
                             <TextBlock Text="FECHA INSPECCIÓN" Style="{StaticResource DetailLabel}"/>
-                            <TextBlock Text="{Binding CitaSeleccionada.FechaInspeccion, StringFormat={}{0:dd/MM/yyyy HH:mm}, TargetNullValue='---'}" Style="{StaticResource DetailValue}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding CitasVM.CitaSeleccionada.FechaInspeccion, StringFormat={}{0:dd/MM/yyyy HH:mm}, TargetNullValue='---'}" Style="{StaticResource DetailValue}" FontWeight="Bold"/>
                         </StackPanel>
                     </ScrollViewer>
 
                     <StackPanel Grid.Row="2">
-                        <Button Content="Actualizar Cita" Height="35" Margin="0,0,0,8" Style="{StaticResource ModernButton}" Background="#007AFF" Command="{Binding ActualizarCitaCommand}"/>
-                        <Button Content="Exportar Info Cita" Height="35" Margin="0,0,0,8" Style="{StaticResource ModernButton}" Command="{Binding ExportarCitaCommand}"/>
-                        <Button Content="Borrar Registro" Height="35" Margin="0,0,0,0" Style="{StaticResource ModernButton}" Background="#FF453A" Command="{Binding BorrarCitaCommand}"/>
+                        <Button Content="Actualizar Cita" Height="35" Margin="0,0,0,8" Style="{StaticResource ModernButton}" Background="#007AFF" Command="{Binding CitasVM.ActualizarCitaCommand}"/>
+                        
+                        <Button Content="Exportar Info Cita" Height="35" Margin="0,0,0,8" Style="{StaticResource ModernButton}" 
+                                Command="{Binding InformeVM.ExportarCitaCommand}" 
+                                CommandParameter="{Binding CitasVM.CitaSeleccionada}"/>
+                        
+                        <Button Content="Borrar Registro" Height="35" Margin="0,0,0,0" Style="{StaticResource ModernButton}" Background="#FF453A" Command="{Binding CitasVM.BorrarCitaCommand}"/>
                     </StackPanel>
                 </Grid>
             </Border>

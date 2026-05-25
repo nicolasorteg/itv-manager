@@ -86,26 +86,42 @@ public class CitaDapperRepository: ICitaRepository {
                 _logger.Warning($"Validación fallida: El propietario con DNI {entity.Dni} ya supera el límite de {AppConfig.MaxVehiculosPorDni} citas");
                 return Result.Failure<Cita, DomainError>(CitaErrors.Database($"El propietario con DNI {entity.Dni} no puede registrar más de {AppConfig.MaxVehiculosPorDni} citas el mismo día."));
             }
+            
+            var diasHastaInspeccion = (entity.FechaInspeccion.Date - DateTime.Today).TotalDays;
+            if (diasHastaInspeccion > AppConfig.VentanaDiasCita) {
+                _logger.Warning($"La cita {entity.Matricula} se sale de la ventana de dias para inspeccion. Máximo desde hoy {AppConfig.VentanaDiasCita} días.");
+                return Result.Failure<Cita, DomainError>(CitaErrors.Database($"La cita {entity.Matricula} se sale de la ventana de dias para inspeccion. Máximo desde hoy {AppConfig.VentanaDiasCita} días."));
+            }
 
-            const string Sql = @"
-                INSERT INTO Citas (Matricula, Marca, Modelo, Cilindrada, Motor, Dni, FechaMatriculacion, FechaInspeccion, CreatedAt, UpdatedAt, IsDeleted)
-                VALUES (@Matricula, @Marca, @Modelo, @Cilindrada, @Motor, @Dni, @FechaMatriculacion, @FechaInspeccion, @CreatedAt, @UpdatedAt, @IsDeleted);
-                SELECT last_insert_rowid();";
-
-            // objeto mapeado
-            var id = _connection.QuerySingle<int>(Sql, new {
-                entity.Matricula,
-                entity.Marca,
-                entity.Modelo,
-                entity.Cilindrada,
-                Motor = (int)entity.Motor,
-                entity.Dni,
+            var parametrosBase = new {
+                entity.Matricula, entity.Marca, entity.Modelo, entity.Cilindrada,
+                Motor = (int)entity.Motor, entity.Dni,
                 FechaMatriculacion = entity.FechaMatriculacion.ToString("yyyy-MM-dd"),
                 FechaInspeccion = entity.FechaInspeccion.ToString("yyyy-MM-dd HH:mm:ss"),
                 CreatedAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                 UpdatedAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                 IsDeleted = entity.IsDeleted
-            });
+            };
+
+            int id;
+            if (entity.Id == 0) {
+                const string SqlSinId = @"
+                    INSERT INTO Citas (Matricula, Marca, Modelo, Cilindrada, Motor, Dni, FechaMatriculacion, FechaInspeccion, CreatedAt, UpdatedAt, IsDeleted)
+                    VALUES (@Matricula, @Marca, @Modelo, @Cilindrada, @Motor, @Dni, @FechaMatriculacion, @FechaInspeccion, @CreatedAt, @UpdatedAt, @IsDeleted);
+                    SELECT last_insert_rowid();";
+                id = _connection.QuerySingle<int>(SqlSinId, parametrosBase);
+            } else {
+                const string SqlConId = @"
+                    INSERT INTO Citas (Id, Matricula, Marca, Modelo, Cilindrada, Motor, Dni, FechaMatriculacion, FechaInspeccion, CreatedAt, UpdatedAt, IsDeleted)
+                    VALUES (@Id, @Matricula, @Marca, @Modelo, @Cilindrada, @Motor, @Dni, @FechaMatriculacion, @FechaInspeccion, @CreatedAt, @UpdatedAt, @IsDeleted);
+                    SELECT last_insert_rowid();";
+                id = _connection.QuerySingle<int>(SqlConId, new { entity.Id, entity.Matricula, entity.Marca, entity.Modelo, entity.Cilindrada, Motor = (int)entity.Motor, entity.Dni,
+                    FechaMatriculacion = entity.FechaMatriculacion.ToString("yyyy-MM-dd"),
+                    FechaInspeccion = entity.FechaInspeccion.ToString("yyyy-MM-dd HH:mm:ss"),
+                    CreatedAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                    UpdatedAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                    IsDeleted = entity.IsDeleted });
+            }
 
             _logger.Information($" Cita guardada  correctamente con ID: {id}");
             return Result.Success<Cita, DomainError>(GetById(id)!);
@@ -390,7 +406,7 @@ public class CitaDapperRepository: ICitaRepository {
 
         _connection.Execute(@"
             CREATE TABLE IF NOT EXISTS Citas (
-                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                Id INTEGER PRIMARY KEY,
                 Matricula TEXT NOT NULL,
                 Marca TEXT NOT NULL,
                 Modelo TEXT NOT NULL,

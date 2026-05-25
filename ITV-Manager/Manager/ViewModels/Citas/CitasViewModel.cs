@@ -1,0 +1,101 @@
+﻿using System.Collections.ObjectModel;
+using System.Windows;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Manager.Models;
+using Manager.Service.Manager;
+
+namespace Manager.ViewModels.Citas;
+
+public partial class CitasViewModel(IManagerService managerService) : ObservableObject {
+    
+    private readonly IManagerService _managerService = managerService;
+    private const int TamPagina = 10;
+
+    [ObservableProperty] private ObservableCollection<Cita> _citas = new();
+    [ObservableProperty] private int _paginaActual = 1;
+    [ObservableProperty] private int _totalPaginas = 1;
+    [ObservableProperty] private Cita? _citaSeleccionada;
+
+    // Métodos parciales nativos del Toolkit que reaccionan automáticamente a los cambios
+    partial void OnCitaSeleccionadaChanged(Cita? value) {
+        ActualizarCitaCommand.NotifyCanExecuteChanged();
+        BorrarCitaCommand.NotifyCanExecuteChanged();
+    }
+
+    partial void OnPaginaActualChanged(int value) {
+        CargarCitas();
+    }
+
+    public void CargarCitas() {
+        var resultado = _managerService.ObtenerConFiltros(
+            fechaInicio: DateTime.MinValue, 
+            fechaFin: null, 
+            pagina: PaginaActual, 
+            tamPagina: TamPagina,
+            searchText: null,
+            motorSeleccionado: "todos",
+            incluirEliminados: false
+        );
+
+        if (resultado.IsSuccess) {
+            Citas = new ObservableCollection<Cita>(resultado.Value);
+        } else {
+            Citas = new ObservableCollection<Cita>();
+            MessageBox.Show("Error al cargar el listado de citas", "Error de Base de Datos", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        
+        var totalRegistrosActivos = _managerService.ContarCitasFiltradas(
+            searchText: null, fechaInicio: DateTime.MinValue, fechaFin: null, motorSeleccionado: "todos", incluirEliminados: false
+        ); 
+
+        TotalPaginas = (int)Math.Ceiling((double)totalRegistrosActivos / TamPagina);
+        if (TotalPaginas < 1) TotalPaginas = 1; 
+
+        // Notificar el estado de los botones de paginación
+        PaginaAnteriorCommand.NotifyCanExecuteChanged();
+        PaginaSiguienteCommand.NotifyCanExecuteChanged();
+    }
+
+    [RelayCommand(CanExecute = nameof(CanPrevia))]
+    private void PaginaAnterior() {
+        if (PaginaActual > 1) PaginaActual--;
+    }
+    private bool CanPrevia() => PaginaActual > 1;
+
+    [RelayCommand(CanExecute = nameof(CanSiguiente))]
+    private void PaginaSiguiente() {
+        if (PaginaActual < TotalPaginas) PaginaActual++;
+    }
+    private bool CanSiguiente() => PaginaActual < TotalPaginas;
+
+    [RelayCommand(CanExecute = nameof(CanOperarCita))]
+    private void ActualizarCita() {
+        if (CitaSeleccionada == null) return;
+        MessageBox.Show($"Formulario para modificar la matrícula {CitaSeleccionada.Matricula} próximamente.", "Actualizar Cita", MessageBoxButton.OK, MessageBoxImage.Information);
+    }
+
+    [RelayCommand(CanExecute = nameof(CanOperarCita))]
+    private void BorrarCita() {
+        if (CitaSeleccionada == null) return;
+    
+        var confirmacion = MessageBox.Show(
+            $"¿Seguro que deseas dar de baja la cita con matrícula {CitaSeleccionada.Matricula}?", 
+            "Confirmar Borrado", MessageBoxButton.YesNo, MessageBoxImage.Warning
+        );
+
+        if (confirmacion != MessageBoxResult.Yes) return;
+        var resultadoBorrado = _managerService.EliminarCita(CitaSeleccionada.Id, esLogico: true);
+
+        if (!resultadoBorrado.IsSuccess) return;
+        MessageBox.Show("Registro eliminado de la vista activa.", "Operación Completada", MessageBoxButton.OK, MessageBoxImage.Information);
+            
+        if (Citas.Count == 1 && PaginaActual > 1) {
+            PaginaActual--;
+        }
+            
+        CargarCitas();
+    }
+
+    private bool CanOperarCita() => CitaSeleccionada != null;
+}

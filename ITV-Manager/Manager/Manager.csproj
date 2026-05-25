@@ -7,6 +7,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <ApplicationIcon>Images\app-icon.ico</ApplicationIcon>
     </PropertyGroup>
     
     <ItemGroup>
@@ -28,6 +29,8 @@
         <PackageReference Include="Dapper" Version="2.1.72"/>
         
         <PackageReference Include="Select.HtmlToPdf.NetCore" Version="25.2.0"/>
+
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.1"/>
     </ItemGroup>
     
     <ItemGroup>

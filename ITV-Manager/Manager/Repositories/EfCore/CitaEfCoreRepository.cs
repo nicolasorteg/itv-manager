@@ -87,6 +87,12 @@ public class CitaEfCoreRepository: ICitaRepository {
                 return Result.Failure<Cita, DomainError>(CitaErrors.Database($"El propietario con DNI {entity.Dni} no puede registrar más de {AppConfig.MaxVehiculosPorDni} citas el mismo día."));
             }
 
+            var diasHastaInspeccion = (entity.FechaInspeccion.Date - DateTime.Today).TotalDays;
+            if (diasHastaInspeccion > AppConfig.VentanaDiasCita) {
+                _logger.Warning($"La cita {entity.Matricula} se sale de la ventana de dias para inspeccion. Máximo desde hoy {AppConfig.VentanaDiasCita} días.");
+                return Result.Failure<Cita, DomainError>(CitaErrors.Database($"La cita {entity.Matricula} se sale de la ventana de dias para inspeccion. Máximo desde hoy {AppConfig.VentanaDiasCita} días."));
+            }
+
             // conversion
             var dbEntity = entity.ToEntity();
             dbEntity.CreatedAt = DateTime.Now;
