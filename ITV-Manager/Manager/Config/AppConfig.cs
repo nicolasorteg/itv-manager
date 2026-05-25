@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 namespace Manager.Config;
 
 /// <summary> Clase de configuración que lee el appsettings.json </summary>
-public class AppConfig {
+public static class AppConfig {
     
     public static IConfigurationRoot Configuration { get; }
     

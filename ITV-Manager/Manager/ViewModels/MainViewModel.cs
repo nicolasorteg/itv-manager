@@ -9,6 +9,7 @@ using Manager.Models;
 using Manager.Service.Manager;
 using Manager.Service.Report;
 using Microsoft.Win32;
+using static System.Windows.MessageBoxResult;
 
 namespace Manager.ViewModels;
 
@@ -73,8 +74,7 @@ public class MainViewModel : INotifyPropertyChanged {
     }
 
     private void CargarCitas() {
-        // 1. Usamos ObtenerConFiltros pasándole los parámetros requeridos por tu arquitectura
-        // Usamos DateTime.MinValue como inicio para que abarque cualquier registro histórico activo
+        
         var resultado = _managerService.ObtenerConFiltros(
             fechaInicio: DateTime.MinValue, 
             fechaFin: null, 
@@ -82,28 +82,26 @@ public class MainViewModel : INotifyPropertyChanged {
             tamPagina: TamPagina,
             searchText: null,
             motorSeleccionado: "todos",
-            incluirEliminados: false // FALSO: No queremos ver registros borrados lógicamente
+            incluirEliminados: false // no registros borrados lógicamente
         );
 
         if (resultado.IsSuccess) {
-            // Volcamos los registros filtrados directamente a la lista que lee el DataGrid de WPF
+            // registros -> lista que lee el DataGrid de wpf
             Citas = new ObservableCollection<Cita>(resultado.Value);
         } else {
             Citas = new ObservableCollection<Cita>();
             MessageBox.Show($"Error al cargar el listado de citas", "Error de Base de Datos", MessageBoxButton.OK, MessageBoxImage.Error);
         }
         
-        // 2. CÁLCULO DINÁMICO DE PAGINACIÓN:
-        // Le pedimos al servicio el conteo real exacto de registros en BD que cumplen la condición de estar activos
-        int totalRegistrosActivos = _managerService.ContarCitasFiltradas(
+        // calculo dinamico de paginacion
+        var totalRegistrosActivos = _managerService.ContarCitasFiltradas(
             searchText: null,
             fechaInicio: DateTime.MinValue,
             fechaFin: null,
             motorSeleccionado: "todos",
             incluirEliminados: false
         ); 
-    
-        // Calculamos el total de páginas en base a los registros reales (ej. 18 / 10 = 2 páginas)
+
         TotalPaginas = (int)Math.Ceiling((double)totalRegistrosActivos / TamPagina);
     
         if (TotalPaginas < 1) TotalPaginas = 1; 
@@ -113,20 +111,19 @@ public class MainViewModel : INotifyPropertyChanged {
         CargarCitas();
     }
 
-    private void EjecutarMostrarDetalles() {
-        string mensaje = $"=== CONFIGURACIÓN DEL SISTEMA ===\n\n" +
-                         $"• Motor de BD Activo: {AppConfig.RepositoryType.ToUpper()}\n" +
-                         $"• Formato Almacenamiento: {AppConfig.StorageType.ToUpper()}\n" +
-                         $"• Borrado Lógico Activado: Sí (IsDeleted = 1)\n" +
-                         $"• Sembrado de Datos (Seed): {(AppConfig.SeedData ? "Activado" : "Desactivado")}\n" +
-                         $"• Límite Diario por Propietario: {AppConfig.MaxVehiculosPorDni} vehículos\n" +
-                         $"• Versión del Framework: .NET 8.0 WPF";
+    private static void EjecutarMostrarDetalles() {
+        var mensaje = $"-----⚙️ CONFIGURACIÓN DEL SISTEMA ⚙️-----\n\n" +
+                      $"• Motor de BD Activo: {AppConfig.RepositoryType.ToUpper()}\n" +
+                      $"• Formato Almacenamiento: {AppConfig.StorageType.ToUpper()}\n" +
+                      $"• Borrado Lógico Activado: {AppConfig.UseLogicalDelete}\n" +
+                      $"• Sembrado de Datos (Seed): {(AppConfig.SeedData ? "Activado" : "Desactivado")}\n" +
+                      $"• Límite Diario por Propietario: {AppConfig.MaxVehiculosPorDni} vehículos\n" +
+                      $"• Versión del Framework: {AppConfig.Version}";
                          
         MessageBox.Show(mensaje, "Detalles del Proyecto", MessageBoxButton.OK, MessageBoxImage.Asterisk);
     }
 
-    private void AbriVentanaAcercaDe() {
-        // Al estar separados, invocamos a la nueva ventana limpia que crearemos abajo
+    private static void AbriVentanaAcercaDe() {
         var acercaDeWin = new Views.About.AboutWindow {
             Owner = Application.Current.MainWindow
         };
@@ -154,44 +151,61 @@ public class MainViewModel : INotifyPropertyChanged {
             MessageBoxImage.Question
         );
 
-        if (result == MessageBoxResult.Cancel) return;
+        if (result == Cancel) return;
 
         // 2. Configurar el explorador nativo SaveFileDialog para guardar archivos
-        SaveFileDialog saveFileDialog = new SaveFileDialog {
+        var saveFileDialog = new SaveFileDialog {
             FileName = $"FichaITV_{CitaSeleccionada.Matricula}",
             InitialDirectory = AppConfig.ReportDirectory
         };
 
-        if (result == MessageBoxResult.Yes) {
-            // Flujo para PDF
-            saveFileDialog.Filter = "Documento PDF (*.pdf)|*.pdf";
-            saveFileDialog.DefaultExt = "pdf";
+        switch (result) {
+            case Yes: {
+                // Flujo para PDF
+                saveFileDialog.Filter = "Documento PDF (*.pdf)|*.pdf";
+                saveFileDialog.DefaultExt = "pdf";
 
-            if (saveFileDialog.ShowDialog() == true) {
-                var resPdf = _reportService.ExportarCitaAPdf(CitaSeleccionada);
-                if (resPdf.IsSuccess) {
-                    // Mover el temporal generado por el servicio a la ruta elegida por el usuario
-                    if (File.Exists(resPdf.Value)) {
-                        File.Move(resPdf.Value, saveFileDialog.FileName, overwrite: true);
+                if (saveFileDialog.ShowDialog() == true) {
+                    var resPdf = _reportService.ExportarCitaAPdf(CitaSeleccionada);
+                    if (resPdf.IsSuccess) {
+                        // Mover el temporal generado por el servicio a la ruta elegida por el usuario
+                        if (File.Exists(resPdf.Value)) {
+                            File.Move(resPdf.Value, saveFileDialog.FileName, overwrite: true);
+                        }
+                        MessageBox.Show($"¡Ficha PDF guardada correctamente en:\n{saveFileDialog.FileName}", "Exportación Exitosa", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
-                    MessageBox.Show($"¡Ficha PDF guardada correctamente en:\n{saveFileDialog.FileName}", "Exportación Exitosa", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-            }
-        } 
-        else if (result == MessageBoxResult.No) {
-            // Flujo para HTML
-            saveFileDialog.Filter = "Archivo Web HTML (*.html)|*.html";
-            saveFileDialog.DefaultExt = "html";
 
-            if (saveFileDialog.ShowDialog() == true) {
-                var resHtml = _reportService.ExportarCitaAHtml(CitaSeleccionada);
-                if (resHtml.IsSuccess) {
-                    if (File.Exists(resHtml.Value)) {
-                        File.Move(resHtml.Value, saveFileDialog.FileName, overwrite: true);
-                    }
-                    MessageBox.Show($"¡Ficha HTML generada correctamente en:\n{saveFileDialog.FileName}", "Exportación Exitosa", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
+                break;
             }
+            case No: {
+                // Flujo para HTML
+                saveFileDialog.Filter = "Archivo Web HTML (*.html)|*.html";
+                saveFileDialog.DefaultExt = "html";
+
+                if (saveFileDialog.ShowDialog() == true) {
+                    var resHtml = _reportService.ExportarCitaAHtml(CitaSeleccionada);
+                    if (resHtml.IsSuccess) {
+                        if (File.Exists(resHtml.Value)) {
+                            File.Move(resHtml.Value, saveFileDialog.FileName, overwrite: true);
+                        }
+                        MessageBox.Show($"¡Ficha HTML generada correctamente en:\n{saveFileDialog.FileName}", "Exportación Exitosa", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                }
+
+                break;
+            }
+            case None:
+            case OK:
+            case Abort:
+            case Retry:
+            case Ignore:
+            case TryAgain:
+            case Continue:
+            case Cancel: 
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
 
@@ -205,20 +219,18 @@ public class MainViewModel : INotifyPropertyChanged {
             MessageBoxImage.Warning
         );
 
-        if (confirmacion == MessageBoxResult.Yes) {
-            var resultadoBorrado = _managerService.EliminarCita(CitaSeleccionada.Id, esLogico: true);
+        if (confirmacion != Yes) return;
+        var resultadoBorrado = _managerService.EliminarCita(CitaSeleccionada.Id, esLogico: true);
 
-            if (resultadoBorrado.IsSuccess) {
-                MessageBox.Show("Registro eliminado de la vista activa.", "Operación Completada", MessageBoxButton.OK, MessageBoxImage.Information);
+        if (!resultadoBorrado.IsSuccess) return;
+        MessageBox.Show("Registro eliminado de la vista activa.", "Operación Completada", MessageBoxButton.OK, MessageBoxImage.Information);
             
-                // Si borras el último elemento de la página 2, volvemos automáticamente a la página 1
-                if (Citas.Count == 1 && PaginaActual > 1) {
-                    PaginaActual--;
-                }
-            
-                CargarCitas(); // Esto volverá a ejecutar el GetAll actualizado y el conteo dinámico
-            }
+        // Si borras el último elemento de la página 2, volvemos automáticamente a la página 1
+        if (Citas.Count == 1 && PaginaActual > 1) {
+            PaginaActual--;
         }
+            
+        CargarCitas(); // Esto volverá a ejecutar el GetAll actualizado y el conteo dinámico
     }
 }
 
