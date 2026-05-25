@@ -140,5 +140,15 @@ public class LruCacheTest {
             // assert
             resultado.Should().BeTrue();
         }
+        
+        [Test]
+        public void Clear_DeberiaDevolverTrue() {
+            
+            _cache.Add(1, "uno");
+            _cache.Get(1).Should().Be("uno");
+            
+            _cache.Clear();
+            _cache.Get(1).Should().BeNull();
+        }
     }
 }

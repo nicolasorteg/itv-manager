@@ -291,7 +291,7 @@ var assemblies = [
     "name": "Manager",
     "classes": [
       { "name": "Manager.App", "rp": "Manager_App.html", "cl": 0, "ucl": 2, "cal": 2, "tl": 79, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Cache.LruCache\u003CT1, T2\u003E", "rp": "Manager_LruCache_2.html", "cl": 47, "ucl": 5, "cal": 52, "tl": 89, "cb": 10, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Cache.LruCache\u003CT1, T2\u003E", "rp": "Manager_LruCache_2.html", "cl": 52, "ucl": 0, "cal": 52, "tl": 89, "cb": 10, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Config.AppConfig", "rp": "Manager_AppConfig.html", "cl": 28, "ucl": 19, "cal": 47, "tl": 84, "cb": 5, "tb": 28, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Dto.CitaDto", "rp": "Manager_CitaDto.html", "cl": 17, "ucl": 0, "cal": 17, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Entity.AppDbContext", "rp": "Manager_AppDbContext.html", "cl": 7, "ucl": 8, "cal": 15, "tl": 33, "cb": 2, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
