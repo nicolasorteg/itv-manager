@@ -104,7 +104,7 @@ public class CitaDapperRepository: ICitaRepository {
                 FechaInspeccion = entity.FechaInspeccion.ToString("yyyy-MM-dd HH:mm:ss"),
                 CreatedAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                 UpdatedAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                IsDeleted = 0
+                IsDeleted = entity.IsDeleted
             });
 
             _logger.Information($" Cita guardada  correctamente con ID: {id}");
@@ -322,7 +322,6 @@ public class CitaDapperRepository: ICitaRepository {
                       LOWER(Marca) LIKE @Search OR 
                       LOWER(Modelo) LIKE @Search
                   ))
-                ORDER BY Id ASC
                 LIMIT @Limit OFFSET @Offset";
 
             var entities = _connection.Query<CitaEntity>(Sql, new {

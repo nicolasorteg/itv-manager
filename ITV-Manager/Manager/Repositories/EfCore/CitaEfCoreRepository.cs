@@ -3,11 +3,11 @@ using Manager.Config;
 using Manager.Entity;
 using Manager.Errors.Citas;
 using Manager.Errors.Common;
-using Manager.Errors.Storage;
 using Manager.Factories;
 using Manager.Mapper;
 using Manager.Models;
 using Manager.Repositories.Base;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace Manager.Repositories.EfCore;
@@ -91,7 +91,6 @@ public class CitaEfCoreRepository: ICitaRepository {
             var dbEntity = entity.ToEntity();
             dbEntity.CreatedAt = DateTime.Now;
             dbEntity.UpdatedAt = DateTime.Now;
-            dbEntity.IsDeleted = false;
 
             _context.Citas.Add(dbEntity);
             _context.SaveChanges(); // gernera ID autoincremental
@@ -264,15 +263,16 @@ public class CitaEfCoreRepository: ICitaRepository {
         
         try {
             _logger.Debug("Ejecutando consulta con filtros en EFCore...");
-            var consulta = _context.Citas.AsQueryable();
+            var consulta = _context.Citas.AsNoTracking().AsQueryable();
 
             // filtro eliminados
             consulta = consulta.Where(c => incluirEliminados ? c.IsDeleted : !c.IsDeleted);
-
             // filtro rango de fechas
-            consulta = consulta.Where(c => c.FechaInspeccion.Date >= fechaInicio.Date);
+            var fechaInicioLimpia = fechaInicio.Date;
+            consulta = consulta.Where(c => c.FechaInspeccion >= fechaInicioLimpia);          
             if (fechaFin.HasValue) {
-                consulta = consulta.Where(c => c.FechaInspeccion.Date <= fechaFin.Value.Date);
+                DateTime fechaFinLimpia = fechaFin.Value.Date.AddDays(1).AddTicks(-1); // Incluye todo el día completo
+                consulta = consulta.Where(c => c.FechaInspeccion <= fechaFinLimpia);
             }
 
             // filtro motor
@@ -316,7 +316,7 @@ public class CitaEfCoreRepository: ICitaRepository {
     public int CountCitasFiltradas(string? searchText, DateTime fechaInicio, DateTime? fechaFin, bool incluirEliminados,
         string motorSeleccionado = "todos") {
         try {
-            var consulta = _context.Citas.AsQueryable();
+            var consulta = _context.Citas.AsNoTracking().AsQueryable();
 
             // mismo filtros pero sin paginacion
             consulta = consulta.Where(c => incluirEliminados ? c.IsDeleted : !c.IsDeleted);

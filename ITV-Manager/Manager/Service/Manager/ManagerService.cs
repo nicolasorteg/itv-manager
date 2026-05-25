@@ -113,4 +113,8 @@ public class ManagerService: IManagerService {
     /// <inheritdoc cref="IManagerService.ContarTotalCitas" />
     public int ContarTotalCitas(bool incluirEliminados = false) =>
         _citaRepository.CountCita(incluirEliminados);
+    
+    /// <inheritdoc cref="IManagerService.ObtenerTodas" />
+    public IEnumerable<Cita> ObtenerTodas(int pagina = 1, int tamPagina = 10, bool incluirEliminados = false) =>
+        _citaRepository.GetAll(pagina, tamPagina, incluirEliminados);
 }

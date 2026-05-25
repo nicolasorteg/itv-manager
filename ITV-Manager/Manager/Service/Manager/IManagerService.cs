@@ -47,4 +47,6 @@ public interface IManagerService {
     
     /// <summary> Cuenta la cantidad de citas existentes </summary>
     int ContarTotalCitas(bool incluirEliminados = false);
+
+    IEnumerable<Cita> ObtenerTodas(int pagina, int tamPagina, bool incluirEliminados = false);
 }

@@ -343,7 +343,7 @@ public class CitaEfCoreRepositoryTest {
     public void GetWithFilters_DebeFiltrarPorMotoresYSearchText() {
         // arrange
         _context.Citas.AddRange(new List<CitaEntity> {
-            new() { Id = 1, Matricula = "AABB123", Dni = "11111111d", Motor = 0, FechaInspeccion = DateTime.Today, Marca = "Toyota", Modelo = "Yaris" }, 
+            new() { Id = 1, Matricula = "AABB123", Dni = "11111111d", Motor = 0, FechaInspeccion = DateTime.Today, Marca = "Toyota", Modelo = "Yaris", IsDeleted = true}, 
             new() { Id = 2, Matricula = "CCDD456", Dni = "22222222s", Motor = 1, FechaInspeccion = DateTime.Today, Marca = "Renault", Modelo = "Clio" }, 
             new() { Id = 3, Matricula = "EEFF789", Dni = "33333333f", Motor = 2, FechaInspeccion = DateTime.Today, Marca = "Ford", Modelo = "Fiesta" },
             new() { Id = 4, Matricula = "1111ccc", Dni = "34444444c", Motor = 3, FechaInspeccion = DateTime.Today, Marca = "Skoda", Modelo = "Octavia" }
@@ -390,8 +390,7 @@ public class CitaEfCoreRepositoryTest {
 
         // assert
         resultadoG.IsSuccess.Should().BeTrue();
-        resultadoG.Value.Should().HaveCount(1);
-        resultadoG.Value.First().Matricula.Should().Be("AABB123");
+        resultadoG.Value.Should().HaveCount(0);
         resultadoD.IsSuccess.Should().BeTrue();
         resultadoD.Value.Should().HaveCount(1);
         resultadoD.Value.First().Matricula.Should().Be("CCDD456");

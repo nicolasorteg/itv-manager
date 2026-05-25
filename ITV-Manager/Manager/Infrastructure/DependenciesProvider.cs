@@ -9,6 +9,7 @@ using Manager.Repositories.Base;
 using Manager.Repositories.Dapper;
 using Manager.Repositories.EfCore;
 using Manager.Service.Manager;
+using Manager.Service.Report;
 using Manager.Storage.Common;
 using Manager.Storage.Csv;
 using Manager.Storage.Json;
@@ -95,12 +96,14 @@ public class DependenciesProvider {
     }
 
     private static void RegisterServices(IServiceCollection services) {
+        services.AddTransient<IReportService, ReportService>();
         services.AddScoped<IManagerService, ManagerService>(sp => 
             new ManagerService(
                 sp.GetRequiredService<ICitaRepository>(),
                 sp.GetRequiredService<IValidator<Cita>>(),
                 sp.GetRequiredService<ICache<int, Cita>>()
-            ));
+            )
+        );
     }
     
     
