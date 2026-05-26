@@ -42,6 +42,7 @@
             <MenuItem Header="_Archivo" Background="#1E1E1E" Foreground="White">
                 <MenuItem Header="_Importar..." Command="{Binding ImportarGlobalCommand}" Background="#2C2C2E" Foreground="White"/>
                 <MenuItem Header="_Exportar..." Command="{Binding ExportarGlobalCommand}" Background="#2C2C2E" Foreground="White"/>
+                <MenuItem Header="_Realizar Backup" Command="{Binding RealizarBackupCommand}" Background="#2C2C2E" Foreground="White"/>
             </MenuItem>
             <MenuItem Header="_Configuración" Command="{Binding MostrarDetallesCommand}" Foreground="White"/>
             <MenuItem Header="A_cerca de" Command="{Binding MostrarAcercaDeCommand}" Foreground="White"/>

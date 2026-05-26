@@ -290,9 +290,9 @@ var assemblies = [
   {
     "name": "Manager",
     "classes": [
-      { "name": "Manager.App", "rp": "Manager_App.html", "cl": 0, "ucl": 35, "cal": 35, "tl": 120, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.App", "rp": "Manager_App.html", "cl": 0, "ucl": 50, "cal": 50, "tl": 125, "cb": 0, "tb": 8, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Cache.LruCache\u003CT1, T2\u003E", "rp": "Manager_LruCache_2.html", "cl": 52, "ucl": 0, "cal": 52, "tl": 89, "cb": 10, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Config.AppConfig", "rp": "Manager_AppConfig.html", "cl": 34, "ucl": 13, "cal": 47, "tl": 84, "cb": 8, "tb": 28, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Config.AppConfig", "rp": "Manager_AppConfig.html", "cl": 35, "ucl": 12, "cal": 47, "tl": 84, "cb": 10, "tb": 28, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Dto.CitaDto", "rp": "Manager_CitaDto.html", "cl": 17, "ucl": 0, "cal": 17, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Entity.AppDbContext", "rp": "Manager_AppDbContext.html", "cl": 7, "ucl": 8, "cal": 15, "tl": 33, "cb": 2, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Entity.CitaEntity", "rp": "Manager_CitaEntity.html", "cl": 13, "ucl": 0, "cal": 13, "tl": 46, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
@@ -301,28 +301,29 @@ var assemblies = [
       { "name": "Manager.Errors.Common.DomainError", "rp": "Manager_DomainError.html", "cl": 1, "ucl": 0, "cal": 1, "tl": 5, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Errors.Report.ReportError", "rp": "Manager_ReportError.html", "cl": 3, "ucl": 2, "cal": 5, "tl": 12, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Errors.Report.ReportErrors", "rp": "Manager_ReportErrors.html", "cl": 0, "ucl": 6, "cal": 6, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Errors.Storage.StorageError", "rp": "Manager_StorageError.html", "cl": 6, "ucl": 5, "cal": 11, "tl": 33, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Errors.Storage.StorageErrors", "rp": "Manager_StorageErrors.html", "cl": 4, "ucl": 1, "cal": 5, "tl": 27, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Errors.Storage.StorageError", "rp": "Manager_StorageError.html", "cl": 7, "ucl": 4, "cal": 11, "tl": 33, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Errors.Storage.StorageErrors", "rp": "Manager_StorageErrors.html", "cl": 5, "ucl": 0, "cal": 5, "tl": 27, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Factories.CitaFactory", "rp": "Manager_CitaFactory.html", "cl": 46, "ucl": 0, "cal": 46, "tl": 55, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Infrastructure.DependenciesProvider", "rp": "Manager_DependenciesProvider.html", "cl": 0, "ucl": 93, "cal": 93, "tl": 141, "cb": 0, "tb": 24, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Infrastructure.DependenciesProvider", "rp": "Manager_DependenciesProvider.html", "cl": 0, "ucl": 119, "cal": 119, "tl": 151, "cb": 0, "tb": 48, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Mapper.CitaMapper", "rp": "Manager_CitaMapper.html", "cl": 77, "ucl": 0, "cal": 77, "tl": 105, "cb": 10, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Models.Cita", "rp": "Manager_Cita.html", "cl": 13, "ucl": 0, "cal": 13, "tl": 24, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Repositories.Ado.CitaAdoRepository", "rp": "Manager_CitaAdoRepository.html", "cl": 341, "ucl": 13, "cal": 354, "tl": 533, "cb": 90, "tb": 100, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Repositories.Dapper.CitaDapperRepository", "rp": "Manager_CitaDapperRepository.html", "cl": 235, "ucl": 11, "cal": 246, "tl": 427, "cb": 78, "tb": 84, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Repositories.EfCore.CitaEfCoreRepository", "rp": "Manager_CitaEfCoreRepository.html", "cl": 217, "ucl": 11, "cal": 228, "tl": 362, "cb": 77, "tb": 80, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Service.Backup.BackupService", "rp": "Manager_BackupService.html", "cl": 53, "ucl": 3, "cal": 56, "tl": 93, "cb": 20, "tb": 22, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Service.ImportExport.ImportExportService", "rp": "Manager_ImportExportService.html", "cl": 20, "ucl": 0, "cal": 20, "tl": 39, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Service.Manager.ManagerService", "rp": "Manager_ManagerService.html", "cl": 60, "ucl": 0, "cal": 60, "tl": 120, "cb": 11, "tb": 12, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Service.Manager.ManagerService", "rp": "Manager_ManagerService.html", "cl": 60, "ucl": 2, "cal": 62, "tl": 124, "cb": 11, "tb": 12, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Service.Report.ReportService", "rp": "Manager_ReportService.html", "cl": 160, "ucl": 0, "cal": 160, "tl": 195, "cb": 1, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Storage.Csv.CitaCsvStorage", "rp": "Manager_CitaCsvStorage.html", "cl": 76, "ucl": 0, "cal": 76, "tl": 116, "cb": 18, "tb": 20, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Storage.Json.CitaJsonStorage", "rp": "Manager_CitaJsonStorage.html", "cl": 45, "ucl": 3, "cal": 48, "tl": 97, "cb": 6, "tb": 6, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Storage.Xml.CitaXmlStorage", "rp": "Manager_CitaXmlStorage.html", "cl": 43, "ucl": 0, "cal": 43, "tl": 84, "cb": 4, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Validators.Citas.CitaValidator", "rp": "Manager_CitaValidator.html", "cl": 23, "ucl": 0, "cal": 23, "tl": 51, "cb": 18, "tb": 18, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Validators.Citas.CitaValidator", "rp": "Manager_CitaValidator.html", "cl": 37, "ucl": 0, "cal": 37, "tl": 53, "cb": 36, "tb": 36, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Validators.Citas.CitaValidatorExtensions", "rp": "Manager_CitaValidatorExtensions.html", "cl": 39, "ucl": 0, "cal": 39, "tl": 116, "cb": 26, "tb": 26, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.ViewModels.Citas.CitasViewModel", "rp": "Manager_CitasViewModel.html", "cl": 0, "ucl": 64, "cal": 64, "tl": 100, "cb": 0, "tb": 20, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.ViewModels.Citas.CitasViewModel", "rp": "Manager_CitasViewModel.html", "cl": 0, "ucl": 83, "cal": 83, "tl": 101, "cb": 0, "tb": 40, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.ViewModels.Informe.InformeViewModel", "rp": "Manager_InformeViewModel.html", "cl": 0, "ucl": 39, "cal": 39, "tl": 75, "cb": 0, "tb": 29, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.ViewModels.Main.MainViewModel", "rp": "Manager_MainViewModel.html", "cl": 0, "ucl": 29, "cal": 29, "tl": 53, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.ViewModels.Main.MainViewModel", "rp": "Manager_MainViewModel.html", "cl": 0, "ucl": 86, "cal": 86, "tl": 120, "cb": 0, "tb": 24, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Views.About.AboutWindow", "rp": "Manager_AboutWindow.html", "cl": 0, "ucl": 15, "cal": 15, "tl": 46, "cb": 0, "tb": 6, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Manager.Views.Main.MainWindow", "rp": "Manager_MainWindow.html", "cl": 0, "ucl": 9, "cal": 9, "tl": 258, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Manager.Views.Main.MainWindow", "rp": "Manager_MainWindow.html", "cl": 0, "ucl": 9, "cal": 9, "tl": 259, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Manager.Views.Splash.SplashWindow", "rp": "Manager_SplashWindow.html", "cl": 0, "ucl": 26, "cal": 26, "tl": 101, "cb": 0, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
 ];
@@ -350,6 +351,24 @@ var riskHotspots = [
       { "value": 10, "exceeded": false },
     ]},
   {
+    "assembly": "Manager", "class": "Manager.ViewModels.Citas.CitasViewModel", "reportPath": "Manager_CitasViewModel.html", "methodName": "BorrarCita()", "methodShortName": "BorrarCita()", "fileIndex": 0, "line": 79,
+    "metrics": [
+      { "value": 110, "exceeded": true },
+      { "value": 10, "exceeded": false },
+    ]},
+  {
+    "assembly": "Manager", "class": "Manager.ViewModels.Main.MainViewModel", "reportPath": "Manager_MainViewModel.html", "methodName": "ImportarGlobal()", "methodShortName": "ImportarGlobal()", "fileIndex": 0, "line": 33,
+    "metrics": [
+      { "value": 110, "exceeded": true },
+      { "value": 10, "exceeded": false },
+    ]},
+  {
+    "assembly": "Manager", "class": "Manager.ViewModels.Main.MainViewModel", "reportPath": "Manager_MainViewModel.html", "methodName": "ExportarGlobal()", "methodShortName": "ExportarGlobal()", "fileIndex": 0, "line": 63,
+    "metrics": [
+      { "value": 72, "exceeded": true },
+      { "value": 8, "exceeded": false },
+    ]},
+  {
     "assembly": "Manager", "class": "Manager.Config.AppConfig", "reportPath": "Manager_AppConfig.html", "methodName": "get_ItvDataFile()", "methodShortName": "get_ItvDataFile()", "fileIndex": 0, "line": 50,
     "metrics": [
       { "value": 42, "exceeded": true },
@@ -374,6 +393,24 @@ var riskHotspots = [
       { "value": 6, "exceeded": false },
     ]},
   {
+    "assembly": "Manager", "class": "Manager.Infrastructure.DependenciesProvider", "reportPath": "Manager_DependenciesProvider.html", "methodName": "RegisterStorages(Microsoft.Extensions.DependencyInjection.IServiceCollection)", "methodShortName": "RegisterStorages(...)", "fileIndex": 0, "line": 56,
+    "metrics": [
+      { "value": 42, "exceeded": true },
+      { "value": 6, "exceeded": false },
+    ]},
+  {
+    "assembly": "Manager", "class": "Manager.Infrastructure.DependenciesProvider", "reportPath": "Manager_DependenciesProvider.html", "methodName": "RegisterRepositories(Microsoft.Extensions.DependencyInjection.IServiceCollection)", "methodShortName": "RegisterRepositories(...)", "fileIndex": 0, "line": 68,
+    "metrics": [
+      { "value": 42, "exceeded": true },
+      { "value": 6, "exceeded": false },
+    ]},
+  {
+    "assembly": "Manager", "class": "Manager.Infrastructure.DependenciesProvider", "reportPath": "Manager_DependenciesProvider.html", "methodName": "CleanDirectory(System.String)", "methodShortName": "CleanDirectory(...)", "fileIndex": 0, "line": 135,
+    "metrics": [
+      { "value": 42, "exceeded": true },
+      { "value": 6, "exceeded": false },
+    ]},
+  {
     "assembly": "Manager", "class": "Manager.Repositories.Ado.CitaAdoRepository", "reportPath": "Manager_CitaAdoRepository.html", "methodName": "GetWithFilters(System.DateTime,System.Nullable\u00601\u003CSystem.DateTime\u003E,System.Int32,System.Int32,System.String,System.String,System.Boolean)", "methodShortName": "GetWithFilters(...)", "fileIndex": 0, "line": 391,
     "metrics": [
       { "value": 18, "exceeded": false },
@@ -381,6 +418,12 @@ var riskHotspots = [
     ]},
   {
     "assembly": "Manager", "class": "Manager.Validators.Citas.CitaValidator", "reportPath": "Manager_CitaValidator.html", "methodName": "Validar(Manager.Models.Cita)", "methodShortName": "Validar(...)", "fileIndex": 0, "line": 14,
+    "metrics": [
+      { "value": 18, "exceeded": false },
+      { "value": 18, "exceeded": true },
+    ]},
+  {
+    "assembly": "Manager", "class": "Manager.Validators.Citas.CitaValidator", "reportPath": "Manager_CitaValidator.html", "methodName": "Validar(Manager.Models.Cita)", "methodShortName": "Validar(...)", "fileIndex": 0, "line": 16,
     "metrics": [
       { "value": 18, "exceeded": false },
       { "value": 18, "exceeded": true },

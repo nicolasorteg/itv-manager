@@ -8,6 +8,7 @@ using Manager.Repositories.Ado;
 using Manager.Repositories.Base;
 using Manager.Repositories.Dapper;
 using Manager.Repositories.EfCore;
+using Manager.Service.Backup;
 using Manager.Service.ImportExport;
 using Manager.Service.Manager;
 using Manager.Service.Report;
@@ -99,6 +100,12 @@ public class DependenciesProvider {
     private static void RegisterServices(IServiceCollection services) {
         services.AddTransient<IReportService, ReportService>();
         services.AddTransient<IImportExportService, ImportExportService>(); 
+        services.AddTransient<IBackupService>(sp =>          
+            new BackupService(
+                new CitaJsonStorage(), // para que ignore el tipo de storage del appsettings.json y use json siempre para el backup
+                AppConfig.BackupDirectory
+            )
+        );
         services.AddScoped<IManagerService, ManagerService>(sp => 
             new ManagerService(
                 sp.GetRequiredService<ICitaRepository>(),
@@ -107,6 +114,7 @@ public class DependenciesProvider {
             )
         );
     }
+    
     
     
     // métodos auxiliares -------------------------

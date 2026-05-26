@@ -11,6 +11,8 @@ namespace Manager.Validators.Citas;
 /// Validador para campos de Cita. Se usa el Result del ROP.
 /// </summary>
 public class CitaValidator: IValidator<Cita> {
+    
+    /// <inheritdoc cref="IValidator{T}.Validar" />
     public Result<Cita, DomainError> Validar(Cita cita) {
         Log.Debug($"🔵 Validando cita de ID: {cita.Id}");
         

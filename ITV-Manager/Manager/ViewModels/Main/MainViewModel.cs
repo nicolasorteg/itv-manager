@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Manager.Config;
+using Manager.Service.Backup;
 using Manager.Service.ImportExport;
 using Manager.Service.Manager;
 using Manager.Service.Report;
@@ -16,13 +17,15 @@ public partial class MainViewModel : ObservableObject {
     
     private readonly IManagerService _managerService;
     private readonly IImportExportService _importExportService;
+    private readonly IBackupService _backupService;
 
-    public MainViewModel(IManagerService managerService, IReportService reportService, IImportExportService importExportService) {
+    public MainViewModel(IManagerService managerService, IReportService reportService, IImportExportService importExportService, IBackupService backupService) {
         // subviewmodels
         _managerService = managerService;
         _importExportService = importExportService;
         CitasVM = new CitasViewModel(managerService);
         InformeVM = new InformeViewModel(reportService);
+        _backupService = backupService; 
         CitasVM.CargarCitas();
     }
 
@@ -103,5 +106,15 @@ public partial class MainViewModel : ObservableObject {
             Owner = Application.Current.MainWindow
         };
         acercaDeWin.ShowDialog();
+    }
+    
+    [RelayCommand]
+    private void RealizarBackup() {
+        var todas = _managerService.ObtenerTodas(1, int.MaxValue, incluirEliminados: true);
+        var resultado = _backupService.RealizarBackup(todas);
+        if (resultado.IsSuccess)
+            MessageBox.Show($"Backup creado:\n{resultado.Value}", "Backup", MessageBoxButton.OK, MessageBoxImage.Information);
+        else
+            MessageBox.Show($"Error: {resultado.Error.Mensaje}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
     }
 }
