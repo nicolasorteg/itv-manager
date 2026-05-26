@@ -49,6 +49,4 @@ public interface IManagerService {
     int ContarTotalCitas(bool incluirEliminados = false);
 
     IEnumerable<Cita> ObtenerTodas(int pagina, int tamPagina, bool incluirEliminados = false);
-    
-    Result<Cita, DomainError> ImportarCita(Cita cita);
 }

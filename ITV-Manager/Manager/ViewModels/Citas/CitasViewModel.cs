@@ -72,7 +72,16 @@ public partial class CitasViewModel(IManagerService managerService) : Observable
     [RelayCommand(CanExecute = nameof(CanOperarCita))]
     private void ActualizarCita() {
         if (CitaSeleccionada == null) return;
-        MessageBox.Show($"Formulario para modificar la matrícula {CitaSeleccionada.Matricula} próximamente.", "Actualizar Cita", MessageBoxButton.OK, MessageBoxImage.Information);
+
+        var editVM = new EditarCitaViewModel(CitaSeleccionada, _managerService);
+        var editWindow = new Views.Citas.EditarCitaWindow {
+            DataContext = editVM,
+            Owner = Application.Current.MainWindow
+        };
+
+        if (editWindow.ShowDialog() == true) {
+            CargarCitas();
+        }
     }
 
     [RelayCommand(CanExecute = nameof(CanOperarCita))]
