@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Manager.Views.Citas.EditarCitaWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Editar Cita" Height="620" Width="440"
+        Title="{Binding Titulo}" Height="620" Width="440"
         WindowStartupLocation="CenterOwner"
         Background="#121212" ResizeMode="NoResize">
 
@@ -121,7 +121,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Editar Cita" Foreground="#007AFF" 
+            <TextBlock Grid.Row="0" Text="{Binding Titulo}" Foreground="#007AFF" 
                        FontSize="18" FontWeight="Bold" Margin="0,0,0,16"/>
 
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
@@ -160,7 +160,7 @@
                         Style="{StaticResource ActionButton}" Background="#2C2C2E"
                         Command="{Binding CancelarCommand}"
                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
-                <Button Content="Guardar Cambios" Width="130"
+                <Button Content="{Binding TextBotonGuardar}" Width="130"
                         Style="{StaticResource ActionButton}" Background="#007AFF"
                         Command="{Binding GuardarCommand}"
                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>

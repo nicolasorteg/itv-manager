@@ -105,6 +105,19 @@ public partial class CitasViewModel(IManagerService managerService) : Observable
             
         CargarCitas();
     }
+    
+    [RelayCommand]
+    private void CrearCita() {
+        var editVM = new EditarCitaViewModel(_managerService);
+        var editWindow = new Views.Citas.EditarCitaWindow {
+            DataContext = editVM,
+            Owner = Application.Current.MainWindow
+        };
+
+        if (editWindow.ShowDialog() == true) {
+            CargarCitas();
+        }
+    }
 
     private bool CanOperarCita() => CitaSeleccionada != null;
 }

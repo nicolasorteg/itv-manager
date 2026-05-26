@@ -116,6 +116,9 @@
                     <TextBlock Text="de" Foreground="#8E8E93" VerticalAlignment="Center" Margin="5,0"/>
                     <TextBlock Text="{Binding CitasVM.TotalPaginas}" Foreground="White" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,15,0"/>
                     <Button Content="Siguiente ▶" Width="90" Height="30" Style="{StaticResource ModernButton}" Command="{Binding CitasVM.PaginaSiguienteCommand}"/>
+                    <Button Content="+ Nueva Cita" Width="110" Height="30" Margin="20,0,0,0"
+                            Style="{StaticResource ModernButton}" Background="#007AFF"
+                            Command="{Binding CitasVM.CrearCitaCommand}"/>
                 </StackPanel>
             </Grid>
 

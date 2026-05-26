@@ -10,8 +10,11 @@ public partial class EditarCitaViewModel : ObservableObject {
 
     private readonly IManagerService _managerService;
     private readonly int _idOriginal;
+    private readonly bool _esModoCreacion;
 
     // campos editables
+    [ObservableProperty] private string _titulo = "Editar Cita";
+    [ObservableProperty] private string _textBotonGuardar = "Guardar Cambios";
     [ObservableProperty] private string _matricula = "";
     [ObservableProperty] private string _dni = "";
     [ObservableProperty] private string _marca = "";
@@ -38,10 +41,19 @@ public partial class EditarCitaViewModel : ObservableObject {
         FechaMatriculacion = cita.FechaMatriculacion;
         FechaInspeccion = cita.FechaInspeccion;
     }
+    
+    // constructor creación
+    public EditarCitaViewModel(IManagerService managerService) {
+        _managerService = managerService;
+        _idOriginal = 0;
+        _esModoCreacion = true;
+        Titulo = "Nueva Cita";
+        TextBotonGuardar = "Crear Cita";
+    }
 
     [RelayCommand]
     private void Guardar(Window ventana) {
-        var citaActualizada = new Cita {
+        var cita = new Cita {
             Id = _idOriginal,
             Matricula = Matricula,
             Dni = Dni,
@@ -53,15 +65,19 @@ public partial class EditarCitaViewModel : ObservableObject {
             FechaInspeccion = FechaInspeccion
         };
 
-        var resultado = _managerService.ActualizarCita(_idOriginal, citaActualizada);
+        var resultado = _esModoCreacion
+            ? _managerService.CrearCita(cita)
+            : _managerService.ActualizarCita(_idOriginal, cita);
+
+        var accion = _esModoCreacion ? "creada" : "actualizada";
 
         if (resultado.IsSuccess) {
             Guardado = true;
-            MessageBox.Show("Cita actualizada correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show($"Cita {accion} correctamente.", "Éxito", MessageBoxButton.OK, MessageBoxImage.Information);
             ventana.DialogResult = true;
             ventana.Close();
         } else {
-            MessageBox.Show($"Error al actualizar: {resultado.Error.Mensaje}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show($"Error: {resultado.Error.Mensaje}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
