@@ -283,9 +283,21 @@ public class CitaAdoRepository : ICitaRepository {
     public Result<Cita, DomainError> Restore(int id) {
         
         _logger.Debug($"Restaurando cita borrada con ID: {id}");
+        
+        using var connection = new SqliteConnection(_connectionString);
+        connection.Open();
     
-        // bsuqueda cita
-        var cita = GetById(id);
+        // bsuqueda cita (no se usa getbyid pq si esta borrada no la mostra´ra)
+        Cita? cita = null;
+        using (var findCmd = connection.CreateCommand()) {
+            findCmd.CommandText = "SELECT * FROM Citas WHERE Id = @Id;";
+            findCmd.Parameters.AddWithValue("@Id", id);
+            
+            using var reader = findCmd.ExecuteReader();
+            if (reader.Read()) {
+                cita = MapReaderToEntity(reader).ToModel();
+            }
+        }
         if (cita == null) return Result.Failure<Cita, DomainError>(CitaErrors.Database("No se puede restaurar una Cita que no existe."));
         
         // si no estaba borrada devolvemos success directamente
@@ -293,8 +305,7 @@ public class CitaAdoRepository : ICitaRepository {
             return Result.Success<Cita, DomainError>(cita);
         }
 
-        using var connection = new SqliteConnection(_connectionString);
-        connection.Open();
+        
         
         // validacion apra no restaurar una cita que rompa la RN-05 (misma matrícula en la misma fecha)
         using var checkMatriculaCmd = connection.CreateCommand();

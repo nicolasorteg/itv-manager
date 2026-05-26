@@ -231,10 +231,14 @@ public class CitaDapperRepository: ICitaRepository {
     public Result<Cita, DomainError> Restore(int id) {
         try {
             _logger.Debug($"Restaurado cita borrada con ID: {id}");
-            var existente = GetById(id);
-            if (existente == null) {
+            const string SqlGetAny = "SELECT * FROM Citas WHERE Id = @Id";
+            var entity = _connection.QueryFirstOrDefault<CitaEntity>(SqlGetAny, new { Id = id });
+        
+            if (entity == null) {
                 return Result.Failure<Cita, DomainError>(CitaErrors.Database("No se puede restaurar una Cita que no existe."));
             }
+            
+            var existente = entity.ToModel()!;
 
             if (!existente.IsDeleted) {
                 return Result.Success<Cita, DomainError>(existente);

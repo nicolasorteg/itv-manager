@@ -205,7 +205,8 @@ public class CitaAdoRepositoryTest {
         // act
         _repository.Delete(creada.Id, isLogical: true);
         
-        var recuperado = _repository.GetById(creada.Id);
+        var todosConEliminados = _repository.GetAll(pagina: 1, tamPagina: 10, incluirEliminados: true);
+        var recuperado = todosConEliminados.FirstOrDefault(c => c.Id == creada.Id);
         var listadoActivos = _repository.GetAll(pagina: 1, tamPagina: 10, incluirEliminados: false);
 
         // assert
@@ -285,7 +286,8 @@ public class CitaAdoRepositoryTest {
         // act
         _repository.Delete(c1.Id, isLogical: true);
         
-        var recuperado = _repository.GetById(c1.Id);
+        var todosConEliminados = _repository.GetAll(pagina: 1, tamPagina: 10, incluirEliminados: true);
+        var recuperado = todosConEliminados.FirstOrDefault(c => c.Id == c1.Id);
         var listadoActivos = _repository.GetAll(pagina: 1, tamPagina: 10, incluirEliminados: false);
 
         // assert
