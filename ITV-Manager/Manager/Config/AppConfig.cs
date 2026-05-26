@@ -81,4 +81,18 @@ public static class AppConfig {
     public static string ReportDirectory => Path.Combine(
         AppDomain.CurrentDomain.BaseDirectory,
         Configuration.GetValue<string>("Reports:Directory") ?? "reports");
+    
+    // logs
+    public static string LogMinimumLevel => 
+        Configuration.GetValue<string>("Serilog:MinimumLevel") ?? "Debug";
+
+    public static string LogFilePath => 
+        Configuration.GetValue<string>("Serilog:WriteTo:1:Args:path") ?? "log/log-.txt";
+
+    public static int LogRetainedFiles => 
+        Configuration.GetValue<int>("Serilog:WriteTo:1:Args:retainedFileCountLimit", 5);
+
+    public static string LogOutputTemplate => 
+        Configuration.GetValue<string>("Serilog:WriteTo:1:Args:outputTemplate") ?? 
+        "{Timestamp:yyyy-MM-dd HH:mm:ss.fff} [{Level:u3}] [{SourceContext}] {Message:lj}{NewLine}{Exception}";
 }

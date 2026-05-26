@@ -54,7 +54,7 @@ public partial class CitasViewModel(IManagerService managerService) : Observable
         TotalPaginas = (int)Math.Ceiling((double)totalRegistrosActivos / TamPagina);
         if (TotalPaginas < 1) TotalPaginas = 1; 
 
-        // Notificar el estado de los botones de paginación
+        // notificar el estado de los botones de paginación
         PaginaAnteriorCommand.NotifyCanExecuteChanged();
         PaginaSiguienteCommand.NotifyCanExecuteChanged();
     }

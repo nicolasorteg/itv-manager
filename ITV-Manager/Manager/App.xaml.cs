@@ -53,12 +53,13 @@ public partial class App {
     private static void ConfigureSerilog() {
         SelfLog.Enable(msg => Debug.WriteLine($"SERILOG DIAG: {msg}"));
 
+        // inicializacion usando appconfig
         Log.Logger = new LoggerConfiguration()
             .ReadFrom.Configuration(AppConfig.Configuration)
             .Enrich.FromLogContext()
             .CreateLogger();
-
-        Log.Information("Sistema de logs configurado desde el appsettings.json");
+        
+        Log.Information($"Serilog inicializado. Archivo activo: {AppConfig.LogFilePath} (Nivel: {AppConfig.LogMinimumLevel})");
     }
     
     /// <summary>  Se ejecuta al cerrar la aplicación </summary>
