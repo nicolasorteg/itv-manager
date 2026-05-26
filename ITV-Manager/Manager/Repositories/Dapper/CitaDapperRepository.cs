@@ -36,8 +36,8 @@ public class CitaDapperRepository: ICitaRepository {
     public Cita? GetById(int id) {
         try {
             _logger.Debug($"Obteniendo cita por ID: {id}");
-            const string Sql = "SELECT * FROM Citas WHERE Id = @Id";
-            var entity = _connection.QueryFirstOrDefault<CitaEntity>(Sql, new { Id = id });
+            const string Sql = "SELECT * FROM Citas WHERE Id = @Id AND IsDeleted = 0";
+            var entity = _connection.QueryFirstOrDefault<CitaEntity>(Sql, new { Id = id, IsDeleted = false });
             return entity?.ToModel();
         }
         catch (Exception ex) {

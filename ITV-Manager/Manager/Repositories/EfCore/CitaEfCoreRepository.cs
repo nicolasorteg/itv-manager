@@ -38,7 +38,7 @@ public class CitaEfCoreRepository: ICitaRepository {
     public Cita? GetById(int id) {
         try {
             _logger.Debug($"Obteniendo cita por ID: {id}");
-            var entity = _context.Citas.FirstOrDefault(c => c.Id == id);
+            var entity = _context.Citas.FirstOrDefault(c => c.Id == id && !c.IsDeleted);
             return entity?.ToModel();
         }
         catch (Exception ex) {

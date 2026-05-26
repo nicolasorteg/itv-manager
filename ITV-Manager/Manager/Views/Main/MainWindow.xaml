@@ -119,6 +119,31 @@
                     <Button Content="+ Nueva Cita" Width="110" Height="30" Margin="20,0,0,0"
                             Style="{StaticResource ModernButton}" Background="#007AFF"
                             Command="{Binding CitasVM.CrearCitaCommand}"/>
+                    <Border Background="#2C2C2E" BorderBrush="#3A3A3C" BorderThickness="1" 
+                            CornerRadius="6" Margin="43,0,0,0" Padding="5,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="ID:" Foreground="#8E8E93" VerticalAlignment="Center" Margin="0,0,6,0" FontSize="12" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding CitasVM.BusquedaId, UpdateSourceTrigger=PropertyChanged}"
+                                     Width="40" Height="30" Background="Transparent" Foreground="White"
+                                     BorderThickness="0" VerticalContentAlignment="Center" FontSize="13"/>
+                            <Button Content="🔍" Width="20" Height="30" Background="Transparent" Foreground="White"
+                                    BorderThickness="0" Cursor="Hand"
+                                    Command="{Binding CitasVM.BuscarPorIdCommand}"/>
+                        </StackPanel>
+                    </Border>
+                    
+                    <Border Background="#2C2C2E" BorderBrush="#3A3A3C" BorderThickness="1"
+                            CornerRadius="6" Margin="10,0,0,0" Padding="5,0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Mat:" Foreground="#8E8E93" VerticalAlignment="Center" Margin="0,0,6,0" FontSize="12" FontWeight="SemiBold"/>
+                            <TextBox Text="{Binding CitasVM.BusquedaMatricula, UpdateSourceTrigger=PropertyChanged}"
+                                     Width="80" Height="30" Background="Transparent" Foreground="White"
+                                     BorderThickness="0" VerticalContentAlignment="Center" FontSize="13"/>
+                            <Button Content="🔍" Width="28" Height="30" Background="Transparent" Foreground="White"
+                                    BorderThickness="0" Cursor="Hand"
+                                    Command="{Binding CitasVM.BuscarPorMatriculaCommand}"/>
+                        </StackPanel>
+                    </Border>
                 </StackPanel>
             </Grid>
 

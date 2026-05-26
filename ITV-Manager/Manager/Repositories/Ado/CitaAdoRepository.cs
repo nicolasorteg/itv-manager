@@ -96,9 +96,10 @@ public class CitaAdoRepository : ICitaRepository {
         connection.Open();
 
         using var command = connection.CreateCommand();
-        command.CommandText = "SELECT * FROM Citas WHERE Id = @Id;";
+        command.CommandText = "SELECT * FROM Citas WHERE Id = @Id AND IsDeleted = @IsDeleted;";
         command.Parameters.AddWithValue("@Id", id); // asignamos el id
-
+        command.Parameters.AddWithValue("@IsDeleted", 0);
+        
         using var reader = command.ExecuteReader();
         return reader.Read() ? MapReaderToEntity(reader).ToModel() : null;
     }

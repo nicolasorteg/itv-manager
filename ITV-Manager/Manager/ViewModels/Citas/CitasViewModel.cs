@@ -16,6 +16,8 @@ public partial class CitasViewModel(IManagerService managerService) : Observable
     [ObservableProperty] private int _paginaActual = 1;
     [ObservableProperty] private int _totalPaginas = 1;
     [ObservableProperty] private Cita? _citaSeleccionada;
+    [ObservableProperty] private string _busquedaId = "";
+    [ObservableProperty] private string _busquedaMatricula = "";
 
     // Métodos parciales nativos del Toolkit que reaccionan automáticamente a los cambios
     partial void OnCitaSeleccionadaChanged(Cita? value) {
@@ -116,6 +118,42 @@ public partial class CitasViewModel(IManagerService managerService) : Observable
 
         if (editWindow.ShowDialog() == true) {
             CargarCitas();
+        }
+    }
+    
+    [RelayCommand]
+    private void BuscarPorId() {
+        if (!int.TryParse(BusquedaId.Trim(), out var id)) {
+            MessageBox.Show("Introduce un ID numérico válido.", "Búsqueda", MessageBoxButton.OK, MessageBoxImage.Warning);
+            return;
+        }
+
+        var resultado = _managerService.ObtenerPorId(id);
+        if (resultado.IsSuccess) {
+            Citas = new ObservableCollection<Cita> { resultado.Value };
+            TotalPaginas = 1;
+            PaginaAnteriorCommand.NotifyCanExecuteChanged();
+            PaginaSiguienteCommand.NotifyCanExecuteChanged();
+        } else {
+            MessageBox.Show($"No se encontró ninguna cita con ID {id}.", "Sin resultados", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+    }
+
+    [RelayCommand]
+    private void BuscarPorMatricula() {
+        if (string.IsNullOrWhiteSpace(BusquedaMatricula)) {
+            CargarCitas();
+            return;
+        }
+
+        var resultado = _managerService.ObtenerPorMatricula(BusquedaMatricula.Trim().ToUpper());
+        if (resultado.IsSuccess) {
+            Citas = new ObservableCollection<Cita> { resultado.Value };
+            TotalPaginas = 1;
+            PaginaAnteriorCommand.NotifyCanExecuteChanged();
+            PaginaSiguienteCommand.NotifyCanExecuteChanged();
+        } else {
+            MessageBox.Show($"No se encontró ninguna cita con matrícula {BusquedaMatricula}.", "Sin resultados", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 
