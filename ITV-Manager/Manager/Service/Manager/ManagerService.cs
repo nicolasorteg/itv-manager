@@ -117,4 +117,8 @@ public class ManagerService: IManagerService {
     /// <inheritdoc cref="IManagerService.ObtenerTodas" />
     public IEnumerable<Cita> ObtenerTodas(int pagina = 1, int tamPagina = 10, bool incluirEliminados = false) =>
         _citaRepository.GetAll(pagina, tamPagina, incluirEliminados);
+
+    public Result<Cita, DomainError> ImportarCita(Cita cita) {
+        throw new NotImplementedException();
+    }
 }

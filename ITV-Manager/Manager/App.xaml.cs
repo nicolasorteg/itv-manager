@@ -2,6 +2,7 @@
 using System.Windows;
 using Manager.Config;
 using Manager.Infrastructure;
+using Manager.Service.ImportExport;
 using Manager.Service.Manager;
 using Manager.Service.Report;
 using Manager.ViewModels.Main;
@@ -36,7 +37,9 @@ public partial class App {
             // inicializamos servicios
             var managerService = ServiceProvider.GetRequiredService<IManagerService>();
             var reportService = ServiceProvider.GetRequiredService<IReportService>();
-            var mainViewModel = new MainViewModel(managerService, reportService);
+            var importExportService = ServiceProvider.GetRequiredService<IImportExportService>();
+            var mainViewModel = new MainViewModel(managerService, reportService, importExportService);
+
             
             var mainWindow = new MainWindow { DataContext = mainViewModel };
             

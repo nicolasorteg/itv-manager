@@ -8,6 +8,7 @@ using Manager.Repositories.Ado;
 using Manager.Repositories.Base;
 using Manager.Repositories.Dapper;
 using Manager.Repositories.EfCore;
+using Manager.Service.ImportExport;
 using Manager.Service.Manager;
 using Manager.Service.Report;
 using Manager.Storage.Common;
@@ -97,6 +98,7 @@ public class DependenciesProvider {
 
     private static void RegisterServices(IServiceCollection services) {
         services.AddTransient<IReportService, ReportService>();
+        services.AddTransient<IImportExportService, ImportExportService>(); 
         services.AddScoped<IManagerService, ManagerService>(sp => 
             new ManagerService(
                 sp.GetRequiredService<ICitaRepository>(),

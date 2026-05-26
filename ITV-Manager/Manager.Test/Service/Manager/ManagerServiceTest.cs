@@ -305,4 +305,45 @@ public class ManagerServiceTest {
         resultado.Error.Should().BeOfType<CitaError.NotFound>();
         _cacheMock.Verify(c => c.Add(It.IsAny<int>(), It.IsAny<Cita>()), Times.Never);
     }
+    
+    [Test]
+    public void ObtenerTodas_DeberiaLlamarAlRepositorioConParametros() {
+        // arrange
+        var listaCitas = new List<Cita> { _citaPrueba };
+        _citaRepositoryMock.Setup(r => r.GetAll(1, 10, false)).Returns(listaCitas);
+
+        // act
+        var resultado = _managerService.ObtenerTodas(1, 10, false);
+
+        // assert
+        resultado.Should().BeEquivalentTo(listaCitas);
+        _citaRepositoryMock.Verify(r => r.GetAll(1, 10, false), Times.Once);
+    }
+
+    [Test]
+    public void ObtenerTodas_IncluyendoEliminados_DeberiaPasarElParametroalRepositorio() {
+        // arrange
+        var listaCitas = new List<Cita> { _citaPrueba };
+        _citaRepositoryMock.Setup(r => r.GetAll(1, 10, true)).Returns(listaCitas);
+
+        // act
+        var resultado = _managerService.ObtenerTodas(1, 10, true);
+
+        // assert
+        resultado.Should().BeEquivalentTo(listaCitas);
+        _citaRepositoryMock.Verify(r => r.GetAll(1, 10, true), Times.Once);
+    }
+
+    [Test]
+    public void ObtenerTodas_SiNoHayCitas_DeberiaRetornarListaVacia() {
+        // arrange
+        _citaRepositoryMock.Setup(r => r.GetAll(1, 10, false)).Returns(new List<Cita>());
+
+        // act
+        var resultado = _managerService.ObtenerTodas();
+
+        // assert
+        resultado.Should().BeEmpty();
+        _citaRepositoryMock.Verify(r => r.GetAll(1, 10, false), Times.Once);
+    }
 }
