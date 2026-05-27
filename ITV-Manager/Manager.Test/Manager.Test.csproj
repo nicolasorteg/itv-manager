@@ -29,5 +29,9 @@
     <ItemGroup>
         <ProjectReference Include="..\Manager\Manager.csproj" />
     </ItemGroup>
+
+    <PropertyGroup>
+        <ExcludeByFile>**/ViewModels/**/*.cs;**/ViewModels/*.cs</ExcludeByFile>
+    </PropertyGroup>
     
 </Project>

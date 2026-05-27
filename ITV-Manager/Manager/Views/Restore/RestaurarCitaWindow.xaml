@@ -1,12 +1,68 @@
 ﻿<Window x:Class="Manager.Views.Restore.RestaurarCitaWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:Manager.Views.Restore"
-        mc:Ignorable="d"
-        Title="RestaurarCitaWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="Restaurar Citas Eliminadas" Height="480" Width="750"
+        WindowStartupLocation="CenterOwner"
+        Background="#121212" ResizeMode="NoResize">
+
+    <Border Padding="24">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Citas Eliminadas" Foreground="#FF453A"
+                       FontSize="18" FontWeight="Bold" Margin="0,0,0,16"/>
+
+            <DataGrid Grid.Row="1"
+                      ItemsSource="{Binding CitasEliminadas}"
+                      SelectedItem="{Binding CitaSeleccionada}"
+                      AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single"
+                      Background="#1E1E1E" BorderBrush="#3A3A3C" BorderThickness="1"
+                      RowBackground="#1E1E1E" AlternatingRowBackground="#252528"
+                      Foreground="White" HorizontalGridLinesBrush="#2C2C2E">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Background" Value="#2C2C2E"/>
+                        <Setter Property="Foreground" Value="#8E8E93"/>
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="Padding" Value="8"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                    </Style>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Padding" Value="8"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#FF453A"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="40"/>
+                    <DataGridTextColumn Header="Matrícula" Binding="{Binding Matricula}" Width="100" FontWeight="Bold"/>
+                    <DataGridTextColumn Header="DNI" Binding="{Binding Dni}" Width="100"/>
+                    <DataGridTextColumn Header="Marca" Binding="{Binding Marca}" Width="90"/>
+                    <DataGridTextColumn Header="Modelo" Binding="{Binding Modelo}" Width="90"/>
+                    <DataGridTextColumn Header="F. Inspección" Binding="{Binding FechaInspeccion, StringFormat={}{0:dd/MM/yyyy}}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+                <Button Content="Cerrar" Width="90" Margin="0,0,10,0"
+                        Background="#2C2C2E" Foreground="White" BorderThickness="0"
+                        Padding="10,8" FontWeight="SemiBold" Cursor="Hand"
+                        Command="{Binding CerrarCommand}"
+                        CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+                <Button Content="♻ Restaurar Seleccionada" Width="180"
+                        Background="#30D158" Foreground="White" BorderThickness="0"
+                        Padding="10,8" FontWeight="SemiBold" Cursor="Hand"
+                        Command="{Binding RestaurarCommand}"/>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>

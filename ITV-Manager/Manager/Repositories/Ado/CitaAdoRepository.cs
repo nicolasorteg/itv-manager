@@ -114,7 +114,7 @@ public class CitaAdoRepository : ICitaRepository {
         const string sql = @"
             SELECT * FROM Citas 
             WHERE (@IncludeDeleted = 1 OR IsDeleted = 0)
-            ORDER BY Id DESC
+            ORDER BY Id ASC 
             LIMIT @Limit OFFSET @Offset";
 
         using var command = connection.CreateCommand();
@@ -435,6 +435,7 @@ public class CitaAdoRepository : ICitaRepository {
                   LOWER(Marca) LIKE @Search OR 
                   LOWER(Modelo) LIKE @Search
               ))
+            ORDER BY Id ASC
             LIMIT @Limit OFFSET @Offset;";
 
             // mapeo parametros
@@ -452,7 +453,7 @@ public class CitaAdoRepository : ICitaRepository {
             while (reader.Read()) {
                 citas.Add(MapReaderToEntity(reader).ToModel()!);
             }
-
+            
             return Result.Success<IEnumerable<Cita>, DomainError>(citas);
             
         } catch (Exception ex) {

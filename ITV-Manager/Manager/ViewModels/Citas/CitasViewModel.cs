@@ -18,8 +18,18 @@ public partial class CitasViewModel(IManagerService managerService) : Observable
     [ObservableProperty] private Cita? _citaSeleccionada;
     [ObservableProperty] private string _busquedaId = "";
     [ObservableProperty] private string _busquedaMatricula = "";
+    [ObservableProperty] private string _filtroTexto = "";
+    [ObservableProperty] private string _filtroMotor = "Todos";
+    [ObservableProperty] private DateTime? _filtroFechaInicio = null;
+    [ObservableProperty] private DateTime? _filtroFechaFin = null;
+    
+    partial void OnFiltroTextoChanged(string value)      => ResetYCargar();
+    partial void OnFiltroMotorChanged(string value)      => ResetYCargar();
+    partial void OnFiltroFechaInicioChanged(DateTime? value) => ResetYCargar();
+    partial void OnFiltroFechaFinChanged(DateTime? value)    => ResetYCargar();
 
-    // Métodos parciales nativos del Toolkit que reaccionan automáticamente a los cambios
+    public List<string> OpcionesMotor => ["Todos", "Gasolina", "Diesel", "Electrico", "Hibrido"];
+
     partial void OnCitaSeleccionadaChanged(Cita? value) {
         ActualizarCitaCommand.NotifyCanExecuteChanged();
         BorrarCitaCommand.NotifyCanExecuteChanged();
@@ -30,13 +40,16 @@ public partial class CitasViewModel(IManagerService managerService) : Observable
     }
 
     public void CargarCitas() {
+        var fechaInicio = FiltroFechaInicio ?? DateTime.MinValue;
+        var motorFiltro = FiltroMotor?.ToLower() ?? "todos";
+
         var resultado = _managerService.ObtenerConFiltros(
-            fechaInicio: DateTime.MinValue, 
-            fechaFin: null, 
-            pagina: PaginaActual, 
+            fechaInicio: fechaInicio,
+            fechaFin: FiltroFechaFin,
+            pagina: PaginaActual,
             tamPagina: TamPagina,
-            searchText: null,
-            motorSeleccionado: "todos",
+            searchText: string.IsNullOrWhiteSpace(FiltroTexto) ? null : FiltroTexto,
+            motorSeleccionado: motorFiltro,
             incluirEliminados: false
         );
 
@@ -46,17 +59,35 @@ public partial class CitasViewModel(IManagerService managerService) : Observable
             Citas = new ObservableCollection<Cita>();
             MessageBox.Show("Error al cargar el listado de citas", "Error de Base de Datos", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-        
+
         var totalRegistrosActivos = _managerService.ContarCitasFiltradas(
-            searchText: null, fechaInicio: DateTime.MinValue, fechaFin: null, motorSeleccionado: "todos", incluirEliminados: false
-        ); 
+            searchText: string.IsNullOrWhiteSpace(FiltroTexto) ? null : FiltroTexto,
+            fechaInicio: fechaInicio,
+            fechaFin: FiltroFechaFin,
+            motorSeleccionado: motorFiltro,
+            incluirEliminados: false
+        );
 
         TotalPaginas = (int)Math.Ceiling((double)totalRegistrosActivos / TamPagina);
-        if (TotalPaginas < 1) TotalPaginas = 1; 
+        if (TotalPaginas < 1) TotalPaginas = 1;
 
-        // notificar el estado de los botones de paginación
         PaginaAnteriorCommand.NotifyCanExecuteChanged();
         PaginaSiguienteCommand.NotifyCanExecuteChanged();
+    }
+
+    private void ResetYCargar() {
+        if (PaginaActual == 1) CargarCitas();      
+        else PaginaActual = 1;   
+    }
+
+    [RelayCommand]
+    private void LimpiarFiltros() {
+        FiltroTexto = "";
+        FiltroMotor = "Todos";
+        FiltroFechaInicio = null;
+        FiltroFechaFin = null;
+        PaginaActual = 1;
+        CargarCitas();
     }
 
     [RelayCommand(CanExecute = nameof(CanPrevia))]
@@ -89,9 +120,9 @@ public partial class CitasViewModel(IManagerService managerService) : Observable
     [RelayCommand(CanExecute = nameof(CanOperarCita))]
     private void BorrarCita() {
         if (CitaSeleccionada == null) return;
-    
+
         var confirmacion = MessageBox.Show(
-            $"¿Seguro que deseas dar de baja la cita con matrícula {CitaSeleccionada.Matricula}?", 
+            $"¿Seguro que deseas dar de baja la cita con matrícula {CitaSeleccionada.Matricula}?",
             "Confirmar Borrado", MessageBoxButton.YesNo, MessageBoxImage.Warning
         );
 
@@ -100,14 +131,14 @@ public partial class CitasViewModel(IManagerService managerService) : Observable
 
         if (!resultadoBorrado.IsSuccess) return;
         MessageBox.Show("Registro eliminado de la vista activa.", "Operación Completada", MessageBoxButton.OK, MessageBoxImage.Information);
-            
+
         if (Citas.Count == 1 && PaginaActual > 1) {
             PaginaActual--;
         }
-            
+
         CargarCitas();
     }
-    
+
     [RelayCommand]
     private void CrearCita() {
         var editVM = new EditarCitaViewModel(_managerService);
@@ -120,7 +151,7 @@ public partial class CitasViewModel(IManagerService managerService) : Observable
             CargarCitas();
         }
     }
-    
+
     [RelayCommand]
     private void BuscarPorId() {
         if (!int.TryParse(BusquedaId.Trim(), out var id)) {
@@ -155,6 +186,17 @@ public partial class CitasViewModel(IManagerService managerService) : Observable
         } else {
             MessageBox.Show($"No se encontró ninguna cita con matrícula {BusquedaMatricula}.", "Sin resultados", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+    }
+
+    [RelayCommand]
+    private void AbrirRestore() {
+        var restoreVM = new RestaurarCitaViewModel(_managerService);
+        var restoreWindow = new Views.Restore.RestaurarCitaWindow {
+            DataContext = restoreVM,
+            Owner = Application.Current.MainWindow
+        };
+        restoreWindow.ShowDialog();
+        CargarCitas();
     }
 
     private bool CanOperarCita() => CitaSeleccionada != null;
