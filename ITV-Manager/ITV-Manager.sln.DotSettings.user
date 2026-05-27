@@ -13,9 +13,9 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a71baa39_002De4d4_002D4eee_002D8d5e_002Dae2f8378803b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ToModel_DeberiaSerSucces" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="C:\Users\nickr\Desktop\itv-manager\ITV-Manager\Manager.Test" Presentation="&amp;lt;Manager.Test&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=af66c850_002D6a8a_002D4eac_002Da9fe_002Dba8fd1b3b242/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsLocked="True" Name="Constructor_ConCarpetaInexistente_DeberiaCrearDirectorio" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=af66c850_002D6a8a_002D4eac_002Da9fe_002Dba8fd1b3b242/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" IsLocked="True" Name="Constructor_ConCarpetaInexistente_DeberiaCrearDirectorio" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="C:\Users\nickr\Desktop\itv-manager\ITV-Manager\Manager.Test" Presentation="&amp;lt;Manager.Test&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=cc67f962_002Da73a_002D4058_002Da9cd_002D5cec3aeb5b54/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Validar_CitaValida_RetornaSucces" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=cc67f962_002Da73a_002D4058_002Da9cd_002D5cec3aeb5b54/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Validar_CitaValida_RetornaSucces" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Project Location="C:\Users\nickr\Desktop\itv-manager\ITV-Manager\Manager.Test" Presentation="&amp;lt;Manager.Test&amp;gt;" /&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

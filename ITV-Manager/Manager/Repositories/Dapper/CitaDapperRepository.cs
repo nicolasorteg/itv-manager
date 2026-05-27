@@ -124,7 +124,7 @@ public class CitaDapperRepository: ICitaRepository {
             }
 
             _logger.Information($" Cita guardada  correctamente con ID: {id}");
-            return Result.Success<Cita, DomainError>(GetById(id)!);
+            return Result.Success<Cita, DomainError>(GetByIdInternal(id)!);
         }
         catch (Exception ex) {
             _logger.Error(ex, "Error al crear cita.");
@@ -179,7 +179,7 @@ public class CitaDapperRepository: ICitaRepository {
                 UpdatedAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
             });
 
-            return Result.Success<Cita, DomainError>(GetById(id)!);
+            return Result.Success<Cita, DomainError>(GetByIdInternal(id)!);
         }
         catch (Exception ex) {
             _logger.Error(ex, $"Error al updatear la cita {id}");
@@ -428,4 +428,10 @@ public class CitaDapperRepository: ICitaRepository {
 
     private int CountTotal() => // n.º de citas
         _connection.ExecuteScalar<int>("SELECT COUNT(1) FROM Citas");
+    
+    private Cita? GetByIdInternal(int id) {
+        const string Sql = "SELECT * FROM Citas WHERE Id = @Id"; // sin filtro IsDeleted
+        var entity = _connection.QueryFirstOrDefault<CitaEntity>(Sql, new { Id = id });
+        return entity?.ToModel();
+    }
 }
