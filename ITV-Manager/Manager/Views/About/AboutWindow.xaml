@@ -1,0 +1,25 @@
+﻿<Window x:Class="Manager.Views.About.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Acerca de..." Height="440" Width="350"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize"
+        Background="#0D1117">
+    
+    <StackPanel Margin="20" VerticalAlignment="Center">
+        <Grid Width="120" Height="120" Margin="0,0,0,15">
+            <Ellipse Fill="#21262D" Stroke="#303E4D" StrokeThickness="2"/>
+            <Image Width="114" Height="114" Stretch="UniformToFill" Source="https://avatars.githubusercontent.com/u/190002481?v=4">
+                <Image.Clip>
+                    <EllipseGeometry Center="57,57" RadiusX="57" RadiusY="57"/>
+                </Image.Clip>
+            </Image>
+        </Grid>
+
+        <TextBlock Text="@nicolasorteg" Foreground="White" FontSize="22" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,5"/>
+        <TextBlock Text="Developer · ITV Manager Core" Foreground="#8B949E" FontSize="14" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+        
+        <TextBlock x:Name="TxtLink" Text="🔗 github.com/nicolasorteg" Foreground="#58A6FF" FontSize="13" HorizontalAlignment="Center" Cursor="Hand" MouseDown="TxtLink_MouseDown"/>
+
+        <Button Content="Cerrar" Width="90" Height="30" Margin="0,25,0,0" Background="#21262D" Foreground="White" Click="BtnCerrar_Click"/>
+    </StackPanel>
+</Window>

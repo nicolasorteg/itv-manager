@@ -1,0 +1,126 @@
+﻿using FluentAssertions;
+using Manager.Errors.Report;
+using Manager.Models;
+using Manager.Service.Report;
+
+namespace Manager.Test.Service.Report;
+
+[TestFixture]
+public class ReportServiceTest {
+    private ReportService _reportService;
+    private Cita _citaPrueba;
+    private readonly List<string> _archivosGenerados = [];
+
+    [SetUp]
+    public void Setup() {
+        _reportService = new ReportService();
+
+        _citaPrueba = new Cita {
+            Id = 1,
+            Matricula = "5489FGG",
+            Dni = "12345678Z",
+            Marca = "Toyota",
+            Modelo = "Yaris Cross",
+            Motor = Cita.TiposMotor.Hibrido,
+            FechaMatriculacion = new DateTime(2022, 05, 10),
+            FechaInspeccion = DateTime.Today.AddDays(5)
+        };
+    }
+    
+    [TearDown]
+    public void TearDown() {
+        foreach (var archivo in _archivosGenerados.Where(archivo => File.Exists(archivo))) {
+            try {
+                File.Delete(archivo);
+            } catch { }
+        }
+
+        _archivosGenerados.Clear();
+    }
+
+    [TestFixture] public class GeneracionDeDocumentos : ReportServiceTest {
+
+        [Test]
+        public void ExportarCitaAHtml_DeberiaCrearArchivoValidoYRetornarRuta() {
+            // act
+            var resultado = _reportService.ExportarCitaAHtml(_citaPrueba);
+
+            // assert
+            resultado.IsSuccess.Should().BeTrue();
+            resultado.Value.Should().NotBeNullOrEmpty();
+            resultado.Value.Should().EndWith(".html");
+            
+            File.Exists(resultado.Value).Should().BeTrue();
+            
+            _archivosGenerados.Add(resultado.Value);
+            
+            var contenido = File.ReadAllText(resultado.Value);
+            contenido.Should().Contain(_citaPrueba.Matricula);
+            contenido.Should().Contain(_citaPrueba.Marca);
+            contenido.Should().Contain(_citaPrueba.Dni);
+        }
+        
+        [Test]
+        public void ExportarCitaAPdf_DeberiaGenerarUnDocumentoPdfFisico() {
+            // act
+            var resultado = _reportService.ExportarCitaAPdf(_citaPrueba);
+
+            // assert
+            resultado.IsSuccess.Should().BeTrue();
+            resultado.Value.Should().NotBeNullOrEmpty();
+            resultado.Value.Should().EndWith(".pdf");
+            
+            File.Exists(resultado.Value).Should().BeTrue();
+            
+            _archivosGenerados.Add(resultado.Value);
+            
+            var bytes = File.ReadAllBytes(resultado.Value);
+            bytes.Length.Should().BeGreaterThan(0);
+            System.Text.Encoding.UTF8.GetString(bytes[0..4]).Should().Be("%PDF");
+        }
+        
+        [Test]
+        public void ExportarCitaAHtml_CuandoRutaEsInvalida_DeberiaEntrarEnCatchYRetornarFailure() {
+            // arrange
+            var citaConError = new Cita {
+                Id = 2,
+                Matricula = "???///??", // caracteres prohibidos 
+                Dni = "12345678Z",
+                Marca = "Test",
+                Modelo = "Error",
+                Motor = Cita.TiposMotor.Hibrido,
+                FechaMatriculacion = DateTime.Today.AddYears(-1),
+                FechaInspeccion = DateTime.Today.AddDays(1)
+            };
+
+            // act
+            var resultado = _reportService.ExportarCitaAHtml(citaConError);
+
+            // assert
+            resultado.IsFailure.Should().BeTrue();
+            resultado.Error.Should().BeOfType<ReportError.HtmlError>();
+        }
+
+        [Test]
+        public void ExportarCitaAPdf_CuandoRutaEsInvalida_DeberiaEntrarEnCatchYRetornarFailure() {
+            // arrange
+            var citaConError = new Cita {
+                Id = 3,
+                Matricula = "???///??", // inválidos en Windows
+                Dni = "12345678Z",
+                Marca = "Test",
+                Modelo = "Error",
+                Motor = Cita.TiposMotor.Hibrido,
+                FechaMatriculacion = DateTime.Today.AddYears(-1),
+                FechaInspeccion = DateTime.Today.AddDays(1)
+            };
+
+            // act
+            var resultado = _reportService.ExportarCitaAPdf(citaConError);
+
+            // assert
+            resultado.IsFailure.Should().BeTrue();
+            resultado.Error.Should().BeOfType<ReportError.PdfError>();
+        }
+    }
+}
